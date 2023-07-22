@@ -12,16 +12,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	DirectX* direct = new DirectX;
 	Engine* engine = new Engine;
 
-
-
-	//アプリケーションの開始
-	window->StartApp();
-	direct->Initialize(window->GetHwnd());
-	engine->Initialize();
-
 	Vector4 data1[3];
 	Vector4 data2[3];
 	Vector4 data3[3];
+
+
 
 	for (int i = 0; i < 3; i++)
 	{
@@ -31,28 +26,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		data3[i] = { 0.2f,-0.2f + (i * -0.5f),0.0f,2.0f };
 	}
 
-	Vector4 data4[3];
-	Vector4 data5[3];
-	Vector4 data6[3];
+
+	//アプリケーションの開始
+	window->StartApp();
+	direct->Initialize(window->GetHwnd());
 
 	for (int i = 0; i < 3; i++)
 	{
-
-		data4[i] = { 0.2f,-0.2f + (i * -0.5f),0.0f,2.0f };
-		data5[i] = { 0.4f,0.2f + (i * -0.5f),0.0f,2.0f };
-		data6[i] = { 0.6f,-0.2f + (i * -0.5f),0.0f,2.0f };
-	}
-
-	Vector4 data7[4];
-	Vector4 data8[4];
-	Vector4 data9[4];
-
-	for (int i = 0; i < 4; i++)
-	{
-
-		data7[i] = { -0.6f,-0.2f + (i * -0.5f),0.0f,2.0f };
-		data8[i] = { -0.4f,0.2f + (i * -0.5f),0.0f,2.0f };
-		data9[i] = { -0.2f,-0.2f + (i * -0.5f),0.0f,2.0f };
+		//三角形描画
+		engine->Initialize(data1[i], data2[i], data3[i]);
 	}
 
 	/*=====================================*/
@@ -72,23 +54,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		{
 			engine->Run();
 
-			for (int i = 0; i < 3; i++)
-			{
-				//三角形描画
-				engine->DrawTriangle(data1[i], data2[i], data3[i]);
-			}
 
-			for (int i = 0; i < 3; i++)
-			{
 				//三角形描画
-				engine->DrawTriangle(data4[i], data5[i], data6[i]);
-			}
+				engine->DrawTriangle();
 
-			for (int i = 0; i < 4; i++)
-			{
-				//三角形描画
-				engine->DrawTriangle(data7[i], data8[i], data9[i]);
-			}
 
 			engine->RunEnd();
 

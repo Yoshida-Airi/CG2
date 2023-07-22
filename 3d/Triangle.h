@@ -8,9 +8,9 @@ class Triangle
 {
 
 public:
-	void Initialize(DirectX* direct);
+	void Initialize(DirectX* direct, const Vector4& a, const Vector4& b, const Vector4& c);
 
-	void Draw(const Vector4& a, const Vector4& b, const Vector4& c);
+	void Draw();
 
 	void End();
 

@@ -12,7 +12,7 @@ Engine::~Engine()
 
 }
 
-void Engine::Initialize()
+void Engine::Initialize(const Vector4& a, const Vector4& b, const Vector4& c)
 {
 	IntializeDXC();
 	CreateSignature();
@@ -26,7 +26,7 @@ void Engine::Initialize()
 	for (int i = 0; i < 11; i++)
 	{
 		triangle_[i] = new Triangle();
-		triangle_[i]->Initialize(direct_);
+		triangle_[i]->Initialize(direct_, a, b, c);
 	}
 
 
@@ -51,10 +51,10 @@ void Engine::End()
 	HandleClose();
 }
 
-void Engine::DrawTriangle(const Vector4& a, const Vector4& b, const Vector4& c)
+void Engine::DrawTriangle()
 {
 	triangleCount_++;
-	triangle_[triangleCount_]->Draw(a, b, c);
+	triangle_[triangleCount_]->Draw();
 	if (triangleCount_ >= 10)
 	{
 		triangleCount_ = 0;

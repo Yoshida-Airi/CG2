@@ -37,7 +37,7 @@ public:
 	/// <summary>
 	/// 初期化処理
 	/// </summary>
-	void Initialize();
+	void Initialize(const Vector4& a, const Vector4& b, const Vector4& c);
 
 	/// <summary>
 	/// 更新処理
@@ -52,7 +52,7 @@ public:
 	/// <summary>
 	/// 三角形描画
 	/// </summary>
-	void DrawTriangle(const Vector4& a, const Vector4& b, const Vector4& c);
+	void DrawTriangle();
 
 	/// <summary>
 	/// 終了(解放処理)
