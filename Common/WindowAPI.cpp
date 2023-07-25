@@ -1,52 +1,52 @@
-#include "WindowAPI.h"
-#include <windows.h>
-#include <tchar.h>
-#include<d3d12.h>
-
+#include"WindowAPI.h"
 
 /*=====================================*/
-/* 　　　　   パブリックメソッド　　　 　     */
+/* 　　　　   パブリックメソッド　　　 　    */
 /*=====================================*/
 
 //コンストラクタ
 WindowAPI::WindowAPI()
 {
-	Title_ = L"CG2";
-
-	hInst_ = nullptr;
-	hwnd_ = nullptr;
-
-	Height_ = 720;
-	Width_ = 1280;
-
-	wrc_ = {};
-	wc_ = {};
 
 }
 
 //デストラクタ
 WindowAPI::~WindowAPI()
 {
-	EndRoop();
-}
+	CloseWindow(hwnd_);
 
+
+}
 
 //開始
-void WindowAPI::StartApp()
+void WindowAPI::StartApp(const wchar_t* title, int32_t width, int32_t height)
 {
-	Initialize();
+	Initialize(title, width, height);
 }
 
-//終了
-void WindowAPI::EndApp()
-{
-	EndRoop();
-}
 
+
+bool WindowAPI::ProcessMessage()
+{
+	MSG msg{}; // メッセージ
+
+	if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) // メッセージがある？
+	{
+		TranslateMessage(&msg); // キー入力メッセージの処理
+		DispatchMessage(&msg);  // ウィンドウプロシージャにメッセージを送る
+	}
+
+	if (msg.message == WM_QUIT) // 終了メッセージが来たらループを抜ける
+	{
+		return true;
+	}
+
+	return false;
+};
 
 
 /*=====================================*/
-/* 　　　　   プライベートメソッド　　　      */
+/* 　　　　   プライベートメソッド　　　    */
 /*=====================================*/
 
 //ウィンドウプロシージャ
@@ -66,9 +66,9 @@ LRESULT CALLBACK WindowAPI::WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARA
 }
 
 //ウィンドウの初期化
-bool WindowAPI::Initialize()
+bool WindowAPI::Initialize(const wchar_t* title, int32_t width, int32_t height)
 {
-	if (!InitializeWindow())
+	if (!InitializeWindow(title, width, height))
 	{
 		return false;
 	}
@@ -78,10 +78,13 @@ bool WindowAPI::Initialize()
 
 
 //ウィンドウクラスの登録(初期化)
-bool WindowAPI::InitializeWindow()
+bool WindowAPI::InitializeWindow(const wchar_t* title, int32_t width, int32_t height)
 {
-	//ウィンドウクラスの登録(設定をWindowsに伝える)
+	Title_ = title;
+	Width_ = width;
+	Height_ = height;
 
+	//ウィンドウクラスの登録(設定をWindowsに伝える)
 	//ウィンドウプロシージャ
 	wc_.lpfnWndProc = WindowProc;
 	//ウィンドウクラス名(なんでも良い)
@@ -117,16 +120,6 @@ bool WindowAPI::InitializeWindow()
 	);
 
 
-#ifdef _DEBUG
-
-	if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&debugController_))))
-	{
-		//デバッグレイヤーを有効化する
-		debugController_->EnableDebugLayer();
-		//さらにGPU側でもチェックを行うようにする
-		debugController_->SetEnableGPUBasedValidation(TRUE);
-	}
-#endif
 
 	if (hwnd_ == nullptr)
 	{
@@ -142,20 +135,3 @@ bool WindowAPI::InitializeWindow()
 }
 
 
-
-void WindowAPI::EndRoop()
-{
-	//ウィンドウの終了処理
-	EndWindow();
-}
-
-//ウィンドウの終了
-void WindowAPI::EndWindow()
-{
-#ifdef _DEBUG
-	if (debugController_ != nullptr)
-	{
-		debugController_->Release();
-	}
-#endif
-}

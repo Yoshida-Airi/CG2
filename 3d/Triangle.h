@@ -1,24 +1,40 @@
 #pragma once
-#include"DirectX.h"
+#include"WindowAPI.h"
+#include"DirectXCommon.h"
 #include"Vector4.h"
-
-class MyEngine;
 
 class Triangle
 {
-
 public:
-	void Initialize(DirectX* direct);
 
-	void Draw(const Vector4& a, const Vector4& b, const Vector4& c);
+	/// <summary>
+	/// 初期化
+	/// </summary>
+	/// <param name="direct"></param>
+	void Initialize(DirectXCommon* direct);
 
+	/// <summary>
+	/// 描画
+	/// </summary>
+	/// <param name="a">左下</param>
+	/// <param name="b">上</param>
+	/// <param name="c">右下</param>
+	void Draw(Vector4* position, ID3D12Resource* resource);
+
+	/// <summary>
+	/// 解放
+	/// </summary>
 	void End();
 
 
-private:
-	MyEngine* engine_;
+	/// <summary>
+	/// 頂点
+	/// </summary>
+	void VertexData(Vector4* position, ID3D12Resource* resource);
 
-	DirectX* direct_;
+private://プライベート変数
+
+	DirectXCommon* dxCommon_;
 
 	Vector4* vertexData_;
 
@@ -26,9 +42,11 @@ private:
 
 	D3D12_VERTEX_BUFFER_VIEW vertexBufferView_;
 
-private:
-	void SetVertex();
+
+
+private://プライベート関数
 
 
 
 };
+

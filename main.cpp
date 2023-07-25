@@ -1,107 +1,110 @@
 #include<Windows.h>
 #include"WindowAPI.h"
-#include"DirectX.h"
-#include"Engine.h"
+#include"DirectXCommon.h"
+#include"MyEngine.h"
 
-#include"Triangle.h"
+const wchar_t* kWindowTitle = L"CG2";
 
 //Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
-	WindowAPI* window = new WindowAPI;
-	DirectX* direct = new DirectX;
-	Engine* engine = new Engine;
 
-
+	WindowAPI* winApp = new WindowAPI;
+	DirectXCommon* dxCommon = new DirectXCommon;
+	MyEngine* engine = new MyEngine;
 
 	//アプリケーションの開始
-	window->StartApp();
-	direct->Initialize(window->GetHwnd());
-	engine->Initialize();
+	const uint32_t kWindowWidth = 1280;
+	const uint32_t kWindowHeight = 720;
 
-	Vector4 data1[3];
-	Vector4 data2[3];
-	Vector4 data3[3];
+	winApp->StartApp(kWindowTitle, kWindowWidth, kWindowHeight);
+	dxCommon->Initialize(winApp);
+	engine->Initialize(dxCommon, winApp);
 
-	for (int i = 0; i < 3; i++)
+	const int kMaxTriangle = 10;
+
+
+	Vector4 data[kMaxTriangle][kMaxTriangle] = { 0 };
+	ID3D12Resource* resource[kMaxTriangle] = { nullptr };
+
+
+
+	for (int i = 0; i < kMaxTriangle; i++)
 	{
-
-		data1[i] = { -0.2f,-0.2f + (i * -0.5f),0.0f,2.0f };
-		data2[i] = { 0.0f,0.2f + (i * -0.5f),0.0f,2.0f };
-		data3[i] = { 0.2f,-0.2f + (i * -0.5f),0.0f,2.0f };
+		resource[i] = engine->VertexResource();
 	}
 
-	Vector4 data4[3];
-	Vector4 data5[3];
-	Vector4 data6[3];
+	data[0][0] = { -0.2f,-0.2f,0.0f,2.0f };
+	data[0][1] = { 0.0f,0.2f,0.0f,2.0f };
+	data[0][2] = { 0.2f,-0.2f,0.0f,2.0f };
 
-	for (int i = 0; i < 3; i++)
+	data[1][0] = { 0.2f,-0.2f ,0.0f,2.0f };
+	data[1][1] = { 0.4f,0.2f ,0.0f,2.0f };
+	data[1][2] = { 0.6f,-0.2f ,0.0f,2.0f };
+
+	data[2][0] = { 0.6f,-0.2f,0.0f,2.0f };
+	data[2][1] = { 0.8f,0.2f,0.0f,2.0f };
+	data[2][2] = { 1.0f,-0.2f,0.0f,2.0f };
+
+	data[3][0] = { 1.0f,-0.2f,0.0f,2.0f };
+	data[3][1] = { 1.2f,0.2f,0.0f,2.0f };
+	data[3][2] = { 1.4f,-0.2f,0.0f,2.0f };
+
+	data[4][0] = { -0.2f,-0.7f,0.0f,2.0f };
+	data[4][1] = { 0.0f,-0.3f,0.0f,2.0f };
+	data[4][2] = { 0.2f,-0.7f,0.0f,2.0f };
+
+	data[5][0] = { 0.2f,-0.7f,0.0f,2.0f };
+	data[5][1] = { 0.4f,-0.3f,0.0f,2.0f };
+	data[5][2] = { 0.6f,-0.7f,0.0f,2.0f };
+
+	data[6][0] = { 0.6f,-0.7f,0.0f,2.0f };
+	data[6][1] = { 0.8f,-0.3f,0.0f,2.0f };
+	data[6][2] = { 1.0f,-0.7f,0.0f,2.0f };
+
+	data[7][0] = { 1.0f,-0.7f,0.0f,2.0f };
+	data[7][1] = { 1.2f,-0.3f,0.0f,2.0f };
+	data[7][2] = { 1.4f,-0.7f,0.0f,2.0f };
+
+	data[8][0] = { -0.2f,0.3f,0.0f,2.0f };
+	data[8][1] = { 0.0f,0.7f,0.0f,2.0f };
+	data[8][2] = { 0.2f,0.3f,0.0f,2.0f };
+
+	data[9][0] = { 0.2f,0.3f,0.0f,2.0f };
+	data[9][1] = { 0.4f,0.7f,0.0f,2.0f };
+	data[9][2] = { 0.6f,0.3f,0.0f,2.0f };
+
+	// ウィンドウの×ボタンが押されるまでループ
+	while (WindowAPI::ProcessMessage() == 0)
 	{
 
-		data4[i] = { 0.2f,-0.2f + (i * -0.5f),0.0f,2.0f };
-		data5[i] = { 0.4f,0.2f + (i * -0.5f),0.0f,2.0f };
-		data6[i] = { 0.6f,-0.2f + (i * -0.5f),0.0f,2.0f };
-	}
+		/*=====================================*/
+		/* 　　　　   メインループ　　    　       */
+		/*=====================================*/
 
-	Vector4 data7[4];
-	Vector4 data8[4];
-	Vector4 data9[4];
+		dxCommon->PreDraw();
+		engine->PreDraw();
 
-	for (int i = 0; i < 4; i++)
-	{
-
-		data7[i] = { -0.6f,-0.2f + (i * -0.5f),0.0f,2.0f };
-		data8[i] = { -0.4f,0.2f + (i * -0.5f),0.0f,2.0f };
-		data9[i] = { -0.2f,-0.2f + (i * -0.5f),0.0f,2.0f };
-	}
-
-	/*=====================================*/
-	/* 　　　　   メインループ　　    　       */
-	/*=====================================*/
-
-	MSG msg{};
-	while (msg.message != WM_QUIT)
-	{
-		//Windowsにメッセージが来てたら最優先で処理させる
-		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+		for (int i = 0; i < kMaxTriangle; i++)
 		{
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
+			engine->DrawTriangle(data[i], resource[i]);
 		}
-		else
-		{
-			engine->Run();
 
-			for (int i = 0; i < 3; i++)
-			{
-				//三角形描画
-				engine->DrawTriangle(data1[i], data2[i], data3[i]);
-			}
+		engine->PostDraw();
+		dxCommon->PostDraw();
 
-			for (int i = 0; i < 3; i++)
-			{
-				//三角形描画
-				engine->DrawTriangle(data4[i], data5[i], data6[i]);
-			}
 
-			for (int i = 0; i < 4; i++)
-			{
-				//三角形描画
-				engine->DrawTriangle(data7[i], data8[i], data9[i]);
-			}
-
-			engine->RunEnd();
-
-		}
 	}
 
-	window->EndApp();
-	engine->End();
-	direct->End();
+	for (int i = 0; i < kMaxTriangle; i++)
+	{
+		resource[i]->Release();
+	}
 
 
-
+	delete engine;
+	delete dxCommon;
+	delete winApp;
 
 	return 0;
-
 }

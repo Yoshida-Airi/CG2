@@ -52,7 +52,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)3d;$(ProjectDir)Common;$(ProjectDir)Resource;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)3d;$(ProjectDir)Common;$(ProjectDir)Resource\shaders;$(ProjectDir)Logger;$(ProjectDir)Math;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -82,32 +82,26 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="3d\Triangle.cpp" />
-    <ClCompile Include="Common\DirectX.cpp" />
-    <ClCompile Include="Common\Engine.cpp" />
+    <ClCompile Include="Common\DirectXCommon.cpp" />
+    <ClCompile Include="Common\MyEngine.cpp" />
     <ClCompile Include="Common\WindowAPI.cpp" />
-    <ClCompile Include="ConvertString.cpp" />
+    <ClCompile Include="Logger\ConvertString.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3d\Triangle.h" />
-    <ClInclude Include="Common\DirectX.h" />
-    <ClInclude Include="Common\Engine.h" />
+    <ClInclude Include="Common\DirectXCommon.h" />
+    <ClInclude Include="Common\MyEngine.h" />
     <ClInclude Include="Common\WindowAPI.h" />
-    <ClInclude Include="ConvertString.h" />
-    <ClInclude Include="Vector4.h" />
+    <ClInclude Include="Logger\ConvertString.h" />
+    <ClInclude Include="Math\Vector4.h" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="Object3d.PS.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    <FxCompile Include="Resources\shaders\Object3d.PS.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
-    <FxCompile Include="Object3d.VS.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    <FxCompile Include="Resources\shaders\Object3d.VS.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
