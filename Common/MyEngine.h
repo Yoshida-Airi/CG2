@@ -1,111 +1,99 @@
 #pragma once
-#include<Windows.h>
-#include<cstdint>
-#include <string>
-#include<format>
-#include<d3d12.h>
-#include<dxgi1_6.h>
+
 #include<cassert>
 #include<dxgidebug.h>
 #include<dxcapi.h>
-#include<Vector>
 
-#include"DirectX.h"
+#include"DirectXCommon.h"
 #include"WindowAPI.h"
 #include"Triangle.h"
-#include "ConvertString.h"
-#include"Vector4.h"
+#include"ConvertString.h"
 
-#pragma comment(lib,"d3d12.lib")
-#pragma comment(lib,"dxgi.lib")
-#pragma comment(lib,"dxguid.lib")
 #pragma comment(lib,"dxcompiler.lib")
 
 
-class Engine
+class MyEngine
 {
 public:
-	/// <summary>
-	/// コンストラクタ
-	/// </summary>
-	Engine();
-	/// <summary>
-	/// デストラクタ
-	/// </summary>
-	~Engine();
+
+	~MyEngine();
 
 	/// <summary>
-	/// 初期化処理
+	/// 初期化
 	/// </summary>
-	void Initialize(const Vector4& a, const Vector4& b, const Vector4& c);
+	void Initialize(DirectXCommon* dxCommon, WindowAPI* winApp);
 
 	/// <summary>
-	/// 更新処理
+	/// 描画前処理
 	/// </summary>
-	void Run();
+	void PreDraw();
 
 	/// <summary>
-	/// 更新処理の終了
+	/// 描画後処理
 	/// </summary>
-	void RunEnd();
+	void PostDraw();
 
 	/// <summary>
-	/// 三角形描画
+	/// 三角形の描画
 	/// </summary>
-	void DrawTriangle();
+	void DrawTriangle(Vector4* position, ID3D12Resource* resource);
 
 	/// <summary>
-	/// 終了(解放処理)
+	/// 頂点のリソース設定
 	/// </summary>
-	void End();
+	/// <returns>resource</returns>
+	ID3D12Resource* VertexResource();
+
+private://プライベート変数
+
+	//ウィンドウアプリケーション管理
+	WindowAPI* winApp_;
+	DirectXCommon* dxCommon_;
+
+	// 三角形を描画できる最大数
 
 
 
-private:
-	DirectX* direct_ = new DirectX;
-	WindowAPI winApp_;
+	Triangle* triangle_ = nullptr;
 
-	Triangle* triangle_[11];//描画出来る最大個数
-
-	int triangleCount_;	//三角形が描画されている数
-
-
-
-	HRESULT hr_;				//結果確認用
+	HRESULT hr_;
 	IDxcUtils* dxcUtils_ = nullptr;
 	IDxcCompiler3* dxcCompiler_ = nullptr;
 	IDxcIncludeHandler* includeHandler_ = nullptr;
+
 	D3D12_ROOT_SIGNATURE_DESC descriptionRootSignature_{};	//RootSignature作成
 	ID3D12RootSignature* rootSignature_ = nullptr;	//バイナリを元に生成
-	D3D12_INPUT_ELEMENT_DESC inputElementDescs_[1] = {};//InputLayout
-	D3D12_INPUT_LAYOUT_DESC inputLayoutDesc_{};
-	D3D12_BLEND_DESC blendDesc_{};//BlendStateの設定
-	D3D12_RASTERIZER_DESC rasterizerDesc_{};//RasiterzerStateの設定
-	D3D12_GRAPHICS_PIPELINE_STATE_DESC graphicsPipelineStateDesc_{};	//PSO
-	ID3D12PipelineState* graphicsPipelineState_ = nullptr;	//実際に生成
-	D3D12_RESOURCE_DESC vertexResourceDesc_{};	//頂点リソースの設定
-	ID3D12Resource* vertexResource_;	//実際に頂点リソースを作る
-	D3D12_VERTEX_BUFFER_VIEW vertexBufferView_{};//頂点バッファビューを作成する
-	D3D12_VIEWPORT viewport_{};	//ビューポート
-	D3D12_RECT scissorRect_{};//シザー矩形
-	UINT backBufferIndex;
-	D3D12_RESOURCE_BARRIER barrier{};	//TransitionBarrierの設定
-
-
-
-
 	ID3DBlob* signatureBlob_ = nullptr;//シリアライズしてバイナリにする
 	ID3DBlob* errorBlob_ = nullptr;
+
+	D3D12_INPUT_ELEMENT_DESC inputElementDescs_[1] = {};//InputLayout
+	D3D12_INPUT_LAYOUT_DESC inputLayoutDesc_{};
+
+	D3D12_BLEND_DESC blendDesc_{};//BlendStateの設定
+
+	D3D12_RASTERIZER_DESC rasterizerDesc_{};//RasiterzerStateの設定
 
 	IDxcBlob* vertexShaderBlob_;
 	IDxcBlob* pixelShaderBlob_;
 
-	D3D12_CPU_DESCRIPTOR_HANDLE RTVHandle_[2];
-	uint64_t fenceValue_;
+	D3D12_GRAPHICS_PIPELINE_STATE_DESC graphicsPipelineStateDesc_{};	//PSO
+	ID3D12PipelineState* graphicsPipelineState_ = nullptr;	//実際に生成
 
+	D3D12_RESOURCE_DESC vertexResourceDesc_{};	//頂点リソースの設定
+	ID3D12Resource* vertexResource_;	//実際に頂点リソースを作る
+	D3D12_VERTEX_BUFFER_VIEW vertexBufferView_{};//頂点バッファビューを作成する
 	//頂点リソースにデータを書き込む
 	Vector4* vertexData_;
 
+	D3D12_VIEWPORT viewport_{};	//ビューポート
+	D3D12_RECT scissorRect_{};//シザー矩形
+
+
+
+
+
+
+private://プライベート関数
 
 	//コンパイルシェーダー関数
 	IDxcBlob* CompileShader
@@ -125,54 +113,55 @@ private:
 	void IntializeDXC();
 
 	/// <summary>
-	/// RootSignatureの生成
+	/// パイプラインステートの設定
 	/// </summary>
-	void CreateSignature();
+	void PSO();
 
 	/// <summary>
-	/// InputLayoutの生成
+	/// ルートシグネチャの生成
 	/// </summary>
-	void InputLayout();
+	void CreateRootSignature();
+
 
 	/// <summary>
-	/// BlendState
+	/// InputLayoutの設定
 	/// </summary>
-	void BlendState();
+	void SetInputLayout();
+
+	/// <summary>
+	/// ブレンドステートの設定
+	/// </summary>
+	void SetBlendState();
 
 	/// <summary>
 	/// ラスタライザステートの設定
 	/// </summary>
-	void RasterizerState();
+	void SetRasterrizerState();
 
 	/// <summary>
-	/// シェーダーを取り込む
+	///	シェーダをコンパイルする 
 	/// </summary>
 	void ShaderCompile();
 
 	/// <summary>
-	/// PSOの生成
+	/// PSOを生成する
 	/// </summary>
 	void CreatePSO();
 
 	/// <summary>
-	/// 頂点データ用のリソース
+	/// ビューポートの生成
 	/// </summary>
-	void VertexResource();
+	void CreateViewport();
 
 
 	/// <summary>
-	/// 描画処理
+	/// シザー矩形の生成
 	/// </summary>
-	void Render();
+	void CreateScissor();
 
 	/// <summary>
-	/// 画面描画の終わり
+	/// コマンドを積む
 	/// </summary>
-	void StateChange();
-
-	/// <summary>
-	/// 解放処理
-	/// </summary>
-	void HandleClose();
+	void SetCommand();
 
 };
