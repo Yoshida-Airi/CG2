@@ -7,6 +7,7 @@
 struct TriangleData
 {
 	Vector4 vertex[3];
+	Vector4 color;
 };
 
 class Triangle
@@ -33,27 +34,32 @@ public:
 	/// <param name="c">右下</param>
 	void Draw();
 
-	/// <summary>
-	/// 頂点
-	/// </summary>
-	void VertexData();
-
-
+	
 
 private://プライベート変数
 
 	DirectXCommon* dxCommon_;
 	MyEngine* engine_;
 
-	ID3D12Resource* vertexResource_;
+	ID3D12Resource* vertexResource_;	//頂点リソース
+	ID3D12Resource* materialResource_;	//マテリアルリソース
 
 	D3D12_VERTEX_BUFFER_VIEW vertexBufferView_;
+	D3D12_VERTEX_BUFFER_VIEW materialBufferView_;
 
-
-	Vector4* vertexData_;
+	Vector4* vertexData_ = nullptr;	//頂点データ
+	Vector4* materialData_ = nullptr;	//マテリアルデータ
 
 private://プライベート関数
 
+	/// <summary>
+	/// 頂点のバッファの取得
+	/// </summary>
+	void VertexBuffer();
 
+	/// <summary>
+	/// マテリアルのバッファの取得
+	/// </summary>
+	void MaterialBuffer();
 
 };

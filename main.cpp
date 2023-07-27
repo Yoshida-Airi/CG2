@@ -35,7 +35,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		triangle[i] = new Triangle;
 	}
 
-
+	//頂点
 	triangleData[0].vertex[0] = { -0.2f,-0.2f,0.0f,2.0f };
 	triangleData[0].vertex[1] = { 0.0f,0.2f,0.0f,2.0f };
 	triangleData[0].vertex[2] = { 0.2f,-0.2f,0.0f,2.0f };
@@ -75,6 +75,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	triangleData[9].vertex[0] = { 0.2f,0.3f,0.0f,2.0f };
 	triangleData[9].vertex[1] = { 0.4f,0.7f,0.0f,2.0f };
 	triangleData[9].vertex[2] = { 0.6f,0.3f,0.0f,2.0f };
+
+	for (int i = 0; i < KmaxTriangle; i++)
+	{
+		//色
+		triangleData[i].color = { 1.0f,0.0f,0.0f,1.0f };
+	}
 
 
 	for (int i = 0; i < KmaxTriangle; i++)

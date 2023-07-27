@@ -33,7 +33,7 @@ public:
 	void PostDraw();
 
 
-	ID3D12Resource* vertexResource(size_t sizeInBytes);
+	ID3D12Resource* CreateBufferResource(size_t sizeInBytes);
 
 private://プライベート変数
 

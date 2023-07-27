@@ -46,7 +46,7 @@ void MyEngine::PostDraw()
 
 }
 
-ID3D12Resource* MyEngine::vertexResource(size_t sizeInBytes)
+ID3D12Resource* MyEngine::CreateBufferResource(size_t sizeInBytes)
 {
 
 	D3D12_HEAP_PROPERTIES uplodeHeapProperties{};
@@ -199,8 +199,19 @@ void MyEngine::PSO()
 void MyEngine::CreateRootSignature()
 {
 	descriptionRootSignature_.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
+	
+	//RootParameter作成。複数設定出来るので配列。今回は結果1つだけなので長さ1の配列
+	D3D12_ROOT_PARAMETER rootParameters[1] = {};
+	rootParameters[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	//CBVを使う
+	rootParameters[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;	//PixelShaderで使う
+	rootParameters[0].Descriptor.ShaderRegister = 0;	//レジスタ番号トバインド
+	descriptionRootSignature_.pParameters = rootParameters;	//ルートパラメータ配列へのポインタ
+	descriptionRootSignature_.NumParameters = _countof(rootParameters);	//配列の長さ
+
 	//シリアライズしてバイナリにする
 	hr_ = D3D12SerializeRootSignature(&descriptionRootSignature_, D3D_ROOT_SIGNATURE_VERSION_1, &signatureBlob_, &errorBlob_);
+
+
 	if (FAILED(hr_))
 	{
 		Log(reinterpret_cast<char*>(errorBlob_->GetBufferPointer()));
