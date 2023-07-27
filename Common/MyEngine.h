@@ -33,16 +33,7 @@ public:
 	/// </summary>
 	void PostDraw();
 
-	/// <summary>
-	/// 三角形の描画
-	/// </summary>
-	void DrawTriangle(Vector4* position, ID3D12Resource* resource);
 
-	/// <summary>
-	/// 頂点のリソース設定
-	/// </summary>
-	/// <returns>resource</returns>
-	ID3D12Resource* VertexResource();
 
 private://プライベート変数
 

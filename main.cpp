@@ -2,6 +2,7 @@
 #include"WindowAPI.h"
 #include"DirectXCommon.h"
 #include"MyEngine.h"
+#include"Triangle.h"
 
 const wchar_t* kWindowTitle = L"CG2";
 
@@ -21,58 +22,68 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	dxCommon->Initialize(winApp);
 	engine->Initialize(dxCommon, winApp);
 
-	const int kMaxTriangle = 10;
 
 
-	Vector4 data[kMaxTriangle][kMaxTriangle] = { 0 };
-	ID3D12Resource* resource[kMaxTriangle] = { nullptr };
+	const int KmaxTriangle = 10;
 
+	TriangleData triangleData[KmaxTriangle];
 
+	Triangle* triangle[KmaxTriangle];
 
-	for (int i = 0; i < kMaxTriangle; i++)
+	for (int i = 0; i < KmaxTriangle; i++)
 	{
-		resource[i] = engine->VertexResource();
+		triangle[i] = new Triangle;
 	}
 
-	data[0][0] = { -0.2f,-0.2f,0.0f,2.0f };
-	data[0][1] = { 0.0f,0.2f,0.0f,2.0f };
-	data[0][2] = { 0.2f,-0.2f,0.0f,2.0f };
 
-	data[1][0] = { 0.2f,-0.2f ,0.0f,2.0f };
-	data[1][1] = { 0.4f,0.2f ,0.0f,2.0f };
-	data[1][2] = { 0.6f,-0.2f ,0.0f,2.0f };
+	triangleData[0].vertex[0] = { -0.2f,-0.2f,0.0f,2.0f };
+	triangleData[0].vertex[1] = { 0.0f,0.2f,0.0f,2.0f };
+	triangleData[0].vertex[2] = { 0.2f,-0.2f,0.0f,2.0f };
 
-	data[2][0] = { 0.6f,-0.2f,0.0f,2.0f };
-	data[2][1] = { 0.8f,0.2f,0.0f,2.0f };
-	data[2][2] = { 1.0f,-0.2f,0.0f,2.0f };
+	triangleData[1].vertex[0] = { 0.2f,-0.2f ,0.0f,2.0f };
+	triangleData[1].vertex[1] = { 0.4f,0.2f ,0.0f,2.0f };
+	triangleData[1].vertex[2] = { 0.6f,-0.2f ,0.0f,2.0f };
 
-	data[3][0] = { 1.0f,-0.2f,0.0f,2.0f };
-	data[3][1] = { 1.2f,0.2f,0.0f,2.0f };
-	data[3][2] = { 1.4f,-0.2f,0.0f,2.0f };
+	triangleData[2].vertex[0] = { 0.6f,-0.2f,0.0f,2.0f };
+	triangleData[2].vertex[1] = { 0.8f,0.2f,0.0f,2.0f };
+	triangleData[2].vertex[2] = { 1.0f,-0.2f,0.0f,2.0f };
 
-	data[4][0] = { -0.2f,-0.7f,0.0f,2.0f };
-	data[4][1] = { 0.0f,-0.3f,0.0f,2.0f };
-	data[4][2] = { 0.2f,-0.7f,0.0f,2.0f };
+	triangleData[3].vertex[0] = { 1.0f,-0.2f,0.0f,2.0f };
+	triangleData[3].vertex[1] = { 1.2f,0.2f,0.0f,2.0f };
+	triangleData[3].vertex[2] = { 1.4f,-0.2f,0.0f,2.0f };
 
-	data[5][0] = { 0.2f,-0.7f,0.0f,2.0f };
-	data[5][1] = { 0.4f,-0.3f,0.0f,2.0f };
-	data[5][2] = { 0.6f,-0.7f,0.0f,2.0f };
+	triangleData[4].vertex[0] = { -0.2f,-0.7f,0.0f,2.0f };
+	triangleData[4].vertex[1] = { 0.0f,-0.3f,0.0f,2.0f };
+	triangleData[4].vertex[2] = { 0.2f,-0.7f,0.0f,2.0f };
 
-	data[6][0] = { 0.6f,-0.7f,0.0f,2.0f };
-	data[6][1] = { 0.8f,-0.3f,0.0f,2.0f };
-	data[6][2] = { 1.0f,-0.7f,0.0f,2.0f };
+	triangleData[5].vertex[0] = { 0.2f,-0.7f,0.0f,2.0f };
+	triangleData[5].vertex[1] = { 0.4f,-0.3f,0.0f,2.0f };
+	triangleData[5].vertex[2] = { 0.6f,-0.7f,0.0f,2.0f };
 
-	data[7][0] = { 1.0f,-0.7f,0.0f,2.0f };
-	data[7][1] = { 1.2f,-0.3f,0.0f,2.0f };
-	data[7][2] = { 1.4f,-0.7f,0.0f,2.0f };
+	triangleData[6].vertex[0] = { 0.6f,-0.7f,0.0f,2.0f };
+	triangleData[6].vertex[1] = { 0.8f,-0.3f,0.0f,2.0f };
+	triangleData[6].vertex[2] = { 1.0f,-0.7f,0.0f,2.0f };
 
-	data[8][0] = { -0.2f,0.3f,0.0f,2.0f };
-	data[8][1] = { 0.0f,0.7f,0.0f,2.0f };
-	data[8][2] = { 0.2f,0.3f,0.0f,2.0f };
+	triangleData[7].vertex[0] = { 1.0f,-0.7f,0.0f,2.0f };
+	triangleData[7].vertex[1] = { 1.2f,-0.3f,0.0f,2.0f };
+	triangleData[7].vertex[2] = { 1.4f,-0.7f,0.0f,2.0f };
 
-	data[9][0] = { 0.2f,0.3f,0.0f,2.0f };
-	data[9][1] = { 0.4f,0.7f,0.0f,2.0f };
-	data[9][2] = { 0.6f,0.3f,0.0f,2.0f };
+	triangleData[8].vertex[0] = { -0.2f,0.3f,0.0f,2.0f };
+	triangleData[8].vertex[1] = { 0.0f,0.7f,0.0f,2.0f };
+	triangleData[8].vertex[2] = { 0.2f,0.3f,0.0f,2.0f };
+
+	triangleData[9].vertex[0] = { 0.2f,0.3f,0.0f,2.0f };
+	triangleData[9].vertex[1] = { 0.4f,0.7f,0.0f,2.0f };
+	triangleData[9].vertex[2] = { 0.6f,0.3f,0.0f,2.0f };
+
+
+	for (int i = 0; i < KmaxTriangle; i++)
+	{
+		triangle[i]->Initialize(dxCommon, triangleData[i]);
+	}
+
+
+
 
 	// ウィンドウの×ボタンが押されるまでループ
 	while (WindowAPI::ProcessMessage() == 0)
@@ -85,9 +96,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		dxCommon->PreDraw();
 		engine->PreDraw();
 
-		for (int i = 0; i < kMaxTriangle; i++)
+
+		for (int i = 0; i < KmaxTriangle; i++)
 		{
-			engine->DrawTriangle(data[i], resource[i]);
+			triangle[i]->Draw();
 		}
 
 		engine->PostDraw();
@@ -96,12 +108,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	}
 
-	for (int i = 0; i < kMaxTriangle; i++)
+	for (int i = 0; i < KmaxTriangle; i++)
 	{
-		resource[i]->Release();
+		delete triangle[i];
 	}
-
-
 	delete engine;
 	delete dxCommon;
 	delete winApp;

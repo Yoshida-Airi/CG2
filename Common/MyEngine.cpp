@@ -34,10 +34,6 @@ void MyEngine::Initialize(DirectXCommon* dxCommon, WindowAPI* winApp)
 	CreateScissor();	//シザー矩形の生成
 
 
-	triangle_ = new Triangle();
-	triangle_->Initialize(dxCommon_);
-
-
 }
 
 
@@ -54,15 +50,6 @@ void MyEngine::PostDraw()
 
 }
 
-
-
-
-void MyEngine::DrawTriangle(Vector4* position, ID3D12Resource* resource)
-{
-
-	triangle_->Draw(position, resource);
-
-}
 
 
 /*=====================================*/
@@ -262,36 +249,7 @@ void MyEngine::CreatePSO()
 	assert(SUCCEEDED(hr_));
 }
 
-ID3D12Resource* MyEngine::VertexResource()
-{
 
-	D3D12_HEAP_PROPERTIES uplodeHeapProperties{};
-	uplodeHeapProperties.Type = D3D12_HEAP_TYPE_UPLOAD;//UploadHeapを使う
-	//頂点リソースの設定
-
-	D3D12_RESOURCE_DESC vertexResourceDesc{};
-	//バッファリソース。テクスチャの場合はまた別の設定をする
-	vertexResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
-	vertexResourceDesc.Width = sizeof(Vector4) * 3;//リソースサイズ　今回はvector4を四分割
-	//バッファの場合はこれらは１にする決まり
-	vertexResourceDesc.Height = 1;
-	vertexResourceDesc.DepthOrArraySize = 1;
-	vertexResourceDesc.MipLevels = 1;
-	vertexResourceDesc.SampleDesc.Count = 1;
-	//バッファの場合はこれにする決まり
-	vertexResourceDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
-	HRESULT hr;
-
-	//実際に頂点リソースを作る
-	ID3D12Resource* resource = nullptr;
-	hr = dxCommon_->GetDevice()->CreateCommittedResource(&uplodeHeapProperties, D3D12_HEAP_FLAG_NONE,
-		&vertexResourceDesc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr,
-		IID_PPV_ARGS(&resource));
-	assert(SUCCEEDED(hr));
-
-	return resource;
-
-}
 
 /// ビューポートの生成
 void MyEngine::CreateViewport()
