@@ -6,7 +6,6 @@
 
 #include"DirectXCommon.h"
 #include"WindowAPI.h"
-#include"Triangle.h"
 #include"ConvertString.h"
 
 #pragma comment(lib,"dxcompiler.lib")
@@ -34,6 +33,7 @@ public:
 	void PostDraw();
 
 
+	ID3D12Resource* vertexResource(size_t sizeInBytes);
 
 private://プライベート変数
 
@@ -41,11 +41,6 @@ private://プライベート変数
 	WindowAPI* winApp_;
 	DirectXCommon* dxCommon_;
 
-	// 三角形を描画できる最大数
-
-
-
-	Triangle* triangle_ = nullptr;
 
 	HRESULT hr_;
 	IDxcUtils* dxcUtils_ = nullptr;
@@ -73,14 +68,9 @@ private://プライベート変数
 	D3D12_RESOURCE_DESC vertexResourceDesc_{};	//頂点リソースの設定
 	ID3D12Resource* vertexResource_;	//実際に頂点リソースを作る
 	D3D12_VERTEX_BUFFER_VIEW vertexBufferView_{};//頂点バッファビューを作成する
-	//頂点リソースにデータを書き込む
-	Vector4* vertexData_;
 
 	D3D12_VIEWPORT viewport_{};	//ビューポート
 	D3D12_RECT scissorRect_{};//シザー矩形
-
-
-
 
 
 

@@ -79,7 +79,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	for (int i = 0; i < KmaxTriangle; i++)
 	{
-		triangle[i]->Initialize(dxCommon, triangleData[i]);
+		triangle[i]->Initialize(dxCommon, engine, triangleData[i]);
 	}
 
 

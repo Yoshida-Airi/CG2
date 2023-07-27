@@ -1,7 +1,8 @@
 #pragma once
-#include"WindowAPI.h"
 #include"DirectXCommon.h"
+#include"MyEngine.h"
 #include"Vector4.h"
+
 
 struct TriangleData
 {
@@ -21,7 +22,7 @@ public:
 	/// 初期化
 	/// </summary>
 	/// <param name="direct"></param>
-	void Initialize(DirectXCommon* direct, const TriangleData& position);
+	void Initialize(DirectXCommon* direct, MyEngine* engine, const TriangleData& position);
 
 
 	/// <summary>
@@ -38,12 +39,11 @@ public:
 	void VertexData();
 
 
-	ID3D12Resource* vertexResource();
-
 
 private://プライベート変数
 
 	DirectXCommon* dxCommon_;
+	MyEngine* engine_;
 
 	ID3D12Resource* vertexResource_;
 
@@ -57,4 +57,3 @@ private://プライベート関数
 
 
 };
-
