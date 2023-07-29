@@ -2,7 +2,7 @@
 
 
 // 加算
-Vector3 MathUtilty::Add(const Vector3& v1, const Vector3& v2) {
+Vector3 Add(const Vector3& v1, const Vector3& v2) {
 	Vector3 result;
 	result.x = v1.x + v2.x;
 	result.y = v1.y + v2.y;
@@ -12,7 +12,7 @@ Vector3 MathUtilty::Add(const Vector3& v1, const Vector3& v2) {
 }
 
 // 減算
-Vector3 MathUtilty::Subtract(const Vector3& v1, const Vector3& v2) {
+Vector3 Subtract(const Vector3& v1, const Vector3& v2) {
 	Vector3 result;
 	result.x = v1.x - v2.x;
 	result.y = v1.y - v2.y;
@@ -21,7 +21,7 @@ Vector3 MathUtilty::Subtract(const Vector3& v1, const Vector3& v2) {
 }
 
 // スカラー倍
-Vector3 MathUtilty::Multiply(float scalar, const Vector3& v) {
+Vector3 Multiply(float scalar, const Vector3& v) {
 	Vector3 result;
 	result.x = scalar * v.x;
 	result.y = scalar * v.y;
@@ -30,14 +30,14 @@ Vector3 MathUtilty::Multiply(float scalar, const Vector3& v) {
 }
 
 // 内積
-float MathUtilty::Dot(const Vector3& v1, const Vector3& v2) {
+float Dot(const Vector3& v1, const Vector3& v2) {
 	float result;
 	result = v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
 	return result;
 }
 
 // 長さ(ノルム)
-float MathUtilty::Length(const Vector3& v) {
+float Length(const Vector3& v) {
 	float result;
 	result = powf(v.x, 2.0) + powf(v.y, 2.0) + powf(v.z, 2.0);
 
@@ -45,7 +45,7 @@ float MathUtilty::Length(const Vector3& v) {
 };
 
 // 正規化
-Vector3 MathUtilty::Normalize(const Vector3& v) {
+Vector3 Normalize(const Vector3& v) {
 	Vector3 result;
 	float x;
 	x = Length(v);
@@ -56,7 +56,7 @@ Vector3 MathUtilty::Normalize(const Vector3& v) {
 }
 
 // 1.行列の加法
-Matrix4x4 MathUtilty::Add(const Matrix4x4& m1, const Matrix4x4& m2) {
+Matrix4x4 Add(const Matrix4x4& m1, const Matrix4x4& m2) {
 	Matrix4x4 resultAdd;
 	for (int row = 0; row < 4; ++row) {
 		for (int column = 0; column < 4; ++column) {
@@ -67,7 +67,7 @@ Matrix4x4 MathUtilty::Add(const Matrix4x4& m1, const Matrix4x4& m2) {
 }
 
 // 2.行列の減法
-Matrix4x4 MathUtilty::Subtract(const Matrix4x4& m1, const Matrix4x4& m2) {
+Matrix4x4 Subtract(const Matrix4x4& m1, const Matrix4x4& m2) {
 	Matrix4x4 resultSubtract;
 	for (int row = 0; row < 4; ++row) {
 		for (int column = 0; column < 4; ++column) {
@@ -78,7 +78,7 @@ Matrix4x4 MathUtilty::Subtract(const Matrix4x4& m1, const Matrix4x4& m2) {
 }
 
 // 行列の掛け算の関数
-Matrix4x4 MathUtilty::Multiply(const Matrix4x4& m1, const Matrix4x4& m2) {
+Matrix4x4 Multiply(const Matrix4x4& m1, const Matrix4x4& m2) {
 	Matrix4x4 resultMultiply;
 	for (int row = 0; row < 4; ++row) {
 		for (int column = 0; column < 4; ++column) {
@@ -91,7 +91,7 @@ Matrix4x4 MathUtilty::Multiply(const Matrix4x4& m1, const Matrix4x4& m2) {
 }
 
 // 4.逆行列
-Matrix4x4 MathUtilty::Inverse(const Matrix4x4& m) {
+Matrix4x4 Inverse(const Matrix4x4& m) {
 	Matrix4x4 result;
 	float formula = m.m[0][0] * m.m[1][1] * m.m[2][2] * m.m[3][3] +
 		m.m[0][0] * m.m[1][2] * m.m[2][3] * m.m[3][1] +
@@ -215,7 +215,7 @@ Matrix4x4 MathUtilty::Inverse(const Matrix4x4& m) {
 }
 
 ////5.転置行列
-Matrix4x4 MathUtilty::Transpose(const Matrix4x4& m) {
+Matrix4x4 Transpose(const Matrix4x4& m) {
 	Matrix4x4 result;
 	result.m[0][0] = m.m[0][0];
 	result.m[0][1] = m.m[1][0];
@@ -240,7 +240,7 @@ Matrix4x4 MathUtilty::Transpose(const Matrix4x4& m) {
 	return result;
 }
 ////6.単位行列の作成
-Matrix4x4 MathUtilty::MakeIdentity4x4() {
+Matrix4x4 MakeIdentity4x4() {
 	Matrix4x4 result;
 	result.m[0][0] = 1.0f;
 	result.m[0][1] = 0.0f;
@@ -267,7 +267,7 @@ Matrix4x4 MathUtilty::MakeIdentity4x4() {
 
 // 平行移動(translate)
 // 平行移動行列の関数
-Matrix4x4 MathUtilty:: MakeTranselateMatrix(const Vector3& transelate) {
+Matrix4x4 MakeTranselateMatrix(const Vector3& transelate) {
 	Matrix4x4 result;
 	result.m[0][0] = 1.0f;
 	result.m[0][1] = 0.0f;
@@ -294,7 +294,7 @@ Matrix4x4 MathUtilty:: MakeTranselateMatrix(const Vector3& transelate) {
 
 // 拡大縮小(scale)
 // 拡大縮小行列の関数
-Matrix4x4 MathUtilty::MakeScaleMatrix(const Vector3& scale) {
+Matrix4x4 MakeScaleMatrix(const Vector3& scale) {
 	Matrix4x4 result;
 	result.m[0][0] = scale.x;
 	result.m[0][1] = 0.0f;
@@ -322,7 +322,7 @@ Matrix4x4 MathUtilty::MakeScaleMatrix(const Vector3& scale) {
 // 回転(rotate)
 
 // x軸回転行列の関数
-Matrix4x4 MathUtilty::MakeRotateXMatrix(float radian) {
+Matrix4x4 MakeRotateXMatrix(float radian) {
 	Matrix4x4 resultMakeRotatedMatrix;
 	resultMakeRotatedMatrix.m[0][0] = 1;
 	resultMakeRotatedMatrix.m[0][1] = 0;
@@ -348,7 +348,7 @@ Matrix4x4 MathUtilty::MakeRotateXMatrix(float radian) {
 }
 
 // y軸回転行列の関数
-Matrix4x4 MathUtilty::MakeRotateYMatrix(float radian) {
+Matrix4x4 MakeRotateYMatrix(float radian) {
 	Matrix4x4 resultMakeRotatedMatrix;
 	resultMakeRotatedMatrix.m[0][0] = std::cos(radian);
 	resultMakeRotatedMatrix.m[0][1] = 0;
@@ -374,7 +374,7 @@ Matrix4x4 MathUtilty::MakeRotateYMatrix(float radian) {
 }
 
 // z軸回転行列の関数
-Matrix4x4 MathUtilty::MakeRotateZMatrix(float radian) {
+Matrix4x4 MakeRotateZMatrix(float radian) {
 	Matrix4x4 resultMakeRotatedMatrix;
 	resultMakeRotatedMatrix.m[0][0] = std::cos(radian);
 	resultMakeRotatedMatrix.m[0][1] = std::sin(radian);
@@ -400,7 +400,7 @@ Matrix4x4 MathUtilty::MakeRotateZMatrix(float radian) {
 }
 
 // 3次元アフィン変換行列の関数
-Matrix4x4 MathUtilty::MakeAffinMatrix(const Vector3& scale, const Vector3& rotate, const Vector3& translate) {
+Matrix4x4 MakeAffinMatrix(const Vector3& scale, const Vector3& rotate, const Vector3& translate) {
 	Matrix4x4 resultMakeAffinMatrix;
 	Matrix4x4 resultMakeScaleMatrix = MakeScaleMatrix(scale);
 	Matrix4x4 resultMakeTranselateMatrix = MakeTranselateMatrix(translate);
@@ -417,7 +417,7 @@ Matrix4x4 MathUtilty::MakeAffinMatrix(const Vector3& scale, const Vector3& rotat
 	return resultMakeAffinMatrix;
 }
 
-Vector3 MathUtilty::TransformNormal(const Vector3& v, const Matrix4x4& m) {
+Vector3 TransformNormal(const Vector3& v, const Matrix4x4& m) {
 	Vector3 result = {
 		v.x * m.m[0][0] + v.y * m.m[1][0] + v.z * m.m[2][0],
 		v.x * m.m[0][1] + v.y * m.m[1][1] + v.z * m.m[2][1],
@@ -427,7 +427,7 @@ Vector3 MathUtilty::TransformNormal(const Vector3& v, const Matrix4x4& m) {
 	return result;
 }
 
-Vector3 MathUtilty::SumVector3(Vector3& num1, Vector3& num2) {
+Vector3 SumVector3(Vector3& num1, Vector3& num2) {
 	Vector3 result{};
 	result.x = num1.x += num2.x;
 	result.y = num1.y += num2.y;
@@ -436,7 +436,7 @@ Vector3 MathUtilty::SumVector3(Vector3& num1, Vector3& num2) {
 }
 
 // 線形補間
-Vector3 MathUtilty::Lerp(const Vector3& v1, const Vector3& v2, float t) {
+Vector3 Lerp(const Vector3& v1, const Vector3& v2, float t) {
 	Vector3 P;
 	P.x = v1.x + t * (v2.x - v1.x);
 	P.y = v1.y + t * (v2.y - v1.y);
@@ -445,7 +445,7 @@ Vector3 MathUtilty::Lerp(const Vector3& v1, const Vector3& v2, float t) {
 }
 
 // 球面線形補間
-Vector3 MathUtilty::Slerp(const Vector3& v1, const Vector3& v2, float t) {
+Vector3 Slerp(const Vector3& v1, const Vector3& v2, float t) {
 
 	float angle = std::acos(Dot(v1, v2));
 

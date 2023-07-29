@@ -1,14 +1,25 @@
 #pragma once
 #include"DirectXCommon.h"
 #include"MyEngine.h"
+#include"MathUtilty.h"
 #include"Vector4.h"
 #include"Matrix4x4.h"
+
+struct Transform
+{
+	Vector3 scale;
+	Vector3 rotate;
+	Vector3 translate;
+};
 
 struct TriangleData
 {
 	Vector4 vertex[3];
 	Vector4 color;
+	Transform  transform;
 };
+
+
 
 class Triangle
 {
@@ -23,7 +34,7 @@ public:
 	/// 初期化
 	/// </summary>
 	/// <param name="direct"></param>
-	void Initialize(DirectXCommon* direct, MyEngine* engine, const TriangleData& position);
+	void Initialize(DirectXCommon* direct, MyEngine* engine, const TriangleData& data);
 
 
 	/// <summary>
@@ -52,6 +63,9 @@ private://プライベート変数
 	Vector4* vertexData_ = nullptr;	//頂点データ
 	Vector4* materialData_ = nullptr;	//マテリアルデータ
 	Matrix4x4* wvpData_ = nullptr;	//wvpデータ
+
+	Transform transform_;
+	Matrix4x4 worldMatrix_;
 
 private://プライベート関数
 

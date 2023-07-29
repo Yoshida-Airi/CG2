@@ -8,13 +8,13 @@ Triangle::~Triangle()
 {
 	vertexResource_->Release();
 	materialResource_->Release();
+	wvpResource_->Release();
 }
 
 void Triangle::Initialize(DirectXCommon* direct, MyEngine* engien, const TriangleData& data)
 {
 	dxCommon_ = direct;
 	engine_ = engien;
-
 
 
 	VertexBuffer();
@@ -26,15 +26,25 @@ void Triangle::Initialize(DirectXCommon* direct, MyEngine* engien, const Triangl
 	vertexData_[1] = data.vertex[1];
 	vertexData_[2] = data.vertex[2];
 
+
 	//色の設定
 	materialData_[0] = data.color;
 
-	//wvpの設定
-
+	transform_ =
+	{
+		{1.0f,1.0f,1.0f},
+		{0.0f,0.0f,0.0f},
+		{0.0f,0.0f,0.0f}
+	};
 }
 
 void Triangle::Draw()
 {
+	transform_.rotate.y += 0.03f;
+	//回転
+	worldMatrix_ = MakeAffinMatrix(transform_.scale, transform_.rotate, transform_.translate);
+	//wvpの設定
+	*wvpData_ = worldMatrix_;
 
 	//VBVを設定
 	dxCommon_->GetCommandList()->IASetVertexBuffers(0, 1, &vertexBufferView_);
@@ -42,6 +52,8 @@ void Triangle::Draw()
 	dxCommon_->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	//マテリアルCBufferの場所を設定
 	dxCommon_->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
+	//wvp用のCbufferの場所を設定
+	dxCommon_->GetCommandList()->SetGraphicsRootConstantBufferView(1, wvpResource_->GetGPUVirtualAddress());
 	//描画
 	dxCommon_->GetCommandList()->DrawInstanced(3, 1, 0, 0);
 
@@ -80,6 +92,7 @@ void Triangle::WvpBuffer()
 	wvpResource_ = engine_->CreateBufferResource(sizeof(Matrix4x4));
 	//書き込むためのアドレスを取得
 	wvpResource_->Map(0, nullptr, reinterpret_cast<void**>(&wvpData_));
-
+	//単位行列を書き込んでおく
+	*wvpData_ = MakeIdentity4x4();
 }
 
