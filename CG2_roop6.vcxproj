@@ -87,6 +87,7 @@
     <ClCompile Include="Common\WindowAPI.cpp" />
     <ClCompile Include="Logger\ConvertString.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MathUtilty.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3d\Triangle.h" />
@@ -94,7 +95,10 @@
     <ClInclude Include="Common\MyEngine.h" />
     <ClInclude Include="Common\WindowAPI.h" />
     <ClInclude Include="Logger\ConvertString.h" />
+    <ClInclude Include="MathUtilty.h" />
     <ClInclude Include="Math\Vector4.h" />
+    <ClInclude Include="Matrix4x4.h" />
+    <ClInclude Include="Vector3.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shaders\Object3d.PS.hlsl">

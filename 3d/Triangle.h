@@ -2,7 +2,7 @@
 #include"DirectXCommon.h"
 #include"MyEngine.h"
 #include"Vector4.h"
-
+#include"Matrix4x4.h"
 
 struct TriangleData
 {
@@ -43,12 +43,15 @@ private://プライベート変数
 
 	ID3D12Resource* vertexResource_;	//頂点リソース
 	ID3D12Resource* materialResource_;	//マテリアルリソース
+	ID3D12Resource* wvpResource_;	//wvpリソース
 
 	D3D12_VERTEX_BUFFER_VIEW vertexBufferView_;
 	D3D12_VERTEX_BUFFER_VIEW materialBufferView_;
+	D3D12_VERTEX_BUFFER_VIEW wvpBufferView_;
 
 	Vector4* vertexData_ = nullptr;	//頂点データ
 	Vector4* materialData_ = nullptr;	//マテリアルデータ
+	Matrix4x4* wvpData_ = nullptr;	//wvpデータ
 
 private://プライベート関数
 
@@ -61,5 +64,10 @@ private://プライベート関数
 	/// マテリアルのバッファの取得
 	/// </summary>
 	void MaterialBuffer();
+
+	/// <summary>
+	/// wvpのバッファの取得
+	/// </summary>
+	void WvpBuffer();
 
 };

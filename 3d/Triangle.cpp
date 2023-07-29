@@ -19,14 +19,17 @@ void Triangle::Initialize(DirectXCommon* direct, MyEngine* engien, const Triangl
 
 	VertexBuffer();
 	MaterialBuffer();
+	WvpBuffer();
 
-
+	//頂点の設定
 	vertexData_[0] = data.vertex[0];
 	vertexData_[1] = data.vertex[1];
 	vertexData_[2] = data.vertex[2];
 
 	//色の設定
 	materialData_[0] = data.color;
+
+	//wvpの設定
 
 }
 
@@ -69,5 +72,14 @@ void Triangle::MaterialBuffer()
 
 	//書き込むためのアドレスを取得
 	materialResource_->Map(0, nullptr, reinterpret_cast<void**>(&materialData_));
+}
+
+void Triangle::WvpBuffer()
+{
+	//wvp用のリソースを作る。Matrix4x4　1つ分のサイズを用意する
+	wvpResource_ = engine_->CreateBufferResource(sizeof(Matrix4x4));
+	//書き込むためのアドレスを取得
+	wvpResource_->Map(0, nullptr, reinterpret_cast<void**>(&wvpData_));
+
 }
 

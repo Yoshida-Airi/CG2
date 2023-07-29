@@ -27,7 +27,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	const int KmaxTriangle = 10;
 
 	TriangleData triangleData[KmaxTriangle];
-
 	Triangle* triangle[KmaxTriangle];
 
 	for (int i = 0; i < KmaxTriangle; i++)

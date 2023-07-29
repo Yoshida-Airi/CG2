@@ -34,6 +34,12 @@
     <Filter Include="ヘッダー ファイル\Logger">
       <UniqueIdentifier>{fa33e1b2-0cd4-4396-bbd2-2ceb8700ba3d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Math">
+      <UniqueIdentifier>{e007a256-8be4-4ceb-9fc1-34f96404fddc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Math">
+      <UniqueIdentifier>{ab4695a8-5536-42ac-9eee-9d9844a036f3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -54,6 +60,9 @@
     <ClCompile Include="Logger\ConvertString.cpp">
       <Filter>ソース ファイル\Logger</Filter>
     </ClCompile>
+    <ClCompile Include="MathUtilty.cpp">
+      <Filter>ソース ファイル\Math</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3d\Triangle.h">
@@ -61,9 +70,6 @@
     </ClInclude>
     <ClInclude Include="Common\WindowAPI.h">
       <Filter>ヘッダー ファイル\Common</Filter>
-    </ClInclude>
-    <ClInclude Include="Math\Vector4.h">
-      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Common\DirectXCommon.h">
       <Filter>ヘッダー ファイル\Common</Filter>
@@ -73,6 +79,18 @@
     </ClInclude>
     <ClInclude Include="Logger\ConvertString.h">
       <Filter>ヘッダー ファイル\Logger</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Vector4.h">
+      <Filter>ヘッダー ファイル\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Matrix4x4.h">
+      <Filter>ヘッダー ファイル\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="MathUtilty.h">
+      <Filter>ヘッダー ファイル\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector3.h">
+      <Filter>ヘッダー ファイル\Math</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
