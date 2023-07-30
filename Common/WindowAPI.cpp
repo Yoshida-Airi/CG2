@@ -28,6 +28,7 @@ void WindowAPI::StartApp(const wchar_t* title, int32_t width, int32_t height)
 
 bool WindowAPI::ProcessMessage()
 {
+	
 	MSG msg{}; // メッセージ
 
 	if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) // メッセージがある？
@@ -52,6 +53,12 @@ bool WindowAPI::ProcessMessage()
 //ウィンドウプロシージャ
 LRESULT CALLBACK WindowAPI::WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 {
+	if (ImGui_ImplWin32_WndProcHandler(hwnd, msg, wparam, lparam))
+	{
+		return true;
+	}
+
+
 	//メッセージに応じてゲーム固有の処理を行う
 	switch (msg)
 	{

@@ -33,10 +33,21 @@ public:
 	/// </summary>
 	void PostDraw();
 
+	/// <summary>
+	/// デスクリプタヒープの作成関数
+	/// </summary>
+	/// <param name="heapType">ヒープのタイプ</param>
+	/// <param name="numDescriptors">数</param>
+	/// <param name="shaderVisible"></param>
+	/// <returns></returns>
+	ID3D12DescriptorHeap* CreateDescriptorHeap(D3D12_DESCRIPTOR_HEAP_TYPE heapType, UINT numDescriptors, bool shaderVisible);
 
 
 	ID3D12Device* GetDevice()const { return device_; };
 	ID3D12GraphicsCommandList* GetCommandList()const { return commandList_; };
+
+	DXGI_SWAP_CHAIN_DESC1 GetSwapChainDesc()const { return swapChainDesc_; };
+	D3D12_RENDER_TARGET_VIEW_DESC GetRtvDesc()const { return rtvDesc_; };
 
 private:
 
@@ -84,7 +95,11 @@ private://プライベート変数
 	ID3D12GraphicsCommandList* commandList_ = nullptr;	//コマンドリスト
 	ID3D12CommandQueue* commandQueue_ = nullptr;	//コマンドキュー
 	IDXGISwapChain4* swapChain_ = nullptr;	//スワップチェーン
+	DXGI_SWAP_CHAIN_DESC1 swapChainDesc_ = {};	//スワップチェーンデスク
+
 	ID3D12DescriptorHeap* rtvDescriptorHeap_ = nullptr;	//ディスクリプタヒープ
+
+
 	ID3D12Resource* swapChainResources_[2] = { nullptr };	//スワップチェーンリソース
 	D3D12_RENDER_TARGET_VIEW_DESC rtvDesc_{};	//rtv
 	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandles_[2];//RTVを二つ作るのでディスクリプタを二つ用意
