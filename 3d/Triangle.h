@@ -6,7 +6,7 @@
 #include"Vector4.h"
 #include"Matrix4x4.h"
 #include"Transform.h"
-
+#include"ImGuiManager.h"
 
 struct TriangleData
 {
@@ -30,7 +30,7 @@ public:
 	/// 初期化
 	/// </summary>
 	/// <param name="direct"></param>
-	void Initialize(WindowAPI*winApp, DirectXCommon* direct, MyEngine* engine, const TriangleData& data);
+	void Initialize(WindowAPI* winApp, DirectXCommon* direct, MyEngine* engine,const TriangleData& data);
 
 	/// <summary>
 	/// 更新処理
@@ -52,6 +52,7 @@ private://プライベート変数
 	WindowAPI* winApp_;
 	DirectXCommon* dxCommon_;
 	MyEngine* engine_;
+	ImGuiManager* imGuiManager_;
 
 	uint32_t kClientWidth_ = 0;
 	uint32_t kClientHeight_ = 0;
@@ -72,6 +73,8 @@ private://プライベート変数
 	Matrix4x4 worldMatrix_;
 
 	Transform cameraTransform_;
+
+	bool isRotate = false;
 
 private://プライベート関数
 

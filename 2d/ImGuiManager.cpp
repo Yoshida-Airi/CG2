@@ -41,12 +41,16 @@ void ImGuiManager::Begin()
 
 	ImGui::ShowDemoWindow();
 
-	ImGui::Render();
+	
+	
+
 
 }
 
 void ImGuiManager::End()
 {
+	ImGui::Render();
+
 	//描画用のDescriptorHeapの設定
 	ID3D12DescriptorHeap* descriptorHeaps[] = { srvDescriptorHeap_ };
 	dxCommon_->GetCommandList()->SetDescriptorHeaps(1, descriptorHeaps);
