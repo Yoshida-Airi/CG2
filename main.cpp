@@ -129,6 +129,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		}
 
 		imGuiManager->End();
+		imGuiManager->Draw();
 		engine->PostDraw();
 		dxCommon->PostDraw();
 
@@ -139,6 +140,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	{
 		delete triangle[i];
 	}
+
+	delete imGuiManager;
 	delete engine;
 	delete dxCommon;
 	delete winApp;

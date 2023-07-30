@@ -2,7 +2,13 @@
 
 ImGuiManager::~ImGuiManager()
 {
+	ImGui_ImplDX12_Shutdown();
+	ImGui_ImplWin32_Shutdown();
+	ImGui::DestroyContext();
+
 	srvDescriptorHeap_->Release();
+
+
 }
 
 void ImGuiManager::Initialize(WindowAPI* winApp, DirectXCommon* dxCommon)
