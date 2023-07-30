@@ -16,6 +16,8 @@ public:
 
 	void End();
 
+	void Draw();
+
 private:
 	WindowAPI* winApp_;
 	DirectXCommon* dxCommon_;

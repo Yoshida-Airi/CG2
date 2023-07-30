@@ -3,6 +3,7 @@
 #include"DirectXCommon.h"
 #include"MyEngine.h"
 #include"Triangle.h"
+#include"ImGuiManager.h"
 
 const wchar_t* kWindowTitle = L"CG2";
 
@@ -13,6 +14,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	WindowAPI* winApp = new WindowAPI;
 	DirectXCommon* dxCommon = new DirectXCommon;
 	MyEngine* engine = new MyEngine;
+	ImGuiManager* imGuiManager = new ImGuiManager;
 
 	//アプリケーションの開始
 	const uint32_t kWindowWidth = 1280;
@@ -101,7 +103,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		triangle[i]->Initialize(winApp, dxCommon, engine, triangleData[i]);
 	}
 
-
+	imGuiManager->Initialize(winApp, dxCommon);
 
 	// ウィンドウの×ボタンが押されるまでループ
 	while (WindowAPI::ProcessMessage() == 0)
@@ -113,7 +115,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 		dxCommon->PreDraw();
 		engine->PreDraw();
-
+		imGuiManager->Begin();
 
 		for (int i = 0; i < KmaxTriangle; i++)
 		{
@@ -126,6 +128,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			triangle[i]->Draw();
 		}
 
+		imGuiManager->End();
 		engine->PostDraw();
 		dxCommon->PostDraw();
 
