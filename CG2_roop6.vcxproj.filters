@@ -60,7 +60,7 @@
     <ClCompile Include="Logger\ConvertString.cpp">
       <Filter>ソース ファイル\Logger</Filter>
     </ClCompile>
-    <ClCompile Include="MathUtilty.cpp">
+    <ClCompile Include="Math\MathUtilty.cpp">
       <Filter>ソース ファイル\Math</Filter>
     </ClCompile>
   </ItemGroup>
@@ -83,13 +83,16 @@
     <ClInclude Include="Math\Vector4.h">
       <Filter>ヘッダー ファイル\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Matrix4x4.h">
+    <ClInclude Include="Math\Matrix4x4.h">
       <Filter>ヘッダー ファイル\Math</Filter>
     </ClInclude>
-    <ClInclude Include="MathUtilty.h">
+    <ClInclude Include="Math\Vector3.h">
       <Filter>ヘッダー ファイル\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Vector3.h">
+    <ClInclude Include="Transform.h">
+      <Filter>ヘッダー ファイル\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\MathUtilty.h">
       <Filter>ヘッダー ファイル\Math</Filter>
     </ClInclude>
   </ItemGroup>

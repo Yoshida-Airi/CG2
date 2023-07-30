@@ -96,9 +96,10 @@
     <ClInclude Include="Common\WindowAPI.h" />
     <ClInclude Include="Logger\ConvertString.h" />
     <ClInclude Include="Math\MathUtilty.h" />
+    <ClInclude Include="Math\Matrix4x4.h" />
+    <ClInclude Include="Math\Vector3.h" />
     <ClInclude Include="Math\Vector4.h" />
-    <ClInclude Include="Matrix4x4.h" />
-    <ClInclude Include="Vector3.h" />
+    <ClInclude Include="Transform.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shaders\Object3d.PS.hlsl">

@@ -67,6 +67,16 @@ Vector3 TransformNormal(const Vector3& v, const Matrix4x4& m);
 // Vector3の計算
 Vector3 SumVector3(Vector3& num1, Vector3& num2);
 
+//1.透視投影行列
+Matrix4x4 MakePerspectiveFovMatrix(float forY, float aspectRatio, float nearClip, float farClip);
+
+//2.正射影行列
+Matrix4x4 MakeOrthographicmatrix(float left, float top, float right, float bottom, float nearClip, float farClip);
+
+//3.ビューポート変換行列
+Matrix4x4 MakeViewportMatrix(float left, float top, float width, float height, float minDepth, float maxDepth);
+
+
 // 線形補間
 Vector3 Lerp(const Vector3& s, const Vector3& e, float t);
 

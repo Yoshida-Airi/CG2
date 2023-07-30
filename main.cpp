@@ -22,8 +22,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	dxCommon->Initialize(winApp);
 	engine->Initialize(dxCommon, winApp);
 
-
-
 	const int KmaxTriangle = 10;
 
 	TriangleData triangleData[KmaxTriangle];
@@ -39,41 +37,48 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	triangleData[0].vertex[1] = { 0.0f,0.2f,0.0f,2.0f };
 	triangleData[0].vertex[2] = { 0.2f,-0.2f,0.0f,2.0f };
 
-	triangleData[1].vertex[0] = { 0.2f,-0.2f ,0.0f,2.0f };
-	triangleData[1].vertex[1] = { 0.4f,0.2f ,0.0f,2.0f };
-	triangleData[1].vertex[2] = { 0.6f,-0.2f ,0.0f,2.0f };
+	triangleData[1].vertex[0] = { -0.2f,-0.7f,0.0f,2.0f };
+	triangleData[1].vertex[1] = { 0.0f,-0.3f,0.0f,2.0f };
+	triangleData[1].vertex[2] = { 0.2f,-0.7f,0.0f,2.0f };
 
-	triangleData[2].vertex[0] = { 0.6f,-0.2f,0.0f,2.0f };
-	triangleData[2].vertex[1] = { 0.8f,0.2f,0.0f,2.0f };
-	triangleData[2].vertex[2] = { 1.0f,-0.2f,0.0f,2.0f };
+	triangleData[2].vertex[0] = { -0.2f,0.3f,0.0f,2.0f };
+	triangleData[2].vertex[1] = { 0.0f,0.7f,0.0f,2.0f };
+	triangleData[2].vertex[2] = { 0.2f,0.3f,0.0f,2.0f };
 
-	triangleData[3].vertex[0] = { 1.0f,-0.2f,0.0f,2.0f };
-	triangleData[3].vertex[1] = { 1.2f,0.2f,0.0f,2.0f };
-	triangleData[3].vertex[2] = { 1.4f,-0.2f,0.0f,2.0f };
+	//triangleData[3].vertex[0] = { 0.2f,-0.2f ,0.0f,2.0f };
+	//triangleData[3].vertex[1] = { 0.4f,0.2f ,0.0f,2.0f };
+	//triangleData[3].vertex[2] = { 0.6f,-0.2f ,0.0f,2.0f };
 
-	triangleData[4].vertex[0] = { -0.2f,-0.7f,0.0f,2.0f };
-	triangleData[4].vertex[1] = { 0.0f,-0.3f,0.0f,2.0f };
-	triangleData[4].vertex[2] = { 0.2f,-0.7f,0.0f,2.0f };
 
-	triangleData[5].vertex[0] = { 0.2f,-0.7f,0.0f,2.0f };
-	triangleData[5].vertex[1] = { 0.4f,-0.3f,0.0f,2.0f };
-	triangleData[5].vertex[2] = { 0.6f,-0.7f,0.0f,2.0f };
+	//triangleData[4].vertex[0] = { 0.2f,-0.7f,0.0f,2.0f };
+	//triangleData[4].vertex[1] = { 0.4f,-0.3f,0.0f,2.0f };
+	//triangleData[4].vertex[2] = { 0.6f,-0.7f,0.0f,2.0f };
 
-	triangleData[6].vertex[0] = { 0.6f,-0.7f,0.0f,2.0f };
-	triangleData[6].vertex[1] = { 0.8f,-0.3f,0.0f,2.0f };
-	triangleData[6].vertex[2] = { 1.0f,-0.7f,0.0f,2.0f };
 
-	triangleData[7].vertex[0] = { 1.0f,-0.7f,0.0f,2.0f };
-	triangleData[7].vertex[1] = { 1.2f,-0.3f,0.0f,2.0f };
-	triangleData[7].vertex[2] = { 1.4f,-0.7f,0.0f,2.0f };
+	//triangleData[5].vertex[0] = { 0.2f,0.3f,0.0f,2.0f };
+	//triangleData[5].vertex[1] = { 0.4f,0.7f,0.0f,2.0f };
+	//triangleData[5].vertex[2] = { 0.6f,0.3f,0.0f,2.0f };
 
-	triangleData[8].vertex[0] = { -0.2f,0.3f,0.0f,2.0f };
-	triangleData[8].vertex[1] = { 0.0f,0.7f,0.0f,2.0f };
-	triangleData[8].vertex[2] = { 0.2f,0.3f,0.0f,2.0f };
+	//triangleData[6].vertex[0] = { 0.6f,-0.2f,0.0f,2.0f };
+	//triangleData[6].vertex[1] = { 0.8f,0.2f,0.0f,2.0f };
+	//triangleData[6].vertex[2] = { 1.0f,-0.2f,0.0f,2.0f };
 
-	triangleData[9].vertex[0] = { 0.2f,0.3f,0.0f,2.0f };
-	triangleData[9].vertex[1] = { 0.4f,0.7f,0.0f,2.0f };
-	triangleData[9].vertex[2] = { 0.6f,0.3f,0.0f,2.0f };
+
+	//triangleData[7].vertex[0] = { 0.6f,-0.7f,0.0f,2.0f };
+	//triangleData[7].vertex[1] = { 0.8f,-0.3f,0.0f,2.0f };
+	//triangleData[7].vertex[2] = { 1.0f,-0.7f,0.0f,2.0f };
+
+	//triangleData[8].vertex[0] = { 1.0f,-0.2f,0.0f,2.0f };
+	//triangleData[8].vertex[1] = { 1.2f,0.2f,0.0f,2.0f };
+	//triangleData[8].vertex[2] = { 1.4f,-0.2f,0.0f,2.0f };
+
+
+	//triangleData[9].vertex[0] = { 1.0f,-0.7f,0.0f,2.0f };
+	//triangleData[9].vertex[1] = { 1.2f,-0.3f,0.0f,2.0f };
+	//triangleData[9].vertex[2] = { 1.4f,-0.7f,0.0f,2.0f };
+
+
+
 
 	for (int i = 0; i < KmaxTriangle; i++)
 	{
@@ -81,13 +86,20 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		triangleData[i].color = { 1.0f,0.0f,0.0f,1.0f };
 	}
 
-
+	for (int i = 0; i < KmaxTriangle; i++)
+	{
+		triangleData[i].transform =
+		{
+			{1.0f, 1.0f, 1.0f},
+			{ 0.0f,0.0f,0.0f },
+			{ 0.0f,0.0f,0.0f }
+		};
+	}
 
 	for (int i = 0; i < KmaxTriangle; i++)
 	{
-		triangle[i]->Initialize(dxCommon, engine, triangleData[i]);
+		triangle[i]->Initialize(winApp, dxCommon, engine, triangleData[i]);
 	}
-
 
 
 
@@ -101,6 +113,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 		dxCommon->PreDraw();
 		engine->PreDraw();
+
+
+		for (int i = 0; i < KmaxTriangle; i++)
+		{
+			triangle[i]->Update();
+		}
 
 
 		for (int i = 0; i < KmaxTriangle; i++)

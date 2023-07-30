@@ -1,16 +1,12 @@
 #pragma once
+#include"WindowAPI.h"
 #include"DirectXCommon.h"
 #include"MyEngine.h"
 #include"MathUtilty.h"
 #include"Vector4.h"
 #include"Matrix4x4.h"
+#include"Transform.h"
 
-struct Transform
-{
-	Vector3 scale;
-	Vector3 rotate;
-	Vector3 translate;
-};
 
 struct TriangleData
 {
@@ -34,8 +30,12 @@ public:
 	/// 初期化
 	/// </summary>
 	/// <param name="direct"></param>
-	void Initialize(DirectXCommon* direct, MyEngine* engine, const TriangleData& data);
+	void Initialize(WindowAPI*winApp, DirectXCommon* direct, MyEngine* engine, const TriangleData& data);
 
+	/// <summary>
+	/// 更新処理
+	/// </summary>
+	void Update();
 
 	/// <summary>
 	/// 描画
@@ -49,8 +49,12 @@ public:
 
 private://プライベート変数
 
+	WindowAPI* winApp_;
 	DirectXCommon* dxCommon_;
 	MyEngine* engine_;
+
+	uint32_t kClientWidth_ = 0;
+	uint32_t kClientHeight_ = 0;
 
 	ID3D12Resource* vertexResource_;	//頂点リソース
 	ID3D12Resource* materialResource_;	//マテリアルリソース
@@ -66,6 +70,8 @@ private://プライベート変数
 
 	Transform transform_;
 	Matrix4x4 worldMatrix_;
+
+	Transform cameraTransform_;
 
 private://プライベート関数
 

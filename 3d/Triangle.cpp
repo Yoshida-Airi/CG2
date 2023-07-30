@@ -11,15 +11,27 @@ Triangle::~Triangle()
 	wvpResource_->Release();
 }
 
-void Triangle::Initialize(DirectXCommon* direct, MyEngine* engien, const TriangleData& data)
+void Triangle::Initialize(WindowAPI* winApp, DirectXCommon* direct, MyEngine* engien, const TriangleData& data)
 {
+	winApp_ = winApp;
 	dxCommon_ = direct;
 	engine_ = engien;
 
+	kClientHeight_ = winApp_->GetHeight();
+	kClientWidth_ = winApp_->GetWidth();
+
+	cameraTransform_ =
+	{
+		{1.0f, 1.0f, 1.0f }, 
+		{0.0f, 0.0f, 0.0f },
+		{0.0f, 0.0f, -5.0f}
+	};
 
 	VertexBuffer();
 	MaterialBuffer();
 	WvpBuffer();
+
+
 
 	//頂点の設定
 	vertexData_[0] = data.vertex[0];
@@ -30,21 +42,31 @@ void Triangle::Initialize(DirectXCommon* direct, MyEngine* engien, const Triangl
 	//色の設定
 	materialData_[0] = data.color;
 
-	transform_ =
-	{
-		{1.0f,1.0f,1.0f},
-		{0.0f,0.0f,0.0f},
-		{0.0f,0.0f,0.0f}
-	};
+	transform_ = data.transform;
+
+	*wvpData_ = MakeIdentity4x4();
+
 }
+
+void Triangle::Update()
+{
+	transform_.rotate.y += 0.03f;
+	worldMatrix_ = MakeAffinMatrix(transform_.scale, transform_.rotate, transform_.translate);
+	*wvpData_ = worldMatrix_;
+
+	Matrix4x4 cameraMatrix = MakeAffinMatrix(cameraTransform_.scale, cameraTransform_.rotate, cameraTransform_.translate);
+	Matrix4x4 viewMatrix = Inverse(cameraMatrix);
+	Matrix4x4 projectionMatrix = MakePerspectiveFovMatrix(0.45f, float(kClientWidth_) / float(kClientHeight_), 0.1f, 100.0f);
+	//WVPMatrixを作る
+	Matrix4x4 worldViewProjectionMatrix = Multiply(worldMatrix_, Multiply(viewMatrix, projectionMatrix));
+	*wvpData_ = worldViewProjectionMatrix;
+
+}
+
 
 void Triangle::Draw()
 {
-	transform_.rotate.y += 0.03f;
-	//回転
-	worldMatrix_ = MakeAffinMatrix(transform_.scale, transform_.rotate, transform_.translate);
-	//wvpの設定
-	*wvpData_ = worldMatrix_;
+	
 
 	//VBVを設定
 	dxCommon_->GetCommandList()->IASetVertexBuffers(0, 1, &vertexBufferView_);
