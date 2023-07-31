@@ -30,12 +30,12 @@ public:
 	/// 初期化
 	/// </summary>
 	/// <param name="direct"></param>
-	void Initialize(WindowAPI* winApp, DirectXCommon* direct, MyEngine* engine,const TriangleData& data);
+	void Initialize(WindowAPI* winApp, DirectXCommon* direct, MyEngine* engine);
 
 	/// <summary>
 	/// 更新処理
 	/// </summary>
-	void Update();
+	void Update(const TriangleData& data);
 
 	/// <summary>
 	/// 描画

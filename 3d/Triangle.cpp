@@ -11,7 +11,7 @@ Triangle::~Triangle()
 	wvpResource_->Release();
 }
 
-void Triangle::Initialize(WindowAPI* winApp, DirectXCommon* direct, MyEngine* engien,const TriangleData& data)
+void Triangle::Initialize(WindowAPI* winApp, DirectXCommon* direct, MyEngine* engien)
 {
 	winApp_ = winApp;
 	dxCommon_ = direct;
@@ -34,6 +34,12 @@ void Triangle::Initialize(WindowAPI* winApp, DirectXCommon* direct, MyEngine* en
 
 
 
+	
+
+}
+
+void Triangle::Update(const TriangleData& data)
+{
 	//頂点の設定
 	vertexData_[0] = data.vertex[0];
 	vertexData_[1] = data.vertex[1];
@@ -47,63 +53,19 @@ void Triangle::Initialize(WindowAPI* winApp, DirectXCommon* direct, MyEngine* en
 
 	*wvpData_ = MakeIdentity4x4();
 
-}
-
-void Triangle::Update()
-{
-	
-	ImGui::Begin("triangle");
-
-	float color[] = { materialData_[0].x,materialData_[0].y,materialData_[0].z,materialData_[0].w};
-
-	ImGui::ColorEdit4("color", color);
 
 
-	materialData_[0].x = color[0];
-	materialData_[0].y = color[1];
-	materialData_[0].z = color[2];
-	materialData_[0].w = color[3];
 
-	float translate[] = { transform_.translate.x,transform_.translate.y,transform_.translate.z};
+	//ImGui::Begin("Rotate");
 
+	//ImGui::Checkbox("true", &isRotate);
 
-	ImGui::SliderFloat3("translate", translate, -1.0f, 1.0f);
+	//ImGui::End();
 
-	transform_.translate.x = translate[0];
-	transform_.translate.y = translate[1];
-	transform_.translate.z = translate[2];
-
-	float scale[] = { transform_.scale.x,transform_.scale.y,transform_.scale.z };
-
-
-	ImGui::SliderFloat3("scale", scale, 0.0f, 10.0f);
-
-	transform_.scale.x = scale[0];
-	transform_.scale.y = scale[1];
-	transform_.scale.z = scale[2];
-
-	float rotate[] = { transform_.rotate.x,transform_.rotate.y,transform_.rotate.z };
-
-	ImGui::SliderFloat3("rotate", rotate, -1.0f, 1.0f);
-
-	transform_.rotate.x = rotate[0];
-	transform_.rotate.y = rotate[1];
-	transform_.rotate.z = rotate[2];
-
-
-	ImGui::End();
-
-
-	ImGui::Begin("Rotate");
-
-	ImGui::Checkbox("true", &isRotate);
-
-	ImGui::End();
-
-	if (isRotate == true)
-	{
-		transform_.rotate.y += 0.03f;
-	}
+	//if (isRotate == true)
+	//{
+	//	transform_.rotate.y += 0.03f;
+	//}
 
 	worldMatrix_ = MakeAffinMatrix(transform_.scale, transform_.rotate, transform_.translate);
 	*wvpData_ = worldMatrix_;
