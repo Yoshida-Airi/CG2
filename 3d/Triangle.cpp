@@ -52,7 +52,7 @@ void Triangle::Initialize(WindowAPI* winApp, DirectXCommon* direct, MyEngine* en
 void Triangle::Update()
 {
 	
-	ImGui::Begin("Color");
+	ImGui::Begin("triangle");
 
 	float color[] = { materialData_[0].x,materialData_[0].y,materialData_[0].z,materialData_[0].w};
 
@@ -64,7 +64,7 @@ void Triangle::Update()
 	materialData_[0].z = color[2];
 	materialData_[0].w = color[3];
 
-	float translate[] = { transform_.translate.x,transform_.translate.y,transform_.translate.z };
+	float translate[] = { transform_.translate.x,transform_.translate.y,transform_.translate.z};
 
 
 	ImGui::SliderFloat3("translate", translate, -1.0f, 1.0f);

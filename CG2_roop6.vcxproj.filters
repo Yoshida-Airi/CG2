@@ -40,6 +40,12 @@
     <Filter Include="ソース ファイル\Math">
       <UniqueIdentifier>{ab4695a8-5536-42ac-9eee-9d9844a036f3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\2d">
+      <UniqueIdentifier>{75904093-e26a-46d0-9563-98337893ad53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\2d">
+      <UniqueIdentifier>{bfcb2b3a-a4d9-4c04-aa33-429563bc6623}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -63,9 +69,6 @@
     <ClCompile Include="Math\MathUtilty.cpp">
       <Filter>ソース ファイル\Math</Filter>
     </ClCompile>
-    <ClCompile Include="2d\ImGuiManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="externals\imgui\imgui_demo.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -87,6 +90,9 @@
     <ClCompile Include="externals\imgui\imgui.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="2d\ImGuiManager.cpp">
+      <Filter>ソース ファイル\2d</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3d\Triangle.h">
@@ -101,9 +107,6 @@
     <ClInclude Include="Common\MyEngine.h">
       <Filter>ヘッダー ファイル\Common</Filter>
     </ClInclude>
-    <ClInclude Include="Logger\ConvertString.h">
-      <Filter>ヘッダー ファイル\Logger</Filter>
-    </ClInclude>
     <ClInclude Include="Math\Vector4.h">
       <Filter>ヘッダー ファイル\Math</Filter>
     </ClInclude>
@@ -115,9 +118,6 @@
     </ClInclude>
     <ClInclude Include="Math\MathUtilty.h">
       <Filter>ヘッダー ファイル\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="2d\ImGuiManager.h">
-      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="externals\imgui\imconfig.h">
       <Filter>ヘッダー ファイル</Filter>
@@ -146,6 +146,12 @@
     <ClInclude Include="Math\Transform.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="2d\ImGuiManager.h">
+      <Filter>ヘッダー ファイル\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="Logger\ConvertString.h">
+      <Filter>ヘッダー ファイル\Logger</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shaders\Object3d.PS.hlsl">
@@ -156,6 +162,8 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="externals\imgui\LICENSE.txt" />
+    <Text Include="externals\imgui\LICENSE.txt">
+      <Filter>ヘッダー ファイル</Filter>
+    </Text>
   </ItemGroup>
 </Project>
