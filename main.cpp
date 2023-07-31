@@ -105,6 +105,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	imGuiManager->Initialize(winApp, dxCommon);
 
+	bool isRotate1 = false;
+	bool isRotate2 = false;
+	bool isRotate3 = false;
+
+
 	// ウィンドウの×ボタンが押されるまでループ
 	while (WindowAPI::ProcessMessage() == 0)
 	{
@@ -118,7 +123,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		imGuiManager->Begin();
 
 	
-		ImGui::Begin("triangle1");
+		ImGui::Begin("triangle2");
 
 		float color[] = { triangleData[0].color.x,triangleData[0].color.y,triangleData[0].color.z,triangleData[0].color.z };
 
@@ -142,7 +147,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		float scale[] = { triangleData[0].transform.scale.x,triangleData[0].transform.scale.y,triangleData[0].transform.scale.z };
 
 
-		ImGui::SliderFloat3("scale", scale, 0.0f, 10.0f);
+		ImGui::SliderFloat3("scale", scale, 0.0f, 5.0f);
 
 		triangleData[0].transform.scale.x = scale[0];
 		triangleData[0].transform.scale.y = scale[1];
@@ -161,7 +166,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 
 
-		ImGui::Begin("triangle2");
+		ImGui::Begin("triangle3");
 
 		float color2[] = { triangleData[1].color.x,triangleData[1].color.y,triangleData[1].color.z,triangleData[1].color.z };
 
@@ -185,7 +190,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		float scale2[] = { triangleData[1].transform.scale.x,triangleData[1].transform.scale.y,triangleData[1].transform.scale.z };
 
 
-		ImGui::SliderFloat3("scale", scale2, 0.0f, 10.0f);
+		ImGui::SliderFloat3("scale", scale2, 0.0f, 5.0f);
 
 		triangleData[1].transform.scale.x = scale2[0];
 		triangleData[1].transform.scale.y = scale2[1];
@@ -202,7 +207,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 		ImGui::End();
 
-		ImGui::Begin("triangle3");
+		ImGui::Begin("triangle1");
 
 		float color3[] = { triangleData[2].color.x,triangleData[2].color.y,triangleData[2].color.z,triangleData[2].color.z };
 
@@ -226,7 +231,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		float scale3[] = { triangleData[2].transform.scale.x,triangleData[2].transform.scale.y,triangleData[2].transform.scale.z };
 
 
-		ImGui::SliderFloat3("scale", scale3, 0.0f, 10.0f);
+		ImGui::SliderFloat3("scale", scale3, 0.0f, 5.0f);
 
 		triangleData[2].transform.scale.x = scale3[0];
 		triangleData[2].transform.scale.y = scale3[1];
@@ -244,10 +249,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		ImGui::End();
 
 
-		bool isRotate1;
-		bool isRotate2;
-		bool isRotate3;
-
+		
 
 		ImGui::Begin("Rotate");
 
@@ -257,19 +259,21 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 		ImGui::End();
 
+
+
 		if (isRotate1 == true)
 		{
-			triangleData[0].transform.rotate.y += 0.03f;
+			triangleData[2].transform.rotate.y += 0.03f;
 		}
 
 		if (isRotate2 == true)
 		{
-			triangleData[1].transform.rotate.y += 0.03f;
+			triangleData[0].transform.rotate.y += 0.03f;
 		}
 
 		if (isRotate3 == true)
 		{
-			triangleData[2].transform.rotate.y += 0.03f;
+			triangleData[1].transform.rotate.y += 0.03f;
 		}
 
 		for (int i = 0; i < KmaxTriangle; i++)
