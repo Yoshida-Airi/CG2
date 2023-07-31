@@ -122,7 +122,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		engine->PreDraw();
 		imGuiManager->Begin();
 
+		ImGui::Begin("Setting");
 	
+		
+
+		ImGui::End();
+
+
 		ImGui::Begin("triangle2");
 
 		float color[] = { triangleData[0].color.x,triangleData[0].color.y,triangleData[0].color.z,triangleData[0].color.z };

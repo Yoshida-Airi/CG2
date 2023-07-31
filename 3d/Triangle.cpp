@@ -40,6 +40,37 @@ void Triangle::Initialize(WindowAPI* winApp, DirectXCommon* direct, MyEngine* en
 
 void Triangle::Update(const TriangleData& data)
 {
+
+	ImGui::Begin("camera");
+
+	float translate[] = { cameraTransform_.translate.x,cameraTransform_.translate.y,cameraTransform_.translate.z };
+
+	ImGui::SliderFloat3("translate", translate, -5.0f, 1.0f);
+
+	cameraTransform_.translate.x = translate[0];
+	cameraTransform_.translate.y = translate[1];
+	cameraTransform_.translate.z = translate[2];
+
+
+	float scale[] = { cameraTransform_.scale.x,cameraTransform_.scale.y,cameraTransform_.scale.z };
+
+
+	ImGui::SliderFloat3("scale", scale, 0.1f, 1.0f);
+
+	cameraTransform_.scale.x = scale[0];
+	cameraTransform_.scale.y = scale[1];
+	cameraTransform_.scale.z = scale[2];
+
+	float rotate[] = { cameraTransform_.rotate.x,cameraTransform_.rotate.y,cameraTransform_.rotate.z };
+
+	ImGui::SliderFloat3("rotate", rotate, 0.0f, 5.0f);
+
+	cameraTransform_.rotate.x = rotate[0];
+	cameraTransform_.rotate.y = rotate[1];
+	cameraTransform_.rotate.z = rotate[2];
+
+	ImGui::End();
+
 	//頂点の設定
 	vertexData_[0] = data.vertex[0];
 	vertexData_[1] = data.vertex[1];
