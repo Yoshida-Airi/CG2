@@ -24,7 +24,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	dxCommon->Initialize(winApp);
 	engine->Initialize(dxCommon, winApp);
 
-	const int KmaxTriangle = 10;
+	const int KmaxTriangle = 3;
 
 	TriangleData triangleData[KmaxTriangle];
 	Triangle* triangle[KmaxTriangle];
