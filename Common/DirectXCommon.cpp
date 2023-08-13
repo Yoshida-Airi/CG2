@@ -18,6 +18,7 @@ DirectXCommon::~DirectXCommon()
 	CloseHandle(fenceEvent_);
 	fence_->Release();
 	rtvDescriptorHeap_->Release();
+	srvDescriptorHeap_->Release();
 
 	swapChainResources_[0]->Release();
 	swapChainResources_[1]->Release();
@@ -349,7 +350,11 @@ void DirectXCommon::CreateFinalRenderTargets()
 
 	//RTV用のヒープでディスクリプタの数は2。RTVはShader内で触るものではないので、ShaderVisibleはFalse
 	rtvDescriptorHeap_ = CreateDescriptorHeap(D3D12_DESCRIPTOR_HEAP_TYPE_RTV, 2, false);
-	
+	srvDescriptorHeap_ = CreateDescriptorHeap(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV, 128, true);
+
+
+
+
 	//---------------------------------------
 	//スワップチェーンからリソースを引っ張ってくる
 	//---------------------------------------

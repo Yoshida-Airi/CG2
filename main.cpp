@@ -4,17 +4,21 @@
 #include"MyEngine.h"
 #include"Triangle.h"
 #include"ImGuiManager.h"
+#include"TextureManager.h"
 
 const wchar_t* kWindowTitle = L"CG2";
 
 //Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
+	//COMの初期化
+	CoInitializeEx(0, COINIT_MULTITHREADED);
 
 	WindowAPI* winApp = new WindowAPI;
 	DirectXCommon* dxCommon = new DirectXCommon;
 	MyEngine* engine = new MyEngine;
 	ImGuiManager* imGuiManager = new ImGuiManager;
+	TextureManager* textureManager = new TextureManager;
 
 	//アプリケーションの開始
 	const uint32_t kWindowWidth = 1280;
@@ -23,8 +27,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	winApp->StartApp(kWindowTitle, kWindowWidth, kWindowHeight);
 	dxCommon->Initialize(winApp);
 	engine->Initialize(dxCommon, winApp);
+	textureManager->Initialize(dxCommon);
 
-	const int KmaxTriangle = 3;
+	const int KmaxTriangle = 1;
 
 	TriangleData triangleData[KmaxTriangle];
 	Triangle* triangle[KmaxTriangle];
@@ -34,18 +39,25 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		triangle[i] = new Triangle;
 	}
 
-	//頂点
-	triangleData[0].vertex[0] = { -0.2f,-0.2f,0.0f,2.0f };
-	triangleData[0].vertex[1] = { 0.0f,0.2f,0.0f,2.0f };
-	triangleData[0].vertex[2] = { 0.2f,-0.2f,0.0f,2.0f };
+	triangleData[0].vertex[0] = { -0.5f,-0.5f,0.0f,1.0f };
+	triangleData[0].vertex[1] = { 0.0f,0.5f,0.0f,1.0f };
+	triangleData[0].vertex[2] = { 0.5f,-0.5f,0.0f,1.0f };
 
-	triangleData[1].vertex[0] = { -0.2f,-0.7f,0.0f,2.0f };
+
+
+	////頂点
+	//triangleData[0].vertex[0] = { -0.2f,-0.2f,0.0f,2.0f };
+	//triangleData[0].vertex[1] = { 0.0f,0.2f,0.0f,2.0f };
+	//triangleData[0].vertex[2] = { 0.2f,-0.2f,0.0f,2.0f };
+
+
+	/*triangleData[1].vertex[0] = { -0.2f,-0.7f,0.0f,2.0f };
 	triangleData[1].vertex[1] = { 0.0f,-0.3f,0.0f,2.0f };
 	triangleData[1].vertex[2] = { 0.2f,-0.7f,0.0f,2.0f };
 
 	triangleData[2].vertex[0] = { -0.2f,0.3f,0.0f,2.0f };
 	triangleData[2].vertex[1] = { 0.0f,0.7f,0.0f,2.0f };
-	triangleData[2].vertex[2] = { 0.2f,0.3f,0.0f,2.0f };
+	triangleData[2].vertex[2] = { 0.2f,0.3f,0.0f,2.0f };*/
 
 	//triangleData[3].vertex[0] = { 0.2f,-0.2f ,0.0f,2.0f };
 	//triangleData[3].vertex[1] = { 0.4f,0.2f ,0.0f,2.0f };
@@ -134,6 +146,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		dxCommon->PostDraw();
 
 
+		//COMの終了処理
+		CoUninitialize();
+
 	}
 
 	for (int i = 0; i < KmaxTriangle; i++)
@@ -141,6 +156,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		delete triangle[i];
 	}
 
+	delete textureManager;
 	delete imGuiManager;
 	delete engine;
 	delete dxCommon;

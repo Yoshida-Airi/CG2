@@ -6,9 +6,7 @@ ImGuiManager::~ImGuiManager()
 	ImGui_ImplWin32_Shutdown();
 	ImGui::DestroyContext();
 
-	srvDescriptorHeap_->Release();
-
-
+	
 }
 
 void ImGuiManager::Initialize(WindowAPI* winApp, DirectXCommon* dxCommon)
@@ -16,7 +14,7 @@ void ImGuiManager::Initialize(WindowAPI* winApp, DirectXCommon* dxCommon)
 	winApp_ = winApp;
 	dxCommon_ = dxCommon;
 
-	srvDescriptorHeap_ = dxCommon_->CreateDescriptorHeap(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV, 128, true);
+	srvDescriptorHeap_ = dxCommon_->GetSrvDescriptorHeap();
 
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();

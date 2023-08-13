@@ -42,6 +42,7 @@ public:
 	/// <returns></returns>
 	ID3D12DescriptorHeap* CreateDescriptorHeap(D3D12_DESCRIPTOR_HEAP_TYPE heapType, UINT numDescriptors, bool shaderVisible);
 
+	ID3D12DescriptorHeap* GetSrvDescriptorHeap()const { return srvDescriptorHeap_; };
 
 	ID3D12Device* GetDevice()const { return device_; };
 	ID3D12GraphicsCommandList* GetCommandList()const { return commandList_; };
@@ -98,6 +99,8 @@ private://プライベート変数
 	DXGI_SWAP_CHAIN_DESC1 swapChainDesc_ = {};	//スワップチェーンデスク
 
 	ID3D12DescriptorHeap* rtvDescriptorHeap_ = nullptr;	//ディスクリプタヒープ
+	ID3D12DescriptorHeap* srvDescriptorHeap_ = nullptr;
+
 
 
 	ID3D12Resource* swapChainResources_[2] = { nullptr };	//スワップチェーンリソース

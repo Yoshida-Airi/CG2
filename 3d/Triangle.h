@@ -6,7 +6,13 @@
 #include"Vector4.h"
 #include"Matrix4x4.h"
 #include"Transform.h"
+#include"Vector2.h"
 
+struct  VertexData
+{
+	Vector4 position;
+	Vector2 texcoord;
+};
 
 struct TriangleData
 {
@@ -30,7 +36,7 @@ public:
 	/// 初期化
 	/// </summary>
 	/// <param name="direct"></param>
-	void Initialize(WindowAPI*winApp, DirectXCommon* direct, MyEngine* engine, const TriangleData& data);
+	void Initialize(WindowAPI* winApp, DirectXCommon* direct, MyEngine* engine, const TriangleData& data);
 
 	/// <summary>
 	/// 更新処理
@@ -59,15 +65,16 @@ private://プライベート変数
 	ID3D12Resource* vertexResource_;	//頂点リソース
 	ID3D12Resource* materialResource_;	//マテリアルリソース
 	ID3D12Resource* wvpResource_;	//wvpリソース
-
+	
 	D3D12_VERTEX_BUFFER_VIEW vertexBufferView_;
 	D3D12_VERTEX_BUFFER_VIEW materialBufferView_;
 	D3D12_VERTEX_BUFFER_VIEW wvpBufferView_;
 
-	Vector4* vertexData_ = nullptr;	//頂点データ
+
+	VertexData* vertexData_ = nullptr;
 	Vector4* materialData_ = nullptr;	//マテリアルデータ
 	Matrix4x4* wvpData_ = nullptr;	//wvpデータ
-
+	
 	Transform transform_;
 	Matrix4x4 worldMatrix_;
 
@@ -90,4 +97,5 @@ private://プライベート関数
 	/// </summary>
 	void WvpBuffer();
 
+	
 };

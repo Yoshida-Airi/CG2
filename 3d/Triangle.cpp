@@ -11,11 +11,11 @@ Triangle::~Triangle()
 	wvpResource_->Release();
 }
 
-void Triangle::Initialize(WindowAPI* winApp, DirectXCommon* direct, MyEngine* engien, const TriangleData& data)
+void Triangle::Initialize(WindowAPI* winApp, DirectXCommon* direct, MyEngine* engine, const TriangleData& data)
 {
 	winApp_ = winApp;
 	dxCommon_ = direct;
-	engine_ = engien;
+	engine_ = engine;
 
 	kClientHeight_ = winApp_->GetHeight();
 	kClientWidth_ = winApp_->GetWidth();
@@ -28,21 +28,28 @@ void Triangle::Initialize(WindowAPI* winApp, DirectXCommon* direct, MyEngine* en
 	};
 
 	VertexBuffer();
+
 	MaterialBuffer();
 	WvpBuffer();
 
 
 
 	//頂点の設定
-	vertexData_[0] = data.vertex[0];
-	vertexData_[1] = data.vertex[1];
-	vertexData_[2] = data.vertex[2];
+	vertexData_[0].position = data.vertex[0];
+	vertexData_[0].texcoord = { 0.0f,1.0f };
 
+	vertexData_[1].position = data.vertex[1];
+	vertexData_[1].texcoord = { 0.5f,0.0f };
+
+	vertexData_[2].position = data.vertex[2];
+	vertexData_[2].texcoord = { 1.0f,1.0f };
 
 	//色の設定
 	materialData_[0] = data.color;
 
 	transform_ = data.transform;
+
+	
 
 	*wvpData_ = MakeIdentity4x4();
 
@@ -88,14 +95,14 @@ void Triangle::Draw()
 
 void Triangle::VertexBuffer()
 {
-	vertexResource_ = engine_->CreateBufferResource(sizeof(Vector4) * 3);	//頂点用のデータ
+	vertexResource_ = engine_->CreateBufferResource(sizeof(VertexData) * 3);	//頂点用のデータ
 
 	//リソースの先頭のアドレスから使う
 	vertexBufferView_.BufferLocation = vertexResource_->GetGPUVirtualAddress();
 	//使用するリソースのサイズは頂点3つ分のサイズ
-	vertexBufferView_.SizeInBytes = sizeof(Vector4) * 3;
+	vertexBufferView_.SizeInBytes = sizeof(VertexData) * 3;
 	//1頂点当たりのサイズ
-	vertexBufferView_.StrideInBytes = sizeof(Vector4);
+	vertexBufferView_.StrideInBytes = sizeof(VertexData);
 	//書き込むためのアドレスを取得
 	vertexResource_->Map(0, nullptr, reinterpret_cast<void**>(&vertexData_));
 }
