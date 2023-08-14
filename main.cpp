@@ -4,6 +4,7 @@
 #include"MyEngine.h"
 #include"Triangle.h"
 #include"ImGuiManager.h"
+#include"TextureManager.h"
 
 const wchar_t* kWindowTitle = L"CG2";
 
@@ -15,6 +16,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	DirectXCommon* dxCommon = new DirectXCommon;
 	MyEngine* engine = new MyEngine;
 	ImGuiManager* imGuiManager = new ImGuiManager;
+	TextureManager* texture = new TextureManager;
 
 	//アプリケーションの開始
 	const uint32_t kWindowWidth = 1280;
@@ -103,6 +105,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		triangle[i]->Initialize(winApp, dxCommon, engine, triangleData[i]);
 	}
 
+	texture->Initialize();
+
 	imGuiManager->Initialize(winApp, dxCommon);
 
 	// ウィンドウの×ボタンが押されるまでループ
@@ -135,6 +139,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 
 	}
+
+	texture->End();
 
 	for (int i = 0; i < KmaxTriangle; i++)
 	{
