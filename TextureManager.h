@@ -25,6 +25,8 @@ public:
 	/// </summary>
 	void Update();
 
+	D3D12_GPU_DESCRIPTOR_HANDLE GetTextureSrvHandleGPU()const { return textureSrvHandleGPU_; }
+
 private:
 
 	DirectXCommon* dxCommon_;
@@ -34,8 +36,11 @@ private:
 	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc_{};
 	ID3D12DescriptorHeap* srvDescriptoHeap_;
 
+	D3D12_CPU_DESCRIPTOR_HANDLE textureSrvHandleCPU_ = {};
+	D3D12_GPU_DESCRIPTOR_HANDLE textureSrvHandleGPU_ = {};
+
 private:
-	
+
 	/// <summary>
 	/// Textureデータを読む
 	/// </summary>
@@ -64,4 +69,3 @@ private:
 	void CreateShaderResourceView(const DirectX::TexMetadata& metadata);
 
 };
-

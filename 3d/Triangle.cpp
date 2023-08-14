@@ -1,4 +1,5 @@
 #include "Triangle.h"
+#include"TextureManager.h"
 
 /*=====================================*/
 /* 　　　　   パブリックメソッド　　　	　 */
@@ -11,11 +12,12 @@ Triangle::~Triangle()
 	wvpResource_->Release();
 }
 
-void Triangle::Initialize(WindowAPI* winApp, DirectXCommon* direct, MyEngine* engine, const TriangleData& data)
+void Triangle::Initialize(WindowAPI* winApp, DirectXCommon* direct, MyEngine* engine, TextureManager* texture, const TriangleData& data)
 {
 	winApp_ = winApp;
 	dxCommon_ = direct;
 	engine_ = engine;
+	texture_ = texture;
 
 	kClientHeight_ = winApp_->GetHeight();
 	kClientWidth_ = winApp_->GetWidth();
@@ -73,8 +75,6 @@ void Triangle::Update()
 
 void Triangle::Draw()
 {
-	
-
 	//VBVを設定
 	dxCommon_->GetCommandList()->IASetVertexBuffers(0, 1, &vertexBufferView_);
 	//形状を設定。PS0にせっていしているものとはまた別。同じものを設定する
@@ -83,11 +83,16 @@ void Triangle::Draw()
 	dxCommon_->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
 	//wvp用のCbufferの場所を設定
 	dxCommon_->GetCommandList()->SetGraphicsRootConstantBufferView(1, wvpResource_->GetGPUVirtualAddress());
+	//SRVのDescriptorTableの先頭を設定。2はrootParamater[2]である。
+	dxCommon_->GetCommandList()->SetGraphicsRootDescriptorTable(2, textureSrvHandleGPU_);
 	//描画
 	dxCommon_->GetCommandList()->DrawInstanced(3, 1, 0, 0);
-
 }
 
+void Triangle::SetTextureSrvHandleGPU(D3D12_GPU_DESCRIPTOR_HANDLE textureSrvHandleGPU)
+{
+	textureSrvHandleGPU_ = textureSrvHandleGPU;
+}
 
 /*=====================================*/
 /* 　　　　   プライベートメソッド　　　    */

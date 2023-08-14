@@ -27,17 +27,30 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	winApp->StartApp(kWindowTitle, kWindowWidth, kWindowHeight);
 	dxCommon->Initialize(winApp);
 	engine->Initialize(dxCommon, winApp);
-	textureManager->Initialize(dxCommon);
+
 
 	const int KmaxTriangle = 1;
 
+	for (int i = 0; i < KmaxTriangle; i++)
+	{
+		textureManager->Initialize(dxCommon);
+	}
+
+
+
+
 	TriangleData triangleData[KmaxTriangle];
 	Triangle* triangle[KmaxTriangle];
+
+
 
 	for (int i = 0; i < KmaxTriangle; i++)
 	{
 		triangle[i] = new Triangle;
 	}
+
+
+
 
 	triangleData[0].vertex[0] = { -0.5f,-0.5f,0.0f,1.0f };
 	triangleData[0].vertex[1] = { 0.0f,0.5f,0.0f,1.0f };
@@ -92,8 +105,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	//triangleData[9].vertex[2] = { 1.4f,-0.7f,0.0f,2.0f };
 
 
-
-
 	for (int i = 0; i < KmaxTriangle; i++)
 	{
 		//色
@@ -112,7 +123,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	for (int i = 0; i < KmaxTriangle; i++)
 	{
-		triangle[i]->Initialize(winApp, dxCommon, engine, triangleData[i]);
+		triangle[i]->Initialize(winApp, dxCommon, engine, textureManager, triangleData[i]);
 	}
 
 	imGuiManager->Initialize(winApp, dxCommon);
@@ -134,6 +145,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			triangle[i]->Update();
 		}
 
+	
+		triangle[0]->SetTextureSrvHandleGPU(textureManager->GetTextureSrvHandleGPU());
+	
 
 		for (int i = 0; i < KmaxTriangle; i++)
 		{
@@ -146,10 +160,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		dxCommon->PostDraw();
 
 
-		//COMの終了処理
-		CoUninitialize();
-
+	
 	}
+
+	//COMの終了処理
+	CoUninitialize();
+
 
 	for (int i = 0; i < KmaxTriangle; i++)
 	{

@@ -52,7 +52,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)3d;$(ProjectDir)Common;$(ProjectDir)Math;$(ProjectDir)externals\imgui;$(ProjectDir)2d;$(ProjectDir)Logger</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)3d;$(ProjectDir)Common;$(ProjectDir)Math;$(ProjectDir)externals\imgui;$(ProjectDir)2d;$(ProjectDir)Logger;$(ProjectDir)Resources\Shaders</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -71,7 +71,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)3d;$(ProjectDir)Common;$(ProjectDir)Math;$(ProjectDir)externals\imgui;$(ProjectDir)2d;$(ProjectDir)Logger</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)3d;$(ProjectDir)Common;$(ProjectDir)Math;$(ProjectDir)externals\imgui;$(ProjectDir)2d;$(ProjectDir)Logger;$(ProjectDir)Resources\Shaders</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -140,7 +140,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Object3d.hlsli" />
+    <None Include="Resources\Shaders\Object3d.hlsli" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

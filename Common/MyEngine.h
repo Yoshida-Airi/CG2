@@ -52,7 +52,7 @@ private://プライベート変数
 	ID3DBlob* signatureBlob_ = nullptr;//シリアライズしてバイナリにする
 	ID3DBlob* errorBlob_ = nullptr;
 
-	D3D12_INPUT_ELEMENT_DESC inputElementDescs_[1] = {};//InputLayout
+	D3D12_INPUT_ELEMENT_DESC inputElementDescs_[2] = {};//InputLayout
 	D3D12_INPUT_LAYOUT_DESC inputLayoutDesc_{};
 
 	D3D12_BLEND_DESC blendDesc_{};//BlendStateの設定

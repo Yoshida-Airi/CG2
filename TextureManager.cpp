@@ -15,7 +15,7 @@ void TextureManager::Initialize(DirectXCommon* dxCommon)
 	srvDescriptoHeap_ = dxCommon->GetSrvDescriptorHeap();
 	//textureを読む
 	mipImages_ = LoadTexture("Resources/uvChecker.png");
-	const DirectX::TexMetadata& metadata = mipImages_.GetMetadata();
+	const DirectX::TexMetadata&metadata = mipImages_.GetMetadata();
 	textureResource_ = CreateTextureResource(dxCommon_->GetDevice(), metadata);
 	UploadTextureData(textureResource_, mipImages_);
 	CreateShaderResourceView(metadata);
@@ -110,12 +110,12 @@ void TextureManager::CreateShaderResourceView(const DirectX::TexMetadata& metada
 	srvDesc_.Texture2D.MipLevels = UINT(metadata.mipLevels);
 
 	//SRVを作成するDescriptorHeapの場所を決める
-	D3D12_CPU_DESCRIPTOR_HANDLE textureSrvHandleCPU = srvDescriptoHeap_->GetCPUDescriptorHandleForHeapStart();
-	D3D12_GPU_DESCRIPTOR_HANDLE textureSrvHandleGPU = srvDescriptoHeap_->GetGPUDescriptorHandleForHeapStart();
+	textureSrvHandleCPU_ = srvDescriptoHeap_->GetCPUDescriptorHandleForHeapStart();
+	textureSrvHandleGPU_ = srvDescriptoHeap_->GetGPUDescriptorHandleForHeapStart();
 	//先頭はImGuiが使っているのでその次を使う
-	textureSrvHandleCPU.ptr += dxCommon_->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
-	textureSrvHandleGPU.ptr += dxCommon_->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+	textureSrvHandleCPU_.ptr += dxCommon_->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+	textureSrvHandleGPU_.ptr += dxCommon_->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 	//SRVの生成
-	dxCommon_->GetDevice()->CreateShaderResourceView(textureResource_, &srvDesc_, textureSrvHandleCPU);
-	
+	dxCommon_->GetDevice()->CreateShaderResourceView(textureResource_, &srvDesc_, textureSrvHandleCPU_);
+
 }

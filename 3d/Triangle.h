@@ -8,6 +8,8 @@
 #include"Transform.h"
 #include"Vector2.h"
 
+class TextureManager;
+
 struct  VertexData
 {
 	Vector4 position;
@@ -36,7 +38,7 @@ public:
 	/// 初期化
 	/// </summary>
 	/// <param name="direct"></param>
-	void Initialize(WindowAPI* winApp, DirectXCommon* direct, MyEngine* engine, const TriangleData& data);
+	void Initialize(WindowAPI* winApp, DirectXCommon* direct, MyEngine* engine,TextureManager*texture, const TriangleData& data);
 
 	/// <summary>
 	/// 更新処理
@@ -51,13 +53,14 @@ public:
 	/// <param name="c">右下</param>
 	void Draw();
 
-	
-
+	// Setter
+	void SetTextureSrvHandleGPU(D3D12_GPU_DESCRIPTOR_HANDLE textureSrvHandleGPU);
 private://プライベート変数
 
 	WindowAPI* winApp_;
 	DirectXCommon* dxCommon_;
 	MyEngine* engine_;
+	TextureManager* texture_;
 
 	uint32_t kClientWidth_ = 0;
 	uint32_t kClientHeight_ = 0;
@@ -79,6 +82,9 @@ private://プライベート変数
 	Matrix4x4 worldMatrix_;
 
 	Transform cameraTransform_;
+
+
+	D3D12_GPU_DESCRIPTOR_HANDLE textureSrvHandleGPU_;
 
 private://プライベート関数
 
