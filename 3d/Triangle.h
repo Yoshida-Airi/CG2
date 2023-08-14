@@ -5,6 +5,7 @@
 #include"MathUtilty.h"
 #include"Vector4.h"
 #include"Matrix4x4.h"
+#include"Vector2.h"
 #include"Transform.h"
 
 
@@ -15,7 +16,11 @@ struct TriangleData
 	Transform  transform;
 };
 
-
+struct VertexData
+{
+	Vector4 position;
+	Vector2 texcoord;
+};
 
 class Triangle
 {
@@ -64,7 +69,7 @@ private://プライベート変数
 	D3D12_VERTEX_BUFFER_VIEW materialBufferView_;
 	D3D12_VERTEX_BUFFER_VIEW wvpBufferView_;
 
-	Vector4* vertexData_ = nullptr;	//頂点データ
+	VertexData* vertexData_ = nullptr;
 	Vector4* materialData_ = nullptr;	//マテリアルデータ
 	Matrix4x4* wvpData_ = nullptr;	//wvpデータ
 
