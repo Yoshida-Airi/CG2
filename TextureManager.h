@@ -1,6 +1,7 @@
 #pragma once
 #include"externals/DirectXTex/DirectXTex.h"
 #include"ConvertString.h"
+#include"DirectXCommon.h"
 #include<d3d12.h>
 
 class TextureManager
@@ -23,6 +24,15 @@ public:
 
 
 	void transfertexture(ID3D12Device* device);
+
+
+	/// <summary>
+	/// SRVの設定と生成
+	/// </summary>
+	/// <param name="device"></param>
+	/// <param name="srvDescriptorHeap"></param>
+	void CreateShaderResourceView(ID3D12Device* device, ID3D12DescriptorHeap* srvDescriptorHeap);
+
 
 
 
@@ -57,8 +67,6 @@ private:
 	/// <param name="texture"></param>
 	/// <param name="mipImages"></param>
 	void UploadTextureData(ID3D12Resource* texture, const DirectX::ScratchImage& mipImages);
-
-
 
 };
 

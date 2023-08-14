@@ -48,6 +48,8 @@ public:
 
 	DXGI_SWAP_CHAIN_DESC1 GetSwapChainDesc()const { return swapChainDesc_; };
 	D3D12_RENDER_TARGET_VIEW_DESC GetRtvDesc()const { return rtvDesc_; };
+	ID3D12DescriptorHeap* GetsrvDescriptorHeap()const { return srvDescriptorHeap_; };
+
 
 private:
 
@@ -98,6 +100,8 @@ private://プライベート変数
 	DXGI_SWAP_CHAIN_DESC1 swapChainDesc_ = {};	//スワップチェーンデスク
 
 	ID3D12DescriptorHeap* rtvDescriptorHeap_ = nullptr;	//ディスクリプタヒープ
+	ID3D12DescriptorHeap* srvDescriptorHeap_ = nullptr;
+
 
 
 	ID3D12Resource* swapChainResources_[2] = { nullptr };	//スワップチェーンリソース
