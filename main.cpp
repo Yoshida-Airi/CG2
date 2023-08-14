@@ -109,6 +109,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	imGuiManager->Initialize(winApp, dxCommon);
 
+	texture->transfertexture(dxCommon->GetDevice());
+
 	// ウィンドウの×ボタンが押されるまでループ
 	while (WindowAPI::ProcessMessage() == 0)
 	{
@@ -147,6 +149,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		delete triangle[i];
 	}
 
+	delete texture;
 	delete imGuiManager;
 	delete engine;
 	delete dxCommon;
