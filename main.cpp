@@ -108,7 +108,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	for (int i = 0; i < KmaxTriangle; i++)
 	{
 		//色
-		triangleData[i].color = { 1.0f,0.0f,0.0f,1.0f };
+		triangleData[i].color = { 1.0f,1.0f,1.0f,1.0f };
 	}
 
 	for (int i = 0; i < KmaxTriangle; i++)
@@ -148,13 +148,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	
 		triangle[0]->SetTextureSrvHandleGPU(textureManager->GetTextureSrvHandleGPU());
 	
+		imGuiManager->End();
 
 		for (int i = 0; i < KmaxTriangle; i++)
 		{
 			triangle[i]->Draw();
 		}
 
-		imGuiManager->End();
+		
 		imGuiManager->Draw();
 		engine->PostDraw();
 		dxCommon->PostDraw();
