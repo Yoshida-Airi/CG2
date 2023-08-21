@@ -15,15 +15,13 @@ public:
 	/// </summary>
 	void Initialize();
 
-	void Updata();
-
 	/// <summary>
 	/// 終了処理
 	/// </summary>
 	void End();
 
 
-	void transfertexture(ID3D12Device* device);
+	void TransferTexture(DirectXCommon* dxCommon);
 
 
 	/// <summary>
@@ -33,7 +31,7 @@ public:
 	/// <param name="srvDescriptorHeap"></param>
 	void CreateShaderResourceView(ID3D12Device* device, ID3D12DescriptorHeap* srvDescriptorHeap);
 
-
+	D3D12_GPU_DESCRIPTOR_HANDLE GetTextureSrvHandleGPU() { return textureSrvHandleGPU_; };
 
 
 private:

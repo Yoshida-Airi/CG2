@@ -26,7 +26,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	dxCommon->Initialize(winApp);
 	engine->Initialize(dxCommon, winApp);
 
-	const int KmaxTriangle = 10;
+	const int KmaxTriangle = 1;
 
 	TriangleData triangleData[KmaxTriangle];
 	Triangle* triangle[KmaxTriangle];
@@ -36,18 +36,22 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		triangle[i] = new Triangle;
 	}
 
-	//頂点
-	triangleData[0].vertex[0] = { -0.2f,-0.2f,0.0f,2.0f };
-	triangleData[0].vertex[1] = { 0.0f,0.2f,0.0f,2.0f };
-	triangleData[0].vertex[2] = { 0.2f,-0.2f,0.0f,2.0f };
+	triangleData[0].vertex[0] = { -0.5f,-0.5f,0.0f,1.0f };
+	triangleData[0].vertex[1] = { 0.0f,0.5f,0.0f,1.0f };
+	triangleData[0].vertex[2] = { 0.5f,-0.5f,0.0f,1.0f };
 
-	triangleData[1].vertex[0] = { -0.2f,-0.7f,0.0f,2.0f };
-	triangleData[1].vertex[1] = { 0.0f,-0.3f,0.0f,2.0f };
-	triangleData[1].vertex[2] = { 0.2f,-0.7f,0.0f,2.0f };
+	////頂点
+	//triangleData[0].vertex[0] = { -0.2f,-0.2f,0.0f,2.0f };
+	//triangleData[0].vertex[1] = { 0.0f,0.2f,0.0f,2.0f };
+	//triangleData[0].vertex[2] = { 0.2f,-0.2f,0.0f,2.0f };
 
-	triangleData[2].vertex[0] = { -0.2f,0.3f,0.0f,2.0f };
-	triangleData[2].vertex[1] = { 0.0f,0.7f,0.0f,2.0f };
-	triangleData[2].vertex[2] = { 0.2f,0.3f,0.0f,2.0f };
+	//triangleData[1].vertex[0] = { -0.2f,-0.7f,0.0f,2.0f };
+	//triangleData[1].vertex[1] = { 0.0f,-0.3f,0.0f,2.0f };
+	//triangleData[1].vertex[2] = { 0.2f,-0.7f,0.0f,2.0f };
+
+	//triangleData[2].vertex[0] = { -0.2f,0.3f,0.0f,2.0f };
+	//triangleData[2].vertex[1] = { 0.0f,0.7f,0.0f,2.0f };
+	//triangleData[2].vertex[2] = { 0.2f,0.3f,0.0f,2.0f };
 
 	//triangleData[3].vertex[0] = { 0.2f,-0.2f ,0.0f,2.0f };
 	//triangleData[3].vertex[1] = { 0.4f,0.2f ,0.0f,2.0f };
@@ -100,17 +104,20 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		};
 	}
 
-	for (int i = 0; i < KmaxTriangle; i++)
-	{
-		triangle[i]->Initialize(winApp, dxCommon, engine, triangleData[i]);
-	}
-
 	texture->Initialize();
+
+	texture->TransferTexture(dxCommon);
+
 
 	imGuiManager->Initialize(winApp, dxCommon);
 
-	texture->transfertexture(dxCommon->GetDevice());
-	texture->CreateShaderResourceView(dxCommon->GetDevice(), dxCommon->GetsrvDescriptorHeap());
+	
+
+	for (int i = 0; i < KmaxTriangle; i++)
+	{
+		triangle[i]->Initialize(winApp, dxCommon, engine, triangleData[i], texture);
+	}
+
 
 	// ウィンドウの×ボタンが押されるまでループ
 	while (WindowAPI::ProcessMessage() == 0)
@@ -129,13 +136,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			triangle[i]->Update();
 		}
 
+		imGuiManager->End();
 
 		for (int i = 0; i < KmaxTriangle; i++)
 		{
 			triangle[i]->Draw();
 		}
 
-		imGuiManager->End();
+		
 		imGuiManager->Draw();
 		engine->PostDraw();
 		dxCommon->PostDraw();

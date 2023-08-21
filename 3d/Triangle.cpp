@@ -11,14 +11,17 @@ Triangle::~Triangle()
 	wvpResource_->Release();
 }
 
-void Triangle::Initialize(WindowAPI* winApp, DirectXCommon* direct, MyEngine* engien, const TriangleData& data)
+void Triangle::Initialize(WindowAPI* winApp, DirectXCommon* direct, MyEngine* engien, const TriangleData& data, TextureManager* texture)
 {
 	winApp_ = winApp;
 	dxCommon_ = direct;
 	engine_ = engien;
+	texture_ = texture;
 
 	kClientHeight_ = winApp_->GetHeight();
 	kClientWidth_ = winApp_->GetWidth();
+
+	textureSrvHandleGPU_ = texture->GetTextureSrvHandleGPU();
 
 	cameraTransform_ =
 	{
@@ -80,6 +83,9 @@ void Triangle::Draw()
 	dxCommon_->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
 	//wvp用のCbufferの場所を設定
 	dxCommon_->GetCommandList()->SetGraphicsRootConstantBufferView(1, wvpResource_->GetGPUVirtualAddress());
+
+	// SRVのDescriptorTableの先頭を設定。
+	dxCommon_->GetCommandList()->SetGraphicsRootDescriptorTable(2, textureSrvHandleGPU_);
 	//描画
 	dxCommon_->GetCommandList()->DrawInstanced(3, 1, 0, 0);
 

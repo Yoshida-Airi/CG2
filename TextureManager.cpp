@@ -18,12 +18,14 @@ void TextureManager::End()
 }
 
 
-void TextureManager::transfertexture(ID3D12Device* device)
+void TextureManager::TransferTexture(DirectXCommon* dxCommon)
 {
 	mipImages_ = LoadTexture("resources/uvChecker.png");
 	metadata_ = mipImages_.GetMetadata();
-	textureResource_ = CreateTextureResource(device, metadata_);
+	textureResource_ = CreateTextureResource(dxCommon->GetDevice(), metadata_);
 	UploadTextureData(textureResource_, mipImages_);
+
+	CreateShaderResourceView(dxCommon->GetDevice(), dxCommon->GetsrvDescriptorHeap());
 
 	
 }
@@ -105,7 +107,7 @@ void TextureManager::CreateShaderResourceView(ID3D12Device* device, ID3D12Descri
 	// metaDataをもとにSRVの設定
 	srvDesc_.Format = metadata_.format;
 	srvDesc_.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
-	srvDesc_.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
+	srvDesc_.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;	//2Dテクスチャ
 	srvDesc_.Texture2D.MipLevels = UINT(metadata_.mipLevels);
 
 	// SRVを作成するDescriptorHeapの場所を決める
