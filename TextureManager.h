@@ -13,15 +13,7 @@ public:
 	/// <summary>
 	///	初期化
 	/// </summary>
-	void Initialize();
-
-	/// <summary>
-	/// 終了処理
-	/// </summary>
-	void End();
-
-
-	void TransferTexture(DirectXCommon* dxCommon);
+	void Initialize(DirectXCommon* dxCommon);
 
 
 	/// <summary>

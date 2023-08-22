@@ -96,7 +96,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	for (int i = 0; i < KmaxTriangle; i++)
 	{
 		//色
-		triangleData[i].color = { 1.0f,0.0f,0.0f,1.0f };
+		triangleData[i].color = { 1.0f,1.0f,1.0f,1.0f };
 	}
 
 	for (int i = 0; i < KmaxTriangle; i++)
@@ -109,10 +109,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		};
 	}
 
-	texture->Initialize();
+	CoInitializeEx(0, COINIT_MULTITHREADED);
 
-	texture->TransferTexture(dxCommon);
-
+	texture->Initialize(dxCommon);
 
 	imGuiManager->Initialize(winApp, dxCommon);
 
@@ -156,7 +155,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	}
 
-	texture->End();
+	CoUninitialize();
 
 	for (int i = 0; i < KmaxTriangle; i++)
 	{

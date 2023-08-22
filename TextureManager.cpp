@@ -6,19 +6,7 @@ TextureManager::~TextureManager()
 	textureResource_->Release();
 }
 
-void TextureManager::Initialize()
-{
-	CoInitializeEx(0, COINIT_MULTITHREADED);
-}
-
-
-void TextureManager::End()
-{
-	CoUninitialize();
-}
-
-
-void TextureManager::TransferTexture(DirectXCommon* dxCommon)
+void TextureManager::Initialize(DirectXCommon* dxCommon)
 {
 	mipImages_ = LoadTexture("resources/uvChecker.png");
 	metadata_ = mipImages_.GetMetadata();
@@ -27,8 +15,10 @@ void TextureManager::TransferTexture(DirectXCommon* dxCommon)
 
 	CreateShaderResourceView(dxCommon->GetDevice(), dxCommon->GetsrvDescriptorHeap());
 
-	
+
 }
+
+
 
 DirectX::ScratchImage TextureManager::LoadTexture(const std::string& filePath)
 {
