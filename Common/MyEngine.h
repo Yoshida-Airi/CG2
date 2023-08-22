@@ -62,6 +62,8 @@ private://プライベート変数
 	IDxcBlob* vertexShaderBlob_;
 	IDxcBlob* pixelShaderBlob_;
 
+	D3D12_DEPTH_STENCIL_DESC depthStencilDesc{};	//DepthStensilStateの設定
+
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC graphicsPipelineStateDesc_{};	//PSO
 	ID3D12PipelineState* graphicsPipelineState_ = nullptr;	//実際に生成
 
@@ -123,6 +125,11 @@ private://プライベート関数
 	///	シェーダをコンパイルする 
 	/// </summary>
 	void ShaderCompile();
+
+	/// <summary>
+	/// DepthStencilStateの設定を行なう
+	/// </summary>
+	void SetDepthStencilState();
 
 	/// <summary>
 	/// PSOを生成する

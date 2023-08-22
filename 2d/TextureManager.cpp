@@ -18,7 +18,7 @@ void TextureManager::Initialize(DirectXCommon* dxCommon ,int32_t width, int32_t 
 	UploadTextureData(textureResource_, mipImages_);
 
 	CreateShaderResourceView(dxCommon->GetDevice(), dxCommon->GetsrvDescriptorHeap());
-
+	CreateDepthStencilView(dxCommon->GetDevice(), dxCommon->GetDsvDescriptorHeap());
 
 }
 
@@ -105,7 +105,8 @@ ID3D12Resource* TextureManager::CreateDepthStencilTextureResource(ID3D12Device* 
 		&resourceDesc,	//Resourceの設定
 		D3D12_RESOURCE_STATE_DEPTH_WRITE,	//深度値を書き込む状態にしておく
 		&depthClearValue,	//Clear最適値
-		IID_PPV_ARGS(&resource));	//作成するResourceポインタへのポインタ
+		IID_PPV_ARGS(&resource)	//作成するResourceポインタへのポインタ
+	);
 	assert(SUCCEEDED(hr));
 
 	return resource;
@@ -148,4 +149,13 @@ void TextureManager::CreateShaderResourceView(ID3D12Device* device, ID3D12Descri
 	textureSrvHandleGPU_.ptr += device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 	// SRVの生成
 	device->CreateShaderResourceView(textureResource_, &srvDesc_, textureSrvHandleCPU_);
+}
+
+
+void TextureManager::CreateDepthStencilView(ID3D12Device* device, ID3D12DescriptorHeap* dsvDescriptorHeap)
+{
+	dsvDesc_.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;	//Format。基本的にはResourceに合わせる
+	dsvDesc_.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;	//2dTexture
+	//DSVHeapの先頭にDSVを作る
+	device->CreateDepthStencilView(depthStencilResource_, &dsvDesc_, dsvDescriptorHeap->GetCPUDescriptorHandleForHeapStart());
 }

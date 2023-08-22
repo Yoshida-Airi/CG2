@@ -190,6 +190,9 @@ void MyEngine::PSO()
 	//シェーダをコンパイルする 
 	ShaderCompile();
 
+	//デプスステンシルステートの設定
+	SetDepthStencilState();
+
 	//PSOを生成する
 	CreatePSO();
 }
@@ -299,6 +302,19 @@ void MyEngine::ShaderCompile()
 	assert(pixelShaderBlob_ != nullptr);
 }
 
+void MyEngine::SetDepthStencilState()
+{
+
+	//Depthの機能を有効化する
+	depthStencilDesc.DepthEnable = true;
+	//書き込みします
+	depthStencilDesc.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;
+	//比較関数はLessEqual。つまり、近ければ描画される
+	depthStencilDesc.DepthFunc = D3D12_COMPARISON_FUNC_LESS_EQUAL;
+
+}
+
+
 /// PSOを生成する
 void MyEngine::CreatePSO()
 {
@@ -308,6 +324,11 @@ void MyEngine::CreatePSO()
 	graphicsPipelineStateDesc_.PS = { pixelShaderBlob_->GetBufferPointer(),pixelShaderBlob_->GetBufferSize() };	//PixelShader
 	graphicsPipelineStateDesc_.BlendState = blendDesc_;	//BlendDesc
 	graphicsPipelineStateDesc_.RasterizerState = rasterizerDesc_;	//RasterrizerState
+	
+	//DepthStencilの設定
+	graphicsPipelineStateDesc_.DepthStencilState = depthStencilDesc;
+	graphicsPipelineStateDesc_.DSVFormat = DXGI_FORMAT_D24_UNORM_S8_UINT;
+
 	//書き込むRTVの情報
 	graphicsPipelineStateDesc_.NumRenderTargets = 1;
 	graphicsPipelineStateDesc_.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;

@@ -19,6 +19,7 @@ DirectXCommon::~DirectXCommon()
 	fence_->Release();
 	rtvDescriptorHeap_->Release();
 	srvDescriptorHeap_->Release();
+	dsvDescriptorHeap_->Release();
 	swapChainResources_[0]->Release();
 	swapChainResources_[1]->Release();
 	swapChain_->Release();
@@ -351,6 +352,9 @@ void DirectXCommon::CreateFinalRenderTargets()
 	rtvDescriptorHeap_ = CreateDescriptorHeap(D3D12_DESCRIPTOR_HEAP_TYPE_RTV, 2, false);
 	srvDescriptorHeap_ = CreateDescriptorHeap(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV, 128, true);
 
+	//DSV用のヒープでディスクリプタの数は1。DSVはShader内で触るものではないので、ShaderVisibleはfalse
+	dsvDescriptorHeap_ = CreateDescriptorHeap(D3D12_DESCRIPTOR_HEAP_TYPE_DSV, 1, false);
+
 	//---------------------------------------
 	//スワップチェーンからリソースを引っ張ってくる
 	//---------------------------------------
@@ -382,13 +386,23 @@ void DirectXCommon::CreateFinalRenderTargets()
 /// 全画面クリア
 void DirectXCommon::ClearRenderTarget()
 {
+
 	//これから書き込むバッグバッファのインデックスを取得
 	UINT backBufferIndex = swapChain_->GetCurrentBackBufferIndex();
-	//描画先のRTVを設定する
-	commandList_->OMSetRenderTargets(1, &rtvHandles_[backBufferIndex], false, nullptr);
+
+	//描画用のRTVとDSVを設定する
+	D3D12_CPU_DESCRIPTOR_HANDLE dsvhandle = dsvDescriptorHeap_->GetCPUDescriptorHandleForHeapStart();
+	commandList_->OMSetRenderTargets(1, &rtvHandles_[backBufferIndex], false, &dsvhandle);
+
+	////描画先のRTVを設定する
+	//commandList_->OMSetRenderTargets(1, &rtvHandles_[backBufferIndex], false, nullptr);
+	
 	//指定した色で画面全体をクリアする
 	float clearcolor[] = { 0.1f,0.25f,0.5f,1.0f };//青っぽい色。RGBAの順
 	commandList_->ClearRenderTargetView(rtvHandles_[backBufferIndex], clearcolor, 0, nullptr);
+
+	//指定した深度で画面全体をクリアする
+	commandList_->ClearDepthStencilView(dsvhandle, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 }
 
 void DirectXCommon::CreateFence() {
