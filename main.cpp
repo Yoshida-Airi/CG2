@@ -26,7 +26,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	dxCommon->Initialize(winApp);
 	engine->Initialize(dxCommon, winApp);
 
-	const int KmaxTriangle = 1;
+	const int KmaxTriangle = 2;
 
 	TriangleData triangleData[KmaxTriangle];
 	Triangle* triangle[KmaxTriangle];
@@ -39,6 +39,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	triangleData[0].vertex[0] = { -0.5f,-0.5f,0.0f,1.0f };
 	triangleData[0].vertex[1] = { 0.0f,0.5f,0.0f,1.0f };
 	triangleData[0].vertex[2] = { 0.5f,-0.5f,0.0f,1.0f };
+
+	triangleData[1].vertex[0] = { -0.5f,-0.5f,0.5f,1.0f };
+	triangleData[1].vertex[1] = { 0.0f,0.0f,0.0f,1.0f };
+	triangleData[1].vertex[2] = { 0.5f,-0.5f,-0.5f,1.0f };
+
 
 	////頂点
 	//triangleData[0].vertex[0] = { -0.2f,-0.2f,0.0f,2.0f };
