@@ -13,7 +13,7 @@ public:
 	/// <summary>
 	///	初期化
 	/// </summary>
-	void Initialize(DirectXCommon* dxCommon);
+	void Initialize(DirectXCommon* dxCommon, int32_t width, int32_t height);
 
 
 	/// <summary>
@@ -29,7 +29,11 @@ public:
 private:
 	DirectX::TexMetadata metadata_;
 	DirectX::ScratchImage mipImages_;
+
+
 	ID3D12Resource* textureResource_;
+	ID3D12Resource* depthStencilResource_;
+
 	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc_;
 	D3D12_CPU_DESCRIPTOR_HANDLE textureSrvHandleCPU_;
 	D3D12_GPU_DESCRIPTOR_HANDLE textureSrvHandleGPU_;
@@ -50,6 +54,8 @@ private:
 	/// <returns></returns>
 	ID3D12Resource* CreateTextureResource(ID3D12Device* device, const DirectX::TexMetadata& metadata);
 
+
+	ID3D12Resource* CreateDepthStencilTextureResource(ID3D12Device* device, int32_t width, int32_t height);
 
 	/// <summary>
 	/// TextureResourceにデータを転送する

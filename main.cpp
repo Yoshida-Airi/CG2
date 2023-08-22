@@ -111,7 +111,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	CoInitializeEx(0, COINIT_MULTITHREADED);
 
-	texture->Initialize(dxCommon);
+	texture->Initialize(dxCommon, kWindowWidth, kWindowHeight);
 
 	imGuiManager->Initialize(winApp, dxCommon);
 
