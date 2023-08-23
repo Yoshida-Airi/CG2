@@ -30,7 +30,7 @@ public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize(WindowAPI* winApp, DirectXCommon* dxcommon, MyEngine* engine);
+	void Initialize(WindowAPI* winApp, DirectXCommon* dxcommon, MyEngine* engine, const SpriteData& data);
 
 	/// <summary>
 	/// 更新処理

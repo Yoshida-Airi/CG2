@@ -34,6 +34,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	TriangleData triangleData[KmaxTriangle];
 	Triangle* triangle[KmaxTriangle];
 
+	SpriteData spriteData;
 	Sprite* sprite;
 
 	for (int i = 0; i < KmaxTriangle; i++)
@@ -68,20 +69,34 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		};
 	}
 
+	spriteData.vertex[0] = { 0.0f,360.0f,0.0f,1.0f };
+	spriteData.vertex[1] = { 0.0f,0.0f,0.0f,1.0f };
+	spriteData.vertex[2] = { 640.0f,360.0f,0.0f,1.0f };
+	spriteData.vertex[3] = { 0.0f,0.0f,0.0f,1.0f };
+	spriteData.vertex[4] = { 640.0f,0.0f,0.0f,1.0f };
+	spriteData.vertex[5] = { 640.0f,360.0f,0.0f,1.0f };
+
+	spriteData.transform =
+	{
+		{1.0f,1.0f,1.0f},
+		{0.0f,0.0f,0.0f},
+		{0.0f,0.0f,0.0f}
+	};
+
 	CoInitializeEx(0, COINIT_MULTITHREADED);
 
 	texture->Initialize(dxCommon, kWindowWidth, kWindowHeight);
 
 	imGuiManager->Initialize(winApp, dxCommon);
 
-	
+
 
 	for (int i = 0; i < KmaxTriangle; i++)
 	{
 		triangle[i]->Initialize(winApp, dxCommon, engine, triangleData[i], texture);
 	}
 
-	sprite->Initialize(winApp, dxCommon, engine);
+	sprite->Initialize(winApp, dxCommon, engine, spriteData);
 
 	// ウィンドウの×ボタンが押されるまでループ
 	while (WindowAPI::ProcessMessage() == 0)
@@ -101,7 +116,23 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		}
 
 		sprite->Update();
-	
+
+
+#ifdef _DEBUG
+
+		ImGui::Begin("Setting");
+
+		float translateSprite[3] = {spriteData.transform.translate.x,spriteData.transform.translate.y,spriteData.transform.translate.z};
+
+		ImGui::DragFloat3("translete", translateSprite, 0.1f);
+
+
+
+		ImGui::End();
+
+#endif
+
+
 		imGuiManager->End();
 
 		for (int i = 0; i < KmaxTriangle; i++)
