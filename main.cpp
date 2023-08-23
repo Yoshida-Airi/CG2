@@ -118,6 +118,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		sprite->Update();
 
 
+#ifdef _DEBUG
 
 		ImGui::Begin("Setting");
 
@@ -128,6 +129,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 
 		ImGui::End();
+
+#endif
 
 
 		imGuiManager->End();
