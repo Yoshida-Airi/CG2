@@ -82,7 +82,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="2d\ImGuiManager.cpp" />
-    <ClCompile Include="2d\Sprite.cpp" />
     <ClCompile Include="2d\TextureManager.cpp" />
     <ClCompile Include="3d\Triangle.cpp" />
     <ClCompile Include="Common\DirectXCommon.cpp" />
@@ -101,7 +100,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="2d\ImGuiManager.h" />
-    <ClInclude Include="2d\Sprite.h" />
     <ClInclude Include="2d\TextureManager.h" />
     <ClInclude Include="3d\Triangle.h" />
     <ClInclude Include="Common\DirectXCommon.h" />
