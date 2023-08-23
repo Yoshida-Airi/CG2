@@ -8,7 +8,7 @@ Sprite::~Sprite()
 }
 
 
-void Sprite::Initialize(WindowAPI* winApp, DirectXCommon* dxcommon, MyEngine* engine, const SpriteData& data)
+void Sprite::Initialize(WindowAPI* winApp, DirectXCommon* dxcommon, MyEngine* engine,  SpriteData* data)
 {
 	winApp_ = winApp;
 	dxCommon_ = dxcommon;
@@ -17,27 +17,27 @@ void Sprite::Initialize(WindowAPI* winApp, DirectXCommon* dxcommon, MyEngine* en
 	VertexBuffer();
 	WvpBuffer();
 
-	vertexData_[0].position = data.vertex[0];
+	vertexData_[0].position = data->vertex[0];
 	vertexData_[0].texcoord = { 0.0f,1.0f };
 
-	vertexData_[1].position = data.vertex[1];
+	vertexData_[1].position = data->vertex[1];
 	vertexData_[1].texcoord = { 0.0f,0.0f };
 
-	vertexData_[2].position = data.vertex[2];
+	vertexData_[2].position = data->vertex[2];
 	vertexData_[2].texcoord = { 1.0f,1.0f };
 
-	vertexData_[3].position = data.vertex[3];
+	vertexData_[3].position = data->vertex[3];
 	vertexData_[3].texcoord = { 0.0f,0.0f };
 
-	vertexData_[4].position = data.vertex[4];
+	vertexData_[4].position = data->vertex[4];
 	vertexData_[4].texcoord = { 1.0f,0.0f };
 
-	vertexData_[5].position = data.vertex[5];
+	vertexData_[5].position = data->vertex[5];
 	vertexData_[5].texcoord = { 1.0f,1.0f };
 	
 	
 
-	transform_ = data.transform;
+	transform_ = data->transform;
 
 
 }

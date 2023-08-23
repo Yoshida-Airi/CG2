@@ -34,7 +34,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	TriangleData triangleData[KmaxTriangle];
 	Triangle* triangle[KmaxTriangle];
 
-	SpriteData spriteData;
+	SpriteData* spriteData = new SpriteData;
 	Sprite* sprite;
 
 	for (int i = 0; i < KmaxTriangle; i++)
@@ -69,14 +69,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		};
 	}
 
-	spriteData.vertex[0] = { 0.0f,360.0f,0.0f,1.0f };
-	spriteData.vertex[1] = { 0.0f,0.0f,0.0f,1.0f };
-	spriteData.vertex[2] = { 640.0f,360.0f,0.0f,1.0f };
-	spriteData.vertex[3] = { 0.0f,0.0f,0.0f,1.0f };
-	spriteData.vertex[4] = { 640.0f,0.0f,0.0f,1.0f };
-	spriteData.vertex[5] = { 640.0f,360.0f,0.0f,1.0f };
+	spriteData->vertex[0] = { 0.0f,360.0f,0.0f,1.0f };
+	spriteData->vertex[1] = { 0.0f,0.0f,0.0f,1.0f };
+	spriteData->vertex[2] = { 640.0f,360.0f,0.0f,1.0f };
+	spriteData->vertex[3] = { 0.0f,0.0f,0.0f,1.0f };
+	spriteData->vertex[4] = { 640.0f,0.0f,0.0f,1.0f };
+	spriteData->vertex[5] = { 640.0f,360.0f,0.0f,1.0f };
 
-	spriteData.transform =
+	spriteData->transform =
 	{
 		{1.0f,1.0f,1.0f},
 		{0.0f,0.0f,0.0f},
@@ -118,6 +118,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		sprite->Update();
 
 
+	
 
 		imGuiManager->End();
 
