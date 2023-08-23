@@ -118,20 +118,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		sprite->Update();
 
 
-#ifdef _DEBUG
-
-		ImGui::Begin("Setting");
-
-		float translateSprite[] = {spriteData.transform.translate.x,spriteData.transform.translate.y,spriteData.transform.translate.z};
-
-		ImGui::SliderFloat3("translete", translateSprite, 0.0f, 1280.0f);
-
-
-
-		ImGui::End();
-
-#endif
-
 
 		imGuiManager->End();
 
