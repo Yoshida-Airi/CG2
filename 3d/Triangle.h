@@ -16,12 +16,6 @@ struct TriangleData
 	Transform  transform;
 };
 
-struct VertexData
-{
-	Vector4 position;
-	Vector2 texcoord;
-};
-
 class Triangle
 {
 public:
@@ -34,7 +28,11 @@ public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
+	/// <param name="winApp"></param>
 	/// <param name="direct"></param>
+	/// <param name="engine"></param>
+	/// <param name="data"></param>
+	/// <param name="texture"></param>
 	void Initialize(WindowAPI* winApp, DirectXCommon* direct, MyEngine* engine, const TriangleData& data, TextureManager* texture);
 
 	/// <summary>
@@ -45,9 +43,6 @@ public:
 	/// <summary>
 	/// 描画
 	/// </summary>
-	/// <param name="a">左下</param>
-	/// <param name="b">上</param>
-	/// <param name="c">右下</param>
 	void Draw();
 
 

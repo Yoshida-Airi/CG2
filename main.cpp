@@ -5,6 +5,8 @@
 #include"Triangle.h"
 #include"ImGuiManager.h"
 #include"TextureManager.h"
+#include"Sprite.h"
+
 
 const wchar_t* kWindowTitle = L"CG2";
 
@@ -17,6 +19,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	MyEngine* engine = new MyEngine;
 	ImGuiManager* imGuiManager = new ImGuiManager;
 	TextureManager* texture = new TextureManager;
+
 
 	//アプリケーションの開始
 	const uint32_t kWindowWidth = 1280;
@@ -31,10 +34,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	TriangleData triangleData[KmaxTriangle];
 	Triangle* triangle[KmaxTriangle];
 
+	Sprite* sprite;
+
 	for (int i = 0; i < KmaxTriangle; i++)
 	{
 		triangle[i] = new Triangle;
 	}
+
+	sprite = new Sprite;
 
 	triangleData[0].vertex[0] = { -0.5f,-0.5f,0.0f,1.0f };
 	triangleData[0].vertex[1] = { 0.0f,0.5f,0.0f,1.0f };
@@ -43,54 +50,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	triangleData[1].vertex[0] = { -0.5f,-0.5f,0.5f,1.0f };
 	triangleData[1].vertex[1] = { 0.0f,0.0f,0.0f,1.0f };
 	triangleData[1].vertex[2] = { 0.5f,-0.5f,-0.5f,1.0f };
-
-
-	////頂点
-	//triangleData[0].vertex[0] = { -0.2f,-0.2f,0.0f,2.0f };
-	//triangleData[0].vertex[1] = { 0.0f,0.2f,0.0f,2.0f };
-	//triangleData[0].vertex[2] = { 0.2f,-0.2f,0.0f,2.0f };
-
-	//triangleData[1].vertex[0] = { -0.2f,-0.7f,0.0f,2.0f };
-	//triangleData[1].vertex[1] = { 0.0f,-0.3f,0.0f,2.0f };
-	//triangleData[1].vertex[2] = { 0.2f,-0.7f,0.0f,2.0f };
-
-	//triangleData[2].vertex[0] = { -0.2f,0.3f,0.0f,2.0f };
-	//triangleData[2].vertex[1] = { 0.0f,0.7f,0.0f,2.0f };
-	//triangleData[2].vertex[2] = { 0.2f,0.3f,0.0f,2.0f };
-
-	//triangleData[3].vertex[0] = { 0.2f,-0.2f ,0.0f,2.0f };
-	//triangleData[3].vertex[1] = { 0.4f,0.2f ,0.0f,2.0f };
-	//triangleData[3].vertex[2] = { 0.6f,-0.2f ,0.0f,2.0f };
-
-
-	//triangleData[4].vertex[0] = { 0.2f,-0.7f,0.0f,2.0f };
-	//triangleData[4].vertex[1] = { 0.4f,-0.3f,0.0f,2.0f };
-	//triangleData[4].vertex[2] = { 0.6f,-0.7f,0.0f,2.0f };
-
-
-	//triangleData[5].vertex[0] = { 0.2f,0.3f,0.0f,2.0f };
-	//triangleData[5].vertex[1] = { 0.4f,0.7f,0.0f,2.0f };
-	//triangleData[5].vertex[2] = { 0.6f,0.3f,0.0f,2.0f };
-
-	//triangleData[6].vertex[0] = { 0.6f,-0.2f,0.0f,2.0f };
-	//triangleData[6].vertex[1] = { 0.8f,0.2f,0.0f,2.0f };
-	//triangleData[6].vertex[2] = { 1.0f,-0.2f,0.0f,2.0f };
-
-
-	//triangleData[7].vertex[0] = { 0.6f,-0.7f,0.0f,2.0f };
-	//triangleData[7].vertex[1] = { 0.8f,-0.3f,0.0f,2.0f };
-	//triangleData[7].vertex[2] = { 1.0f,-0.7f,0.0f,2.0f };
-
-	//triangleData[8].vertex[0] = { 1.0f,-0.2f,0.0f,2.0f };
-	//triangleData[8].vertex[1] = { 1.2f,0.2f,0.0f,2.0f };
-	//triangleData[8].vertex[2] = { 1.4f,-0.2f,0.0f,2.0f };
-
-
-	//triangleData[9].vertex[0] = { 1.0f,-0.7f,0.0f,2.0f };
-	//triangleData[9].vertex[1] = { 1.2f,-0.3f,0.0f,2.0f };
-	//triangleData[9].vertex[2] = { 1.4f,-0.7f,0.0f,2.0f };
-
-
 
 
 	for (int i = 0; i < KmaxTriangle; i++)
@@ -122,6 +81,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		triangle[i]->Initialize(winApp, dxCommon, engine, triangleData[i], texture);
 	}
 
+	sprite->Initialize(winApp, dxCommon, engine);
 
 	// ウィンドウの×ボタンが押されるまでループ
 	while (WindowAPI::ProcessMessage() == 0)
@@ -140,6 +100,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			triangle[i]->Update();
 		}
 
+		sprite->Update();
+	
 		imGuiManager->End();
 
 		for (int i = 0; i < KmaxTriangle; i++)
@@ -147,7 +109,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			triangle[i]->Draw();
 		}
 
-		
+		sprite->Draw();
+
 		imGuiManager->Draw();
 		engine->PostDraw();
 		dxCommon->PostDraw();
@@ -161,6 +124,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	{
 		delete triangle[i];
 	}
+
+	delete sprite;
 
 	delete texture;
 	delete imGuiManager;

@@ -99,6 +99,9 @@
     <ClCompile Include="2d\TextureManager.cpp">
       <Filter>ソース ファイル\2d</Filter>
     </ClCompile>
+    <ClCompile Include="Sprite.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3d\Triangle.h">
@@ -163,6 +166,9 @@
     </ClInclude>
     <ClInclude Include="Math\Vector2.h">
       <Filter>ヘッダー ファイル\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprite.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
