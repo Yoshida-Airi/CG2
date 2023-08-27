@@ -27,7 +27,7 @@ void Triangle::Initialize(WindowAPI* winApp, DirectXCommon* direct, MyEngine* en
 	{
 		{1.0f, 1.0f, 1.0f }, 
 		{0.0f, 0.0f, 0.0f },
-		{0.0f, 0.0f, -5.0f}
+		{0.0f, 0.0f, -10.0f}
 	};
 
 	VertexBuffer();
@@ -51,8 +51,7 @@ void Triangle::Initialize(WindowAPI* winApp, DirectXCommon* direct, MyEngine* en
 
 	transform_ = data.transform;
 
-	*wvpData_ = MakeIdentity4x4();
-
+	
 }
 
 void Triangle::Update()

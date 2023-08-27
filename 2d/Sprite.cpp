@@ -57,7 +57,6 @@ void Sprite::Draw()
 {
 	dxCommon_->GetCommandList()->IASetVertexBuffers(0, 1, &vertexBufferView_);	//VBVを設定
 	dxCommon_->GetCommandList()->SetGraphicsRootConstantBufferView(1, transformationmatrixResource->GetGPUVirtualAddress());
-	
 	//描画
 	dxCommon_->GetCommandList()->DrawInstanced(6, 1, 0, 0);
 }

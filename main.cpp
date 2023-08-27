@@ -6,7 +6,7 @@
 #include"ImGuiManager.h"
 #include"TextureManager.h"
 #include"Sprite.h"
-
+#include"Sphere.h"
 
 const wchar_t* kWindowTitle = L"CG2";
 
@@ -29,46 +29,19 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	dxCommon->Initialize(winApp);
 	engine->Initialize(dxCommon, winApp);
 
-	const int KmaxTriangle = 2;
-
-	TriangleData triangleData[KmaxTriangle];
-	Triangle* triangle[KmaxTriangle];
-
+	
 	SpriteData* spriteData = new SpriteData;
 	Sprite* sprite;
 
-	for (int i = 0; i < KmaxTriangle; i++)
-	{
-		triangle[i] = new Triangle;
-	}
+	Sphere* sphere;
+
+	
 
 	sprite = new Sprite;
-
-	triangleData[0].vertex[0] = { -0.5f,-0.5f,0.0f,1.0f };
-	triangleData[0].vertex[1] = { 0.0f,0.5f,0.0f,1.0f };
-	triangleData[0].vertex[2] = { 0.5f,-0.5f,0.0f,1.0f };
-
-	triangleData[1].vertex[0] = { -0.5f,-0.5f,0.5f,1.0f };
-	triangleData[1].vertex[1] = { 0.0f,0.0f,0.0f,1.0f };
-	triangleData[1].vertex[2] = { 0.5f,-0.5f,-0.5f,1.0f };
+	sphere = new Sphere;
 
 
-	for (int i = 0; i < KmaxTriangle; i++)
-	{
-		//色
-		triangleData[i].color = { 1.0f,1.0f,1.0f,1.0f };
-	}
-
-	for (int i = 0; i < KmaxTriangle; i++)
-	{
-		triangleData[i].transform =
-		{
-			{1.0f, 1.0f, 1.0f},
-			{ 0.0f,0.0f,0.0f },
-			{ 0.0f,0.0f,0.0f }
-		};
-	}
-
+	
 	spriteData->vertex[0] = { 0.0f,360.0f,0.0f,1.0f };
 	spriteData->vertex[1] = { 0.0f,0.0f,0.0f,1.0f };
 	spriteData->vertex[2] = { 640.0f,360.0f,0.0f,1.0f };
@@ -91,12 +64,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 
 
-	for (int i = 0; i < KmaxTriangle; i++)
-	{
-		triangle[i]->Initialize(winApp, dxCommon, engine, triangleData[i], texture);
-	}
+	
 
 	sprite->Initialize(winApp, dxCommon, engine, spriteData);
+
+	sphere->Initialize(winApp, dxCommon, engine,texture);
 
 	// ウィンドウの×ボタンが押されるまでループ
 	while (WindowAPI::ProcessMessage() == 0)
@@ -110,11 +82,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		engine->PreDraw();
 		imGuiManager->Begin();
 
-		for (int i = 0; i < KmaxTriangle; i++)
-		{
-			triangle[i]->Update();
-		}
 
+
+		sphere->Update();
 		sprite->Update();
 
 
@@ -122,12 +92,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 		imGuiManager->End();
 
-		for (int i = 0; i < KmaxTriangle; i++)
-		{
-			triangle[i]->Draw();
-		}
+		
 
+		sphere->Draw();
 		sprite->Draw();
+		
 
 		imGuiManager->Draw();
 		engine->PostDraw();
@@ -138,13 +107,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	CoUninitialize();
 
-	for (int i = 0; i < KmaxTriangle; i++)
-	{
-		delete triangle[i];
-	}
 
+
+	delete sphere;
 	delete sprite;
-
 	delete texture;
 	delete imGuiManager;
 	delete engine;
