@@ -30,7 +30,7 @@ public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize(WindowAPI* winApp, DirectXCommon* dxcommon, MyEngine* engine, SpriteData* data);
+	void Initialize(WindowAPI* winApp, DirectXCommon* dxcommon, MyEngine* engine, TextureManager* texture, SpriteData* data);
 
 	/// <summary>
 	/// 更新処理
@@ -71,7 +71,7 @@ private:
 	ID3D12Resource* vertexResource_ = nullptr;	//頂点リソース
 	ID3D12Resource* transformationmatrixResource = nullptr;	//トランスフォーメーションマトリックスリソース
 
-	
+	D3D12_GPU_DESCRIPTOR_HANDLE textureSrvHandleGPU_;
 
 	D3D12_VERTEX_BUFFER_VIEW vertexBufferView_{};	//頂点バッファビュー
 

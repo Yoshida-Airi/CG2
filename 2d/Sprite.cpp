@@ -8,11 +8,13 @@ Sprite::~Sprite()
 }
 
 
-void Sprite::Initialize(WindowAPI* winApp, DirectXCommon* dxcommon, MyEngine* engine,  SpriteData* data)
+void Sprite::Initialize(WindowAPI* winApp, DirectXCommon* dxcommon, MyEngine* engine, TextureManager* texture, SpriteData* data)
 {
 	winApp_ = winApp;
 	dxCommon_ = dxcommon;
 	engine_ = engine;
+
+	textureSrvHandleGPU_ = texture->GetTextureSrvHandleGPU();
 
 	VertexBuffer();
 	WvpBuffer();
@@ -57,6 +59,7 @@ void Sprite::Draw()
 {
 	dxCommon_->GetCommandList()->IASetVertexBuffers(0, 1, &vertexBufferView_);	//VBVを設定
 	dxCommon_->GetCommandList()->SetGraphicsRootConstantBufferView(1, transformationmatrixResource->GetGPUVirtualAddress());
+	dxCommon_->GetCommandList()->SetGraphicsRootDescriptorTable(2, textureSrvHandleGPU_);
 	//描画
 	dxCommon_->GetCommandList()->DrawInstanced(6, 1, 0, 0);
 }

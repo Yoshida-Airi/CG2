@@ -66,7 +66,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	
 
-	sprite->Initialize(winApp, dxCommon, engine, spriteData);
+	sprite->Initialize(winApp, dxCommon, engine, texture, spriteData);
 
 	sphere->Initialize(winApp, dxCommon, engine,texture);
 
