@@ -18,6 +18,7 @@ void Sphere::Initialize(WindowAPI* winApp, DirectXCommon* dxComon, MyEngine* eng
 	kClientWidth_ = winApp_->GetWidth();
 
 	textureSrvHandleGPU_ = texture->GetTextureSrvHandleGPU();
+	textureSrvHandleGPU2_ = texture->GetTextureSrvHandleGPU2();
 
 	
 
@@ -142,7 +143,10 @@ void Sphere::Update()
 	Matrix4x4 worldViewProjectionMatrix = Multiply(worldMatrix, Multiply(viewMatrix, projectionMatrix));
 	*wvpData_ = worldViewProjectionMatrix;
 
+	ImGui::Begin("texture");
+	ImGui::Checkbox("useMonsterBall", &useMonsterBall);
 
+	ImGui::End();
 	
 }
 
@@ -156,7 +160,7 @@ void Sphere::Draw()
 	dxCommon_->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
 	dxCommon_->GetCommandList()->SetGraphicsRootConstantBufferView(1, wvpResource_->GetGPUVirtualAddress());
 	// SRVのDescriptorTableの先頭を設定。
-	dxCommon_->GetCommandList()->SetGraphicsRootDescriptorTable(2, textureSrvHandleGPU_);
+	dxCommon_->GetCommandList()->SetGraphicsRootDescriptorTable(2, useMonsterBall ? textureSrvHandleGPU2_ : textureSrvHandleGPU_);
 	//描画
 	dxCommon_->GetCommandList()->DrawInstanced(totalVertex, 1, 0, 0);
 

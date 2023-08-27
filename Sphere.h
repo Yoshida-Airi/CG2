@@ -64,12 +64,13 @@ private:
 	//球の全ての頂点
 	const uint32_t totalVertex = 1536;
 
-
+	bool useMonsterBall = true;
 
 	Transform transform_ = {};
 	Transform cameraTransform_ = {};
 
 	D3D12_GPU_DESCRIPTOR_HANDLE textureSrvHandleGPU_;
+	D3D12_GPU_DESCRIPTOR_HANDLE textureSrvHandleGPU2_;
 
 
 private:

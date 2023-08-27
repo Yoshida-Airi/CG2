@@ -19,17 +19,32 @@ public:
 	D3D12_GPU_DESCRIPTOR_HANDLE GetTextureSrvHandleGPU() { return textureSrvHandleGPU_; };
 
 
+	D3D12_GPU_DESCRIPTOR_HANDLE GetTextureSrvHandleGPU2() { return textureSrvHandleGPU2_; };
+
+
 private:
 	DirectX::TexMetadata metadata_;
-	DirectX::ScratchImage mipImages_;
+	DirectX::TexMetadata metadata2_;
 
+	DirectX::ScratchImage mipImages_;
+	DirectX::ScratchImage mipImages2_;
 
 	ID3D12Resource* textureResource_;
+	ID3D12Resource* textureResource2_;
+
 	ID3D12Resource* depthStencilResource_;
 
 	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc_;
+	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc2_;
+
+
+	
+
 	D3D12_CPU_DESCRIPTOR_HANDLE textureSrvHandleCPU_;
 	D3D12_GPU_DESCRIPTOR_HANDLE textureSrvHandleGPU_;
+
+	D3D12_CPU_DESCRIPTOR_HANDLE textureSrvHandleCPU2_;
+	D3D12_GPU_DESCRIPTOR_HANDLE textureSrvHandleGPU2_;
 
 
 	D3D12_DEPTH_STENCIL_VIEW_DESC dsvDesc_;
@@ -75,8 +90,25 @@ private:
 	/// <param name="srvDescriptorHeap"></param>
 	void CreateShaderResourceView(ID3D12Device* device, ID3D12DescriptorHeap* srvDescriptorHeap);
 
-
+	/// <summary>
+	///	dsvの設定と設定
+	/// </summary>
 	void CreateDepthStencilView(ID3D12Device* device, ID3D12DescriptorHeap* dsvDescriptorHeap);
+
+
+	/// <summary>
+	/// CPUハンドルの取得
+	/// </summary>
+	D3D12_CPU_DESCRIPTOR_HANDLE GetCPUDescriptorHandle(ID3D12DescriptorHeap* descriptorHeap, uint32_t descriptorSize, uint32_t index);
+
+	/// <summary>
+	/// GPUハンドルの取得
+	/// </summary>
+	D3D12_GPU_DESCRIPTOR_HANDLE GetGPUDescriptorHandle(ID3D12DescriptorHeap* descriptorHeap, uint32_t descriptorSize, uint32_t index);
+
+
+
+
 
 };
 

@@ -4,6 +4,7 @@
 TextureManager::~TextureManager()
 {
 	textureResource_->Release();
+	textureResource2_->Release();
 	depthStencilResource_->Release();
 }
 
@@ -11,11 +12,17 @@ void TextureManager::Initialize(DirectXCommon* dxCommon ,int32_t width, int32_t 
 {
 	mipImages_ = LoadTexture("resources/uvChecker.png");
 	metadata_ = mipImages_.GetMetadata();
-
 	textureResource_ = CreateTextureResource(dxCommon->GetDevice(), metadata_);
+
+	mipImages2_ = LoadTexture("resources/monsterBall.png");
+	metadata2_ = mipImages2_.GetMetadata();
+	textureResource2_ = CreateTextureResource(dxCommon->GetDevice(), metadata2_);
+
+
 	depthStencilResource_ = CreateDepthStencilTextureResource(dxCommon->GetDevice(), width, height);
 
 	UploadTextureData(textureResource_, mipImages_);
+	UploadTextureData(textureResource2_, mipImages2_);
 
 	CreateShaderResourceView(dxCommon->GetDevice(), dxCommon->GetsrvDescriptorHeap());
 	CreateDepthStencilView(dxCommon->GetDevice(), dxCommon->GetDsvDescriptorHeap());
@@ -142,13 +149,23 @@ void TextureManager::CreateShaderResourceView(ID3D12Device* device, ID3D12Descri
 	srvDesc_.Texture2D.MipLevels = UINT(metadata_.mipLevels);
 
 	// SRVを作成するDescriptorHeapの場所を決める
-	textureSrvHandleCPU_ = srvDescriptorHeap->GetCPUDescriptorHandleForHeapStart();
-	textureSrvHandleGPU_ = srvDescriptorHeap->GetGPUDescriptorHandleForHeapStart();
-	// 先頭はImGuiが使っているのでその次を使う
-	textureSrvHandleCPU_.ptr += device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
-	textureSrvHandleGPU_.ptr += device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+	textureSrvHandleCPU_ = GetCPUDescriptorHandle(srvDescriptorHeap, device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV), 1);
+	textureSrvHandleGPU_ = GetGPUDescriptorHandle(srvDescriptorHeap, device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV), 1);
+	
 	// SRVの生成
 	device->CreateShaderResourceView(textureResource_, &srvDesc_, textureSrvHandleCPU_);
+
+	srvDesc2_.Format = metadata2_.format;
+	srvDesc2_.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
+	srvDesc2_.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
+	srvDesc2_.Texture2D.MipLevels = UINT(metadata2_.mipLevels);
+
+	textureSrvHandleCPU2_ = GetCPUDescriptorHandle(srvDescriptorHeap, device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV), 2);
+	textureSrvHandleGPU2_ = GetGPUDescriptorHandle(srvDescriptorHeap, device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV), 2);
+
+	device->CreateShaderResourceView(textureResource2_, &srvDesc2_, textureSrvHandleCPU2_);
+	
+
 }
 
 
@@ -159,3 +176,25 @@ void TextureManager::CreateDepthStencilView(ID3D12Device* device, ID3D12Descript
 	//DSVHeapの先頭にDSVを作る
 	device->CreateDepthStencilView(depthStencilResource_, &dsvDesc_, dsvDescriptorHeap->GetCPUDescriptorHandleForHeapStart());
 }
+
+
+/// <summary>
+/// CPUハンドルの取得
+/// </summary>
+D3D12_CPU_DESCRIPTOR_HANDLE TextureManager::GetCPUDescriptorHandle(ID3D12DescriptorHeap* descriptorHeap, uint32_t descriptorSize, uint32_t index)
+{
+	D3D12_CPU_DESCRIPTOR_HANDLE handleCPU = descriptorHeap->GetCPUDescriptorHandleForHeapStart();
+	handleCPU.ptr += (descriptorSize * index);
+	return handleCPU;
+}
+
+/// <summary>
+/// GPUハンドルの取得
+/// </summary>
+D3D12_GPU_DESCRIPTOR_HANDLE TextureManager::GetGPUDescriptorHandle(ID3D12DescriptorHeap* descriptorHeap, uint32_t descriptorSize, uint32_t index)
+{
+	D3D12_GPU_DESCRIPTOR_HANDLE handleGPU = descriptorHeap->GetGPUDescriptorHandleForHeapStart();
+	handleGPU.ptr += (descriptorSize * index);
+	return handleGPU;
+}
+
