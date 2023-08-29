@@ -55,6 +55,10 @@ void Sphere::Initialize(WindowAPI* winApp, DirectXCommon* dxComon, MyEngine* eng
 			vertexData_[start].texcoord.x = u;
 			vertexData_[start].texcoord.y = v + (1.0f / kSubdivision);
 			
+			vertexData_[start].normal.x = vertexData_[start].position.x;
+			vertexData_[start].normal.y = vertexData_[start].position.y;
+			vertexData_[start].normal.z = vertexData_[start].position.z;
+
 
 			//頂点b
 			vertexData_[start + 1].position.x = cos(lat + kLatEvery) * cos(lon);
@@ -65,6 +69,9 @@ void Sphere::Initialize(WindowAPI* winApp, DirectXCommon* dxComon, MyEngine* eng
 			vertexData_[start + 1].texcoord.x = u;
 			vertexData_[start + 1].texcoord.y = v;
 
+			vertexData_[start + 1].normal.x = vertexData_[start].position.x;
+			vertexData_[start + 1].normal.y = vertexData_[start].position.y;
+			vertexData_[start + 1].normal.z = vertexData_[start].position.z;
 
 			//頂点c
 			vertexData_[start + 2].position.x = cos(lat) * cos(lon + kLonEvery);
@@ -75,6 +82,9 @@ void Sphere::Initialize(WindowAPI* winApp, DirectXCommon* dxComon, MyEngine* eng
 			vertexData_[start + 2].texcoord.x = u + (1.0f / kSubdivision);
 			vertexData_[start + 2].texcoord.y = v + (1.0f / kSubdivision);
 
+			vertexData_[start + 2].normal.x = vertexData_[start].position.x;
+			vertexData_[start + 2].normal.y = vertexData_[start].position.y;
+			vertexData_[start + 2].normal.z = vertexData_[start].position.z;
 
 			//頂点d
 			vertexData_[start + 3].position.x = cos(lat + kLatEvery) * cos(lon);
@@ -85,6 +95,9 @@ void Sphere::Initialize(WindowAPI* winApp, DirectXCommon* dxComon, MyEngine* eng
 			vertexData_[start + 3].texcoord.x = u;
 			vertexData_[start + 3].texcoord.y = v;
 
+			vertexData_[start + 3].normal.x = vertexData_[start].position.x;
+			vertexData_[start + 3].normal.y = vertexData_[start].position.y;
+			vertexData_[start + 3].normal.z = vertexData_[start].position.z;
 			
 			//頂点e
 			vertexData_[start + 4].position.x = cos(lat + kLatEvery) * cos(lon + kLonEvery);
@@ -95,6 +108,9 @@ void Sphere::Initialize(WindowAPI* winApp, DirectXCommon* dxComon, MyEngine* eng
 			vertexData_[start + 4].texcoord.x = u + (1.0f / kSubdivision);
 			vertexData_[start + 4].texcoord.y = v;
 
+			vertexData_[start + 4].normal.x = vertexData_[start].position.x;
+			vertexData_[start + 4].normal.y = vertexData_[start].position.y;
+			vertexData_[start + 4].normal.z = vertexData_[start].position.z;
 
 			//頂点f
 			vertexData_[start + 5].position.x = cos(lat) * cos(lon + kLonEvery);
@@ -105,6 +121,9 @@ void Sphere::Initialize(WindowAPI* winApp, DirectXCommon* dxComon, MyEngine* eng
 			vertexData_[start + 5].texcoord.x = u + (1.0f / kSubdivision);
 			vertexData_[start + 5].texcoord.y = v + (1.0f / kSubdivision);
 
+			vertexData_[start + 5].normal.x = vertexData_[start].position.x;
+			vertexData_[start + 5].normal.y = vertexData_[start].position.y;
+			vertexData_[start + 5].normal.z = vertexData_[start].position.z;
 
 		}
 	}

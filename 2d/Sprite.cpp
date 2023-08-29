@@ -21,21 +21,27 @@ void Sprite::Initialize(WindowAPI* winApp, DirectXCommon* dxcommon, MyEngine* en
 
 	vertexData_[0].position = data->vertex[0];
 	vertexData_[0].texcoord = { 0.0f,1.0f };
+	vertexData_[0].normal = { 0.0f,0.0f,-1.0f };
 
 	vertexData_[1].position = data->vertex[1];
 	vertexData_[1].texcoord = { 0.0f,0.0f };
+	vertexData_[1].normal = { 0.0f,0.0f,-1.0f };
 
 	vertexData_[2].position = data->vertex[2];
 	vertexData_[2].texcoord = { 1.0f,1.0f };
+	vertexData_[2].normal = { 0.0f,0.0f,-1.0f };
 
 	vertexData_[3].position = data->vertex[3];
 	vertexData_[3].texcoord = { 0.0f,0.0f };
+	vertexData_[3].normal = { 0.0f,0.0f,-1.0f };
 
 	vertexData_[4].position = data->vertex[4];
 	vertexData_[4].texcoord = { 1.0f,0.0f };
+	vertexData_[4].normal = { 0.0f,0.0f,-1.0f };
 
 	vertexData_[5].position = data->vertex[5];
 	vertexData_[5].texcoord = { 1.0f,1.0f };
+	vertexData_[5].normal = { 0.0f,0.0f,-1.0f };
 	
 	
 
