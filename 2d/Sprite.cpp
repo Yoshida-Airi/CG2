@@ -4,6 +4,7 @@
 Sprite::~Sprite()
 {
 	vertexResource_->Release();
+	materialResource_->Release();
 	transformationmatrixResource->Release();
 }
 
@@ -17,6 +18,7 @@ void Sprite::Initialize(WindowAPI* winApp, DirectXCommon* dxcommon, MyEngine* en
 	textureSrvHandleGPU_ = texture->GetTextureSrvHandleGPU();
 
 	VertexBuffer();
+	MaterialBuffer();
 	WvpBuffer();
 
 	vertexData_[0].position = data->vertex[0];
@@ -43,7 +45,9 @@ void Sprite::Initialize(WindowAPI* winApp, DirectXCommon* dxcommon, MyEngine* en
 	vertexData_[5].texcoord = { 1.0f,1.0f };
 	vertexData_[5].normal = { 0.0f,0.0f,-1.0f };
 	
-	
+	materialData_->color = { 1.0f,1.0f,1.0f,1.0f };
+	//spriteはLightingしないのでfalseを設定する
+	materialData_->enableLighting = false;
 
 	transform_ = data->transform;
 
@@ -64,6 +68,7 @@ void Sprite::Update()
 void Sprite::Draw()
 {
 	dxCommon_->GetCommandList()->IASetVertexBuffers(0, 1, &vertexBufferView_);	//VBVを設定
+	dxCommon_->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
 	dxCommon_->GetCommandList()->SetGraphicsRootConstantBufferView(1, transformationmatrixResource->GetGPUVirtualAddress());
 	dxCommon_->GetCommandList()->SetGraphicsRootDescriptorTable(2, textureSrvHandleGPU_);
 	//描画
@@ -88,6 +93,13 @@ void Sprite::VertexBuffer()
 	vertexBufferView_.StrideInBytes = sizeof(VertexData);
 
 	vertexResource_->Map(0, nullptr, reinterpret_cast<void**>(&vertexData_));
+}
+
+void Sprite::MaterialBuffer()
+{
+	materialResource_ = engine_->CreateBufferResource(sizeof(Material));	//マテリアル用のデータ
+	//書き込むためのアドレスを取得
+	materialResource_->Map(0, nullptr, reinterpret_cast<void**>(&materialData_));
 }
 
 void Sprite::WvpBuffer()

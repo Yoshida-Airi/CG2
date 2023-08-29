@@ -50,6 +50,10 @@ private:
 	/// </summary>
 	void VertexBuffer();
 
+	/// <summary>
+	/// マテリアルのバッファの取得
+	/// </summary>
+	void MaterialBuffer();
 
 	/// <summary>
 	/// wvpのバッファの取得
@@ -65,10 +69,12 @@ private:
 	TextureManager* texture_;
 
 	VertexData* vertexData_ = nullptr;
+	Material* materialData_ = nullptr;
 	Matrix4x4* transformationMatrixData = nullptr;
 	Transform transform_ = {};
 
 	ID3D12Resource* vertexResource_ = nullptr;	//頂点リソース
+	ID3D12Resource* materialResource_ = nullptr;	//マテリアルリソース
 	ID3D12Resource* transformationmatrixResource = nullptr;	//トランスフォーメーションマトリックスリソース
 
 	D3D12_GPU_DESCRIPTOR_HANDLE textureSrvHandleGPU_;

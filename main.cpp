@@ -32,14 +32,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	
 	SpriteData* spriteData = new SpriteData;
 	Sprite* sprite;
-
 	Sphere* sphere;
 
-	
 
 	sprite = new Sprite;
 	sphere = new Sphere;
-
 
 	
 	spriteData->vertex[0] = { 0.0f,360.0f,0.0f,1.0f };
