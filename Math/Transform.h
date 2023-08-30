@@ -2,7 +2,7 @@
 #include"Vector3.h"
 #include"Vector4.h"
 #include"Vector2.h"
-
+#include"Matrix4x4.h"
 
 struct Transform
 {
@@ -23,4 +23,10 @@ struct Material
 {
 	Vector4 color;
 	int32_t enableLighting;
+};
+
+struct TransformationMatrix
+{
+	Matrix4x4 WVP;
+	Matrix4x4 World;
 };

@@ -42,8 +42,8 @@ private:
 	ID3D12Resource* wvpResource_;	//wvpリソース
 
 	VertexData* vertexData_ = nullptr;
-	Vector4* materialData_ = nullptr;	//マテリアルデータ
-	Matrix4x4* wvpData_ = nullptr;	//wvpデータ
+	Material* materialData_ = nullptr;	//マテリアルデータ
+	TransformationMatrix* wvpData_ = nullptr;	//wvpデータ
 
 	D3D12_VERTEX_BUFFER_VIEW vertexBufferView_;
 	D3D12_VERTEX_BUFFER_VIEW materialBufferView_;

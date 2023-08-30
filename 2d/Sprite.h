@@ -70,12 +70,13 @@ private:
 
 	VertexData* vertexData_ = nullptr;
 	Material* materialData_ = nullptr;
-	Matrix4x4* transformationMatrixData = nullptr;
+	TransformationMatrix* transformationMatrixData = nullptr;
 	Transform transform_ = {};
 
 	ID3D12Resource* vertexResource_ = nullptr;	//頂点リソース
 	ID3D12Resource* materialResource_ = nullptr;	//マテリアルリソース
 	ID3D12Resource* transformationmatrixResource = nullptr;	//トランスフォーメーションマトリックスリソース
+
 
 	D3D12_GPU_DESCRIPTOR_HANDLE textureSrvHandleGPU_;
 

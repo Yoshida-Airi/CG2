@@ -128,10 +128,11 @@ void Sphere::Initialize(WindowAPI* winApp, DirectXCommon* dxComon, MyEngine* eng
 		}
 	}
 
-	materialData_->x = 1.0f;
-	materialData_->y = 1.0f;
-	materialData_->z = 1.0f;
-	materialData_->w = 1.0f;
+	materialData_->color = { 1.0f,1.0f,1.0f,1.0f };
+
+	//Lightingを有効にする
+	materialData_->enableLighting = true;
+	
 
 	transform_ =
 	{
@@ -154,13 +155,13 @@ void Sphere::Update()
 	transform_.rotate.y += 0.01f;
 
 	Matrix4x4 worldMatrix = MakeAffinMatrix(transform_.scale, transform_.rotate, transform_.translate);
-
+	wvpData_->World = worldMatrix;
 	Matrix4x4 cameraMatrix = MakeAffinMatrix(cameraTransform_.scale, cameraTransform_.rotate, cameraTransform_.translate);
 	Matrix4x4 viewMatrix = Inverse(cameraMatrix);
 	Matrix4x4 projectionMatrix = MakePerspectiveFovMatrix(0.45f, float(kClientWidth_) / float(kClientHeight_), 0.1f, 100.0f);
 	//WVPMatrixを作る
 	Matrix4x4 worldViewProjectionMatrix = Multiply(worldMatrix, Multiply(viewMatrix, projectionMatrix));
-	*wvpData_ = worldViewProjectionMatrix;
+	wvpData_->WVP = worldViewProjectionMatrix;
 
 	ImGui::Begin("texture");
 	ImGui::Checkbox("useMonsterBall", &useMonsterBall);
@@ -213,7 +214,7 @@ void Sphere::VertexBuffer()
 void Sphere::MaterialBuffer()
 {
 
-	materialResource_ = engine_->CreateBufferResource(sizeof(Vector4));	//マテリアル用のデータ
+	materialResource_ = engine_->CreateBufferResource(sizeof(Material));	//マテリアル用のデータ
 	//書き込むためのアドレスを取得
 	materialResource_->Map(0, nullptr, reinterpret_cast<void**>(&materialData_));
 
@@ -225,10 +226,10 @@ void Sphere::MaterialBuffer()
 void Sphere::WvpBuffer()
 {
 	//トランスフォーメーションマトリックス用のリソースを作る
-	wvpResource_ = engine_->CreateBufferResource(sizeof(Matrix4x4));
+	wvpResource_ = engine_->CreateBufferResource(sizeof(TransformationMatrix));
 	//書き込むためのアドレスを取得
 	wvpResource_->Map(0, nullptr, reinterpret_cast<void**>(&wvpData_));
 	//単位行列を書き込んでおく
-	*wvpData_ = MakeIdentity4x4();
+	wvpData_->WVP = MakeIdentity4x4();
 
 }

@@ -58,10 +58,11 @@ void Sprite::Update()
 {
 
 	Matrix4x4 worldmatrix = MakeAffinMatrix(transform_.scale, transform_.rotate, transform_.translate);
+	transformationMatrixData->World = worldmatrix;
 	Matrix4x4 viewMatrix = MakeIdentity4x4();
 	Matrix4x4 projectionMatrix = MakeOrthographicmatrix(0.0f, 0.0f, float(winApp_->GetWidth()), float(winApp_->GetHeight()), 0.0f, 100.0f);
 	Matrix4x4 worldViewProjectionMatrix = Multiply(worldmatrix, Multiply(viewMatrix, projectionMatrix));
-	*transformationMatrixData = worldViewProjectionMatrix;
+	transformationMatrixData->WVP = worldViewProjectionMatrix;
 
 }
 
@@ -105,9 +106,9 @@ void Sprite::MaterialBuffer()
 void Sprite::WvpBuffer()
 {
 	//トランスフォーメーションマトリックス用のリソースを作る
-	transformationmatrixResource = engine_->CreateBufferResource(sizeof(Matrix4x4));
+	transformationmatrixResource = engine_->CreateBufferResource(sizeof(TransformationMatrix));
 	//書き込むためのアドレスを取得
 	transformationmatrixResource->Map(0, nullptr, reinterpret_cast<void**>(&transformationMatrixData));
 	//単位行列を書き込んでおく
-	*transformationMatrixData = MakeIdentity4x4();
+	transformationMatrixData->WVP = MakeIdentity4x4();
 }
