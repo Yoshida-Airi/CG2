@@ -3,6 +3,7 @@
 #include"Vector4.h"
 #include"Vector2.h"
 #include"Matrix4x4.h"
+#include<stdint.h>
 
 struct Transform
 {
@@ -29,4 +30,11 @@ struct TransformationMatrix
 {
 	Matrix4x4 WVP;
 	Matrix4x4 World;
+};
+
+struct DirectionalLight
+{
+	Vector4 color;
+	Vector3 direction;
+	float intensity;
 };

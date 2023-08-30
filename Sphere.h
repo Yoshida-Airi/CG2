@@ -40,10 +40,12 @@ private:
 	ID3D12Resource* vertexResource_;	//頂点リソース
 	ID3D12Resource* materialResource_;	//マテリアルリソース
 	ID3D12Resource* wvpResource_;	//wvpリソース
+	ID3D12Resource* lightResource_ = nullptr;
 
 	VertexData* vertexData_ = nullptr;
 	Material* materialData_ = nullptr;	//マテリアルデータ
 	TransformationMatrix* wvpData_ = nullptr;	//wvpデータ
+	DirectionalLight* lightData_ = nullptr;
 
 	D3D12_VERTEX_BUFFER_VIEW vertexBufferView_;
 	D3D12_VERTEX_BUFFER_VIEW materialBufferView_;
@@ -65,6 +67,7 @@ private:
 	const uint32_t totalVertex = 1536;
 
 	bool useMonsterBall = true;
+	
 
 	Transform transform_ = {};
 	Transform cameraTransform_ = {};
@@ -89,5 +92,9 @@ private:
 	/// </summary>
 	void WvpBuffer();
 
+	/// <summary>
+	/// ライトのバッファの取得
+	/// </summary>
+	void LightBuffer();
 };
 

@@ -31,39 +31,20 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	
 	SpriteData* spriteData = new SpriteData;
-	Sprite* sprite;
 	Sphere* sphere;
 
 
-	sprite = new Sprite;
+
 	sphere = new Sphere;
 
 	
-	spriteData->vertex[0] = { 0.0f,360.0f,0.0f,1.0f };
-	spriteData->vertex[1] = { 0.0f,0.0f,0.0f,1.0f };
-	spriteData->vertex[2] = { 640.0f,360.0f,0.0f,1.0f };
-	spriteData->vertex[3] = { 0.0f,0.0f,0.0f,1.0f };
-	spriteData->vertex[4] = { 640.0f,0.0f,0.0f,1.0f };
-	spriteData->vertex[5] = { 640.0f,360.0f,0.0f,1.0f };
-
-	spriteData->transform =
-	{
-		{1.0f,1.0f,1.0f},
-		{0.0f,0.0f,0.0f},
-		{0.0f,0.0f,0.0f}
-	};
-
+	
 	CoInitializeEx(0, COINIT_MULTITHREADED);
 
 	texture->Initialize(dxCommon, kWindowWidth, kWindowHeight);
 
 	imGuiManager->Initialize(winApp, dxCommon);
 
-
-
-	
-
-	sprite->Initialize(winApp, dxCommon, engine, texture, spriteData);
 
 	sphere->Initialize(winApp, dxCommon, engine,texture);
 
@@ -82,19 +63,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 
 		sphere->Update();
-		sprite->Update();
-
-
-	
-
+		
 		imGuiManager->End();
 
 		
 
 		sphere->Draw();
-		sprite->Draw();
-		
-
+	
 		imGuiManager->Draw();
 		engine->PostDraw();
 		dxCommon->PostDraw();
@@ -107,7 +82,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 
 	delete sphere;
-	delete sprite;
 	delete texture;
 	delete imGuiManager;
 	delete engine;

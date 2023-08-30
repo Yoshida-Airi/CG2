@@ -5,6 +5,7 @@ Sphere::~Sphere()
 	vertexResource_->Release();
 	materialResource_->Release();
 	wvpResource_->Release();
+	lightResource_->Release();
 }
 
 void Sphere::Initialize(WindowAPI* winApp, DirectXCommon* dxComon, MyEngine* engine, TextureManager* texture)
@@ -25,7 +26,7 @@ void Sphere::Initialize(WindowAPI* winApp, DirectXCommon* dxComon, MyEngine* eng
 	VertexBuffer();
 	MaterialBuffer();
 	WvpBuffer();
-
+	LightBuffer();
 
 
 	//緯度の方向に分割
@@ -69,9 +70,9 @@ void Sphere::Initialize(WindowAPI* winApp, DirectXCommon* dxComon, MyEngine* eng
 			vertexData_[start + 1].texcoord.x = u;
 			vertexData_[start + 1].texcoord.y = v;
 
-			vertexData_[start + 1].normal.x = vertexData_[start].position.x;
-			vertexData_[start + 1].normal.y = vertexData_[start].position.y;
-			vertexData_[start + 1].normal.z = vertexData_[start].position.z;
+			vertexData_[start + 1].normal.x = vertexData_[start+1].position.x;
+			vertexData_[start + 1].normal.y = vertexData_[start+1].position.y;
+			vertexData_[start + 1].normal.z = vertexData_[start+1].position.z;
 
 			//頂点c
 			vertexData_[start + 2].position.x = cos(lat) * cos(lon + kLonEvery);
@@ -82,9 +83,9 @@ void Sphere::Initialize(WindowAPI* winApp, DirectXCommon* dxComon, MyEngine* eng
 			vertexData_[start + 2].texcoord.x = u + (1.0f / kSubdivision);
 			vertexData_[start + 2].texcoord.y = v + (1.0f / kSubdivision);
 
-			vertexData_[start + 2].normal.x = vertexData_[start].position.x;
-			vertexData_[start + 2].normal.y = vertexData_[start].position.y;
-			vertexData_[start + 2].normal.z = vertexData_[start].position.z;
+			vertexData_[start + 2].normal.x = vertexData_[start+2].position.x;
+			vertexData_[start + 2].normal.y = vertexData_[start+2].position.y;
+			vertexData_[start + 2].normal.z = vertexData_[start+2].position.z;
 
 			//頂点d
 			vertexData_[start + 3].position.x = cos(lat + kLatEvery) * cos(lon);
@@ -95,9 +96,9 @@ void Sphere::Initialize(WindowAPI* winApp, DirectXCommon* dxComon, MyEngine* eng
 			vertexData_[start + 3].texcoord.x = u;
 			vertexData_[start + 3].texcoord.y = v;
 
-			vertexData_[start + 3].normal.x = vertexData_[start].position.x;
-			vertexData_[start + 3].normal.y = vertexData_[start].position.y;
-			vertexData_[start + 3].normal.z = vertexData_[start].position.z;
+			vertexData_[start + 3].normal.x = vertexData_[start+3].position.x;
+			vertexData_[start + 3].normal.y = vertexData_[start+3].position.y;
+			vertexData_[start + 3].normal.z = vertexData_[start+3].position.z;
 			
 			//頂点e
 			vertexData_[start + 4].position.x = cos(lat + kLatEvery) * cos(lon + kLonEvery);
@@ -108,9 +109,9 @@ void Sphere::Initialize(WindowAPI* winApp, DirectXCommon* dxComon, MyEngine* eng
 			vertexData_[start + 4].texcoord.x = u + (1.0f / kSubdivision);
 			vertexData_[start + 4].texcoord.y = v;
 
-			vertexData_[start + 4].normal.x = vertexData_[start].position.x;
-			vertexData_[start + 4].normal.y = vertexData_[start].position.y;
-			vertexData_[start + 4].normal.z = vertexData_[start].position.z;
+			vertexData_[start + 4].normal.x = vertexData_[start+4].position.x;
+			vertexData_[start + 4].normal.y = vertexData_[start+4].position.y;
+			vertexData_[start + 4].normal.z = vertexData_[start+4].position.z;
 
 			//頂点f
 			vertexData_[start + 5].position.x = cos(lat) * cos(lon + kLonEvery);
@@ -121,9 +122,9 @@ void Sphere::Initialize(WindowAPI* winApp, DirectXCommon* dxComon, MyEngine* eng
 			vertexData_[start + 5].texcoord.x = u + (1.0f / kSubdivision);
 			vertexData_[start + 5].texcoord.y = v + (1.0f / kSubdivision);
 
-			vertexData_[start + 5].normal.x = vertexData_[start].position.x;
-			vertexData_[start + 5].normal.y = vertexData_[start].position.y;
-			vertexData_[start + 5].normal.z = vertexData_[start].position.z;
+			vertexData_[start + 5].normal.x = vertexData_[start+5].position.x;
+			vertexData_[start + 5].normal.y = vertexData_[start+5].position.y;
+			vertexData_[start + 5].normal.z = vertexData_[start+5].position.z;
 
 		}
 	}
@@ -148,6 +149,11 @@ void Sphere::Initialize(WindowAPI* winApp, DirectXCommon* dxComon, MyEngine* eng
 		{0.0f, 0.0f, -10.0f}
 	};
 
+	//デフォルト値
+	lightData_->color = { 1.0f,1.0f,1.0f,1.0f };
+	lightData_->direction = { 0.0f,-1.0f,0.0f };
+	lightData_->intensity = 1.0f;
+
 }
 
 void Sphere::Update()
@@ -165,6 +171,14 @@ void Sphere::Update()
 
 	ImGui::Begin("texture");
 	ImGui::Checkbox("useMonsterBall", &useMonsterBall);
+	
+	float direction[] = { lightData_->direction.x,lightData_->direction.y,lightData_->direction.z };
+	ImGui::SliderFloat3("lightDirection", direction, -1.0f, 1.0f);
+
+	lightData_->direction.x = direction[0];
+	lightData_->direction.y = direction[1];
+	lightData_->direction.z = direction[2];
+
 
 	ImGui::End();
 	
@@ -179,6 +193,7 @@ void Sphere::Draw()
 	//マテリアルCBufferの場所を設定
 	dxCommon_->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
 	dxCommon_->GetCommandList()->SetGraphicsRootConstantBufferView(1, wvpResource_->GetGPUVirtualAddress());
+	dxCommon_->GetCommandList()->SetGraphicsRootConstantBufferView(3, lightResource_->GetGPUVirtualAddress());
 	// SRVのDescriptorTableの先頭を設定。
 	dxCommon_->GetCommandList()->SetGraphicsRootDescriptorTable(2, useMonsterBall ? textureSrvHandleGPU2_ : textureSrvHandleGPU_);
 	//描画
@@ -232,4 +247,11 @@ void Sphere::WvpBuffer()
 	//単位行列を書き込んでおく
 	wvpData_->WVP = MakeIdentity4x4();
 
+}
+
+
+void Sphere::LightBuffer()
+{
+	lightResource_ = engine_->CreateBufferResource(sizeof(DirectionalLight));
+	lightResource_->Map(0, nullptr, reinterpret_cast<void**>(&lightData_));
 }
