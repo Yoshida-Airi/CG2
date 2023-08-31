@@ -149,7 +149,7 @@ void Sphere::Initialize(WindowAPI* winApp, DirectXCommon* dxComon, MyEngine* eng
 		{0.0f, 0.0f, -10.0f}
 	};
 
-	//デフォルト値
+	//ライトのデフォルト値
 	lightData_->color = { 1.0f,1.0f,1.0f,1.0f };
 	lightData_->direction = { 0.0f,-1.0f,0.0f };
 	lightData_->intensity = 1.0f;
@@ -192,8 +192,9 @@ void Sphere::Draw()
 	dxCommon_->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	//マテリアルCBufferの場所を設定
 	dxCommon_->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
-	dxCommon_->GetCommandList()->SetGraphicsRootConstantBufferView(1, wvpResource_->GetGPUVirtualAddress());
 	dxCommon_->GetCommandList()->SetGraphicsRootConstantBufferView(3, lightResource_->GetGPUVirtualAddress());
+	dxCommon_->GetCommandList()->SetGraphicsRootConstantBufferView(1, wvpResource_->GetGPUVirtualAddress());
+	
 	// SRVのDescriptorTableの先頭を設定。
 	dxCommon_->GetCommandList()->SetGraphicsRootDescriptorTable(2, useMonsterBall ? textureSrvHandleGPU2_ : textureSrvHandleGPU_);
 	//描画
