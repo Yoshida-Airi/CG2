@@ -43,85 +43,83 @@ void Sphere::Initialize(WindowAPI* winApp, DirectXCommon* dxComon, MyEngine* eng
 
 			float lon = lonIndex * kLonEvery;
 
-			float u = float(lonIndex) / float(kSubdivision);
-			float v = 1.0f - float(latIndex) / float(kSubdivision);
-
+		
 			
 			//頂点にデータを入力する	頂点a
-			vertexData_[start].position.x = cos(lat) * cos(lon);
-			vertexData_[start].position.y = sin(lat);
-			vertexData_[start].position.z = cos(lat) * sin(lon);
+			vertexData_[start].position.x = std::cos(lat) * std::cos(lon);
+			vertexData_[start].position.y = std::sin(lat);
+			vertexData_[start].position.z = std::cos(lat) * std::sin(lon);
 			vertexData_[start].position.w = 1.0f;
-			
-			vertexData_[start].texcoord.x = u;
-			vertexData_[start].texcoord.y = v + (1.0f / kSubdivision);
-			
+
+			vertexData_[start].texcoord.x = float(lonIndex) / float(kSubdivision);
+			vertexData_[start].texcoord.y = 1.0f - float(latIndex) / float(kSubdivision);
+
 			vertexData_[start].normal.x = vertexData_[start].position.x;
 			vertexData_[start].normal.y = vertexData_[start].position.y;
 			vertexData_[start].normal.z = vertexData_[start].position.z;
 
 
 			//頂点b
-			vertexData_[start + 1].position.x = cos(lat + kLatEvery) * cos(lon);
-			vertexData_[start + 1].position.y = sin(lat + kLatEvery);
-			vertexData_[start + 1].position.z = cos(lat + kLatEvery) * sin(lon);
+			vertexData_[start + 1].position.x = std::cos(lat + kLatEvery) * std::cos(lon);
+			vertexData_[start + 1].position.y = std::sin(lat + kLatEvery);
+			vertexData_[start + 1].position.z = std::cos(lat + kLatEvery) * std::sin(lon);
 			vertexData_[start + 1].position.w = 1.0f;
-
-			vertexData_[start + 1].texcoord.x = u;
-			vertexData_[start + 1].texcoord.y = v;
-
+			
+			vertexData_[start + 1].texcoord.x = float(lonIndex) / float(kSubdivision);
+			vertexData_[start + 1].texcoord.y = 1.0f - float(latIndex + 1) / float(kSubdivision);
+			
 			vertexData_[start + 1].normal.x = vertexData_[start + 1].position.x;
 			vertexData_[start + 1].normal.y = vertexData_[start + 1].position.y;
 			vertexData_[start + 1].normal.z = vertexData_[start + 1].position.z;
 
 			//頂点c
-			vertexData_[start + 2].position.x = cos(lat) * cos(lon + kLonEvery);
-			vertexData_[start + 2].position.y = sin(lat);
-			vertexData_[start + 2].position.z = cos(lat) * sin(lon + kLonEvery);
+			vertexData_[start + 2].position.x = std::cos(lat) * std::cos(lon + kLonEvery);
+			vertexData_[start + 2].position.y = std::sin(lat);
+			vertexData_[start + 2].position.z = std::cos(lat) * std::sin(lon + kLonEvery);
 			vertexData_[start + 2].position.w = 1.0f;
-
-			vertexData_[start + 2].texcoord.x = u + (1.0f / kSubdivision);
-			vertexData_[start + 2].texcoord.y = v + (1.0f / kSubdivision);
-
+			
+			vertexData_[start + 2].texcoord.x = float(lonIndex + 1) / float(kSubdivision);
+			vertexData_[start + 2].texcoord.y = 1.0f - float(latIndex) / float(kSubdivision);
+			
 			vertexData_[start + 2].normal.x = vertexData_[start + 2].position.x;
 			vertexData_[start + 2].normal.y = vertexData_[start + 2].position.y;
 			vertexData_[start + 2].normal.z = vertexData_[start + 2].position.z;
 
 			//頂点d
-			vertexData_[start + 3].position.x = cos(lat + kLatEvery) * cos(lon);
-			vertexData_[start + 3].position.y = sin(lat + kLatEvery);
-			vertexData_[start + 3].position.z = cos(lat + kLatEvery) * sin(lon);
+			vertexData_[start + 3].position.x = std::cos(lat) * std::cos(lon + kLonEvery);
+			vertexData_[start + 3].position.y = std::sin(lat);
+			vertexData_[start + 3].position.z = std::cos(lat) * std::sin(lon + kLonEvery);
 			vertexData_[start + 3].position.w = 1.0f;
-
-			vertexData_[start + 3].texcoord.x = u;
-			vertexData_[start + 3].texcoord.y = v;
-
+			
+			vertexData_[start + 3].texcoord.x = float(lonIndex + 1) / float(kSubdivision);
+			vertexData_[start + 3].texcoord.y = 1.0f - float(latIndex) / float(kSubdivision);
+			
 			vertexData_[start + 3].normal.x = vertexData_[start + 3].position.x;
 			vertexData_[start + 3].normal.y = vertexData_[start + 3].position.y;
 			vertexData_[start + 3].normal.z = vertexData_[start + 3].position.z;
 			
 			//頂点e
-			vertexData_[start + 4].position.x = cos(lat + kLatEvery) * cos(lon + kLonEvery);
-			vertexData_[start + 4].position.y = sin(lat + kLatEvery);
-			vertexData_[start + 4].position.z = cos(lat + kLatEvery) * sin(lon + kLonEvery);
+			vertexData_[start + 4].position.x = std::cos(lat + kLatEvery) * std::cos(lon);
+			vertexData_[start + 4].position.y = std::sin(lat + kLatEvery);
+			vertexData_[start + 4].position.z = std::cos(lat + kLatEvery) * std::sin(lon);
 			vertexData_[start + 4].position.w = 1.0f;
-
-			vertexData_[start + 4].texcoord.x = u + (1.0f / kSubdivision);
-			vertexData_[start + 4].texcoord.y = v;
-
+			
+			vertexData_[start + 4].texcoord.x = float(lonIndex) / float(kSubdivision);
+			vertexData_[start + 4].texcoord.y = 1.0f - float(latIndex + 1) / float(kSubdivision);
+			
 			vertexData_[start + 4].normal.x = vertexData_[start + 4].position.x;
 			vertexData_[start + 4].normal.y = vertexData_[start + 4].position.y;
 			vertexData_[start + 4].normal.z = vertexData_[start + 4].position.z;
-
+			
 			//頂点f
-			vertexData_[start + 5].position.x = cos(lat) * cos(lon + kLonEvery);
-			vertexData_[start + 5].position.y = sin(lat);
-			vertexData_[start + 5].position.z = cos(lat) * sin(lon + kLonEvery);
+			vertexData_[start + 5].position.x = std::cos(lat + kLatEvery) * std::cos(lon + kLonEvery);
+			vertexData_[start + 5].position.y = std::sin(lat + kLatEvery);
+			vertexData_[start + 5].position.z = std::cos(lat + kLatEvery) * std::sin(lon + kLonEvery);
 			vertexData_[start + 5].position.w = 1.0f;
-
-			vertexData_[start + 5].texcoord.x = u + (1.0f / kSubdivision);
-			vertexData_[start + 5].texcoord.y = v + (1.0f / kSubdivision);
-
+			
+			vertexData_[start + 5].texcoord.x = float(lonIndex + 1) / float(kSubdivision);
+			vertexData_[start + 5].texcoord.y = 1.0f - float(latIndex + 1) / float(kSubdivision);
+			
 			vertexData_[start + 5].normal.x = vertexData_[start + 5].position.x;
 			vertexData_[start + 5].normal.y = vertexData_[start + 5].position.y;
 			vertexData_[start + 5].normal.z = vertexData_[start + 5].position.z;
@@ -150,8 +148,9 @@ void Sphere::Initialize(WindowAPI* winApp, DirectXCommon* dxComon, MyEngine* eng
 	};
 
 	//ライトのデフォルト値
+
 	lightData_->color = { 1.0f,1.0f,1.0f,1.0f };
-	lightData_->direction = { 0.0f,-1.0f,0.0f };
+	lightData_->direction = { -1.0f,-1.0f,1.0f };
 	lightData_->intensity = 1.0f;
 
 }
@@ -161,13 +160,14 @@ void Sphere::Update()
 	transform_.rotate.y += 0.01f;
 
 	Matrix4x4 worldMatrix = MakeAffinMatrix(transform_.scale, transform_.rotate, transform_.translate);
-	wvpData_->World = worldMatrix;
+
 	Matrix4x4 cameraMatrix = MakeAffinMatrix(cameraTransform_.scale, cameraTransform_.rotate, cameraTransform_.translate);
 	Matrix4x4 viewMatrix = Inverse(cameraMatrix);
 	Matrix4x4 projectionMatrix = MakePerspectiveFovMatrix(0.45f, float(kClientWidth_) / float(kClientHeight_), 0.1f, 100.0f);
 	//WVPMatrixを作る
 	Matrix4x4 worldViewProjectionMatrix = Multiply(worldMatrix, Multiply(viewMatrix, projectionMatrix));
 	wvpData_->WVP = worldViewProjectionMatrix;
+	wvpData_->World = worldMatrix;
 
 	ImGui::Begin("texture");
 	ImGui::Checkbox("useMonsterBall", &useMonsterBall);
