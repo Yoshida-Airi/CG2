@@ -60,6 +60,12 @@ private:
 	/// </summary>
 	void WvpBuffer();
 
+	/// <summary>
+	/// インデックスバッファ
+	/// </summary>
+	void IndexBuffer();
+
+
 private:
 
 
@@ -72,16 +78,17 @@ private:
 	Material* materialData_ = nullptr;
 	TransformationMatrix* transformationMatrixData = nullptr;
 	Transform transform_ = {};
+	uint32_t* indexData_ = nullptr;
 
 	ID3D12Resource* vertexResource_ = nullptr;	//頂点リソース
 	ID3D12Resource* materialResource_ = nullptr;	//マテリアルリソース
 	ID3D12Resource* transformationmatrixResource = nullptr;	//トランスフォーメーションマトリックスリソース
-
+	ID3D12Resource* indexResource_ = nullptr;
 
 	D3D12_GPU_DESCRIPTOR_HANDLE textureSrvHandleGPU_;
 
 	D3D12_VERTEX_BUFFER_VIEW vertexBufferView_{};	//頂点バッファビュー
-
+	D3D12_INDEX_BUFFER_VIEW indexBufferView_{};	//インデックスバッファビュー
 
 };
 

@@ -20,6 +20,7 @@ void Sprite::Initialize(WindowAPI* winApp, DirectXCommon* dxcommon, MyEngine* en
 	VertexBuffer();
 	MaterialBuffer();
 	WvpBuffer();
+	IndexBuffer();
 
 	vertexData_[0].position = data->vertex[0];
 	vertexData_[0].texcoord = { 0.0f,1.0f };
@@ -51,6 +52,12 @@ void Sprite::Initialize(WindowAPI* winApp, DirectXCommon* dxcommon, MyEngine* en
 
 	transform_ = data->transform;
 
+	indexData_[0] = 0;
+	indexData_[1] = 1;
+	indexData_[2] = 2;
+	indexData_[3] = 1;
+	indexData_[4] = 3;
+	indexData_[5] = 2;
 
 }
 
@@ -69,11 +76,13 @@ void Sprite::Update()
 void Sprite::Draw()
 {
 	dxCommon_->GetCommandList()->IASetVertexBuffers(0, 1, &vertexBufferView_);	//VBVを設定
+	dxCommon_->GetCommandList()->IASetIndexBuffer(&indexBufferView_);
 	dxCommon_->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
 	dxCommon_->GetCommandList()->SetGraphicsRootConstantBufferView(1, transformationmatrixResource->GetGPUVirtualAddress());
 	dxCommon_->GetCommandList()->SetGraphicsRootDescriptorTable(2, textureSrvHandleGPU_);
 	//描画
-	dxCommon_->GetCommandList()->DrawInstanced(6, 1, 0, 0);
+	/*dxCommon_->GetCommandList()->DrawInstanced(6, 1, 0, 0);*/
+	dxCommon_->GetCommandList()->DrawIndexedInstanced(6, 1, 0, 0, 0);
 }
 
 
@@ -111,4 +120,14 @@ void Sprite::WvpBuffer()
 	transformationmatrixResource->Map(0, nullptr, reinterpret_cast<void**>(&transformationMatrixData));
 	//単位行列を書き込んでおく
 	transformationMatrixData->WVP = MakeIdentity4x4();
+}
+
+
+void Sprite::IndexBuffer()
+{
+	indexResource_ = engine_->CreateBufferResource(sizeof(uint32_t) * 6);
+	indexBufferView_.BufferLocation = indexResource_->GetGPUVirtualAddress();
+	indexBufferView_.SizeInBytes = sizeof(uint32_t) * 6;
+	indexBufferView_.Format = DXGI_FORMAT_R32_UINT;
+	indexResource_->Map(0, nullptr, reinterpret_cast<void**>(&indexData_));
 }
