@@ -35,7 +35,6 @@ void Sprite::Initialize(WindowAPI* winApp, DirectXCommon* dxcommon, MyEngine* en
 	vertexData_[2].texcoord = { 1.0f,1.0f };
 	vertexData_[2].normal = { 0.0f,0.0f,-1.0f };
 
-
 	vertexData_[3].position = data->vertex[4];
 	vertexData_[3].texcoord = { 1.0f,0.0f };
 	vertexData_[3].normal = { 0.0f,0.0f,-1.0f };
