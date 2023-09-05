@@ -6,6 +6,7 @@ Sprite::~Sprite()
 	vertexResource_->Release();
 	materialResource_->Release();
 	transformationmatrixResource->Release();
+	indexResource_->Release();
 }
 
 
@@ -34,17 +35,11 @@ void Sprite::Initialize(WindowAPI* winApp, DirectXCommon* dxcommon, MyEngine* en
 	vertexData_[2].texcoord = { 1.0f,1.0f };
 	vertexData_[2].normal = { 0.0f,0.0f,-1.0f };
 
-	vertexData_[3].position = data->vertex[3];
-	vertexData_[3].texcoord = { 0.0f,0.0f };
+
+	vertexData_[3].position = data->vertex[4];
+	vertexData_[3].texcoord = { 1.0f,0.0f };
 	vertexData_[3].normal = { 0.0f,0.0f,-1.0f };
 
-	vertexData_[4].position = data->vertex[4];
-	vertexData_[4].texcoord = { 1.0f,0.0f };
-	vertexData_[4].normal = { 0.0f,0.0f,-1.0f };
-
-	vertexData_[5].position = data->vertex[5];
-	vertexData_[5].texcoord = { 1.0f,1.0f };
-	vertexData_[5].normal = { 0.0f,0.0f,-1.0f };
 	
 	materialData_->color = { 1.0f,1.0f,1.0f,1.0f };
 	//spriteはLightingしないのでfalseを設定する
@@ -93,12 +88,12 @@ void Sprite::Draw()
 void Sprite::VertexBuffer()
 {
 	//Sprite用の頂点リソースを作る
-	vertexResource_ = engine_->CreateBufferResource(sizeof(VertexData) * 6);
+	vertexResource_ = engine_->CreateBufferResource(sizeof(VertexData) * 4);
 
 	//リソースの先頭のアドレスから使う
 	vertexBufferView_.BufferLocation = vertexResource_->GetGPUVirtualAddress();
-	//使用するリソースサイズは頂点6つ分のサイズ
-	vertexBufferView_.SizeInBytes = sizeof(VertexData) * 6;
+	//使用するリソースサイズは頂点4つ分のサイズ
+	vertexBufferView_.SizeInBytes = sizeof(VertexData) * 4;
 	//1頂点あたりのサイズ
 	vertexBufferView_.StrideInBytes = sizeof(VertexData);
 
@@ -126,8 +121,12 @@ void Sprite::WvpBuffer()
 void Sprite::IndexBuffer()
 {
 	indexResource_ = engine_->CreateBufferResource(sizeof(uint32_t) * 6);
+	//リソースの先頭のアドレスから使う
 	indexBufferView_.BufferLocation = indexResource_->GetGPUVirtualAddress();
+	//使用するリソースのサイズはインデックス6つ分のサイズ
 	indexBufferView_.SizeInBytes = sizeof(uint32_t) * 6;
+	//インデックスはuint32_tとする
 	indexBufferView_.Format = DXGI_FORMAT_R32_UINT;
+	//インデックスリソースにデータを書き込む
 	indexResource_->Map(0, nullptr, reinterpret_cast<void**>(&indexData_));
 }
