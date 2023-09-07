@@ -43,6 +43,7 @@ void Sprite::Initialize(WindowAPI* winApp, DirectXCommon* dxcommon, MyEngine* en
 	materialData_->color = { 1.0f,1.0f,1.0f,1.0f };
 	//spriteはLightingしないのでfalseを設定する
 	materialData_->enableLighting = false;
+	materialData_->uvTransform = MakeIdentity4x4();
 
 	transform_ = data->transform;
 
@@ -52,6 +53,13 @@ void Sprite::Initialize(WindowAPI* winApp, DirectXCommon* dxcommon, MyEngine* en
 	indexData_[3] = 1;
 	indexData_[4] = 3;
 	indexData_[5] = 2;
+
+	uvTransform_ =
+	{
+		{1.0f,1.0f,1.0f},
+		{0.0f,0.0f,0.0f},
+		{0.0f,0.0f,0.0f},
+	};
 
 }
 

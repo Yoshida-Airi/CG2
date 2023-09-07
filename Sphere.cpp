@@ -132,6 +132,7 @@ void Sphere::Initialize(WindowAPI* winApp, DirectXCommon* dxComon, MyEngine* eng
 	//Lightingを有効にする
 	materialData_->enableLighting = true;
 	
+	materialData_->uvTransform = MakeIdentity4x4();
 
 	transform_ =
 	{
