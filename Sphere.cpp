@@ -180,6 +180,7 @@ void Sphere::Update()
 	lightData_->direction.y = direction[1];
 	lightData_->direction.z = direction[2];
 
+	
 
 	ImGui::End();
 	

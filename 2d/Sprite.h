@@ -80,6 +80,7 @@ private:
 	Transform transform_ = {};
 	uint32_t* indexData_ = nullptr;
 	Transform uvTransform_;
+	Matrix4x4 uvTransformMatrix_;
 
 	ID3D12Resource* vertexResource_ = nullptr;	//頂点リソース
 	ID3D12Resource* materialResource_ = nullptr;	//マテリアルリソース
