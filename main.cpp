@@ -7,6 +7,7 @@
 #include"TextureManager.h"
 #include"Sprite.h"
 #include"Sphere.h"
+#include"Model.h"
 
 const wchar_t* kWindowTitle = L"CG2";
 
@@ -33,11 +34,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	SpriteData* spriteData = new SpriteData;
 	Sphere* sphere;
 	Sprite* sprite;
-
+	Model* model;
 
 	sphere = new Sphere;
 	sprite = new Sprite;
-	
+	model = new Model;
+
 	spriteData->vertex[0] = { 0.0f,360.0f,0.0f,1.0f };
 	spriteData->vertex[1] = { 0.0f,0.0f,0.0f,1.0f };
 	spriteData->vertex[2] = { 640.0f,360.0f,0.0f,1.0f };
@@ -61,7 +63,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	sphere->Initialize(winApp, dxCommon, engine,texture);
 	sprite->Initialize(winApp, dxCommon, engine, texture, spriteData);
-
+	model->Initialize(winApp, dxCommon, engine, texture);
 
 	// ウィンドウの×ボタンが押されるまでループ
 	while (WindowAPI::ProcessMessage() == 0)
@@ -79,6 +81,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 		sphere->Update();
 		sprite->Update();
+		model->Update();
 
 		imGuiManager->End();
 
@@ -86,6 +89,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 		sphere->Draw();
 		sprite->Draw();
+		model->Draw();
 
 		imGuiManager->Draw();
 		engine->PostDraw();
@@ -100,6 +104,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	delete sphere;
 	delete sprite;
+	delete model;
 
 	delete texture;
 	delete imGuiManager;

@@ -40,10 +40,17 @@ private:
 	ID3D12Resource* vertexResource_;	//頂点リソース
 	ID3D12Resource* materialResource_;	//マテリアルリソース
 	ID3D12Resource* wvpResource_;	//wvpリソース
+	ID3D12Resource* lightResource_ = nullptr;
 
 	VertexData* vertexData_ = nullptr;
-	Vector4* materialData_ = nullptr;	//マテリアルデータ
-	Matrix4x4* wvpData_ = nullptr;	//wvpデータ
+	Material* materialData_ = nullptr;	//マテリアルデータ
+	TransformationMatrix* wvpData_ = nullptr;	//wvpデータ
+	DirectionalLight* lightData_ = nullptr;
+
+	D3D12_VERTEX_BUFFER_VIEW vertexBufferView_;
+	D3D12_VERTEX_BUFFER_VIEW materialBufferView_;
+	D3D12_VERTEX_BUFFER_VIEW wvpBufferView_;
+
 
 	//分割数
 	const uint32_t kSubdivision = 16;
@@ -55,21 +62,18 @@ private:
 
 	uint32_t latIndex = 0;
 	uint32_t lonIndex = 0;
-		//円の始まりの頂点
+
+	//球の全ての頂点
 	const uint32_t totalVertex = 1536;
 
-
-
-	D3D12_VERTEX_BUFFER_VIEW vertexBufferView_;
-	D3D12_VERTEX_BUFFER_VIEW materialBufferView_;
-	D3D12_VERTEX_BUFFER_VIEW wvpBufferView_;
-
+	bool useMonsterBall = true;
 	
 
 	Transform transform_ = {};
 	Transform cameraTransform_ = {};
 
 	D3D12_GPU_DESCRIPTOR_HANDLE textureSrvHandleGPU_;
+	D3D12_GPU_DESCRIPTOR_HANDLE textureSrvHandleGPU2_;
 
 
 private:
@@ -88,5 +92,9 @@ private:
 	/// </summary>
 	void WvpBuffer();
 
+	/// <summary>
+	/// ライトのバッファの取得
+	/// </summary>
+	void LightBuffer();
 };
 
