@@ -200,7 +200,7 @@ void Sphere::Draw()
 	// SRVのDescriptorTableの先頭を設定。
 	dxCommon_->GetCommandList()->SetGraphicsRootDescriptorTable(2, useMonsterBall ? textureSrvHandleGPU2_ : textureSrvHandleGPU_);
 	//描画
-	dxCommon_->GetCommandList()->DrawInstanced(totalVertex, 1, 0, 0);
+	/*dxCommon_->GetCommandList()->DrawInstanced(totalVertex, 1, 0, 0);*/
 
 }
 
