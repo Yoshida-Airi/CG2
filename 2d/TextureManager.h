@@ -21,8 +21,17 @@ public:
 
 	D3D12_GPU_DESCRIPTOR_HANDLE GetTextureSrvHandleGPU2() { return textureSrvHandleGPU2_; };
 
+	/// <summary>
+	/// テクスチャデータを読む
+	/// </summary>
+	/// <param name="filepath"></param>
+	/// <returns></returns>
+	DirectX::ScratchImage LoadTexture(const std::string& filePath);
 
 private:
+
+	DirectXCommon* dxCommon_;
+
 	DirectX::TexMetadata metadata_;
 	DirectX::TexMetadata metadata2_;
 
@@ -51,12 +60,7 @@ private:
 
 
 private:
-	/// <summary>
-	/// テクスチャデータを読む
-	/// </summary>
-	/// <param name="filepath"></param>
-	/// <returns></returns>
-	DirectX::ScratchImage LoadTexture(const std::string& filePath);
+	
 
 	/// <summary>
 	/// DirectX12のTextureResourceを作る

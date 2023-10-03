@@ -16,16 +16,18 @@
 #include<cmath>
 #include<assert.h>
 
+struct MaterialData
+{
+	std::string textureFilePath;
+};
+
 struct ModelData
 {
 	std::vector<VertexData>vertices;
 	MaterialData material;
 };
 
-struct MaterialData
-{
-	std::string textureFilePath;
-};
+
 
 class Model
 {
@@ -64,6 +66,8 @@ private:
 
 	Transform transform_ = {};
 	Transform cameraTransform_ = {};
+
+	D3D12_GPU_DESCRIPTOR_HANDLE textureSrvHandleGPU_;
 
 	/// <summary>
 	/// Objファイルを読むための関数

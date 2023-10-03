@@ -10,6 +10,8 @@ TextureManager::~TextureManager()
 
 void TextureManager::Initialize(DirectXCommon* dxCommon ,int32_t width, int32_t height)
 {
+	dxCommon_ = dxCommon;
+
 	mipImages_ = LoadTexture("resources/uvChecker.png");
 	metadata_ = mipImages_.GetMetadata();
 	textureResource_ = CreateTextureResource(dxCommon->GetDevice(), metadata_);

@@ -17,6 +17,7 @@ void Model::Initialize(WindowAPI* winApp, DirectXCommon* dxComon, MyEngine* engi
 	kClientHeight_ = winApp_->GetHeight();
 	kClientWidth_ = winApp_->GetWidth();
 
+	textureSrvHandleGPU_ = texture->GetTextureSrvHandleGPU();
 	mipImages2 = texture_->LoadTexture(modelData_.material.textureFilePath);
 
 	modelData_ = LoadObjFile("Resources", "plane.obj");
@@ -78,7 +79,7 @@ void Model::Draw()
 	dxCommon_->GetCommandList()->SetGraphicsRootConstantBufferView(1, wvpResource_->GetGPUVirtualAddress());
 
 	// SRVのDescriptorTableの先頭を設定。
-	dxCommon_->GetCommandList()->SetGraphicsRootDescriptorTable(2, mipImages2);
+	dxCommon_->GetCommandList()->SetGraphicsRootDescriptorTable(2, textureSrvHandleGPU_);
 	//描画
 	dxCommon_->GetCommandList()->DrawInstanced(UINT(modelData_.vertices.size()), 1, 0, 0);
 
@@ -209,6 +210,7 @@ ModelData Model::LoadObjFile(const std::string& directoryPath, const std::string
 			modelData_.vertices.push_back(triangle[1]);
 			modelData_.vertices.push_back(triangle[0]);
 		}
+		
 		else if (identifier == "mtllib")
 		{
 			//materialTemplateLibraryファイルの名前を取得する
@@ -217,7 +219,6 @@ ModelData Model::LoadObjFile(const std::string& directoryPath, const std::string
 			//基本的にObjファイルと同一階層にmtlは存在させるので、ディレクトリ名とファイル名を渡す
 			modelData_.material = LoadMaterialTemplateFile(directoryPath, materialFilename);
 		}
-
 	}
 
 	//4.ModelDataを返す
