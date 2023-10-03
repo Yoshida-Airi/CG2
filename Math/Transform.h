@@ -40,3 +40,4 @@ struct DirectionalLight
 	Vector3 direction;
 	float intensity;
 };
+

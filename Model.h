@@ -19,6 +19,12 @@
 struct ModelData
 {
 	std::vector<VertexData>vertices;
+	MaterialData material;
+};
+
+struct MaterialData
+{
+	std::string textureFilePath;
 };
 
 class Model
@@ -54,8 +60,7 @@ private:
 	Material* materialData_ = nullptr;	//マテリアルデータ
 	D3D12_VERTEX_BUFFER_VIEW materialBufferView_;
 
-	D3D12_GPU_DESCRIPTOR_HANDLE textureSrvHandleGPU_;
-	D3D12_GPU_DESCRIPTOR_HANDLE textureSrvHandleGPU2_;
+	DirectX::ScratchImage mipImages2 = {};
 
 	Transform transform_ = {};
 	Transform cameraTransform_ = {};
@@ -63,7 +68,12 @@ private:
 	/// <summary>
 	/// Objファイルを読むための関数
 	/// </summary>
-	ModelData LoadObjFile(const std::string& filePath);
+	ModelData LoadObjFile(const std::string& directoryPath, const std::string& filename);
+
+	/// <summary>
+	/// mtlファイルを読むための関数
+	/// </summary>
+	MaterialData LoadMaterialTemplateFile(const std::string& directoryPath, const std::string& filename);
 
 	/// <summary>
 	/// 頂点のバッファの取得
