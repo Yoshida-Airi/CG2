@@ -1,8 +1,5 @@
 #include "TextureManager.h"
 
-//デフォルトテクスチャ格納ディレクトリ
-std::string TextureManager::kDefaultTextureDirectoryPath = "Resources/";
-
 
 TextureManager::~TextureManager()
 {
@@ -11,10 +8,8 @@ TextureManager::~TextureManager()
 	depthStencilResource_->Release();
 }
 
-void TextureManager::Initialize(DirectXCommon* dxCommon ,int32_t width, int32_t height)
+void TextureManager::Initialize(DirectXCommon* dxCommon, int32_t width, int32_t height)
 {
-	dxCommon_ = dxCommon;
-
 	mipImages_ = LoadTexture("resources/uvChecker.png");
 	metadata_ = mipImages_.GetMetadata();
 	textureResource_ = CreateTextureResource(dxCommon->GetDevice(), metadata_);
@@ -52,42 +47,6 @@ DirectX::ScratchImage TextureManager::LoadTexture(const std::string& filePath)
 	// ミニマップ付きのデータを返す
 	return mipImages;
 }
-
-
-void TextureManager::LoadTexture(uint32_t index, const std::string& fileName)
-{
-	//ディレクトリパストファイル名を連結してフルパスを得る
-	std::string fullPath = kDefaultTextureDirectoryPath + fileName;
-	////ワイド文字に変換した際の文字列バッファサイズを計算
-	//int filePathBufferSize = MultiByteToWideChar(CP_ACP, 0, fullPath.c_str(), -1, nullptr, 0);
-	////ワイド文字列に変換
-	//std::vector<wchar_t>wfilePath(filePathBufferSize);
-	//MultiByteToWideChar(CP_ACP, 0, fullPath.c_str(), -1, wfilePath.data(), filePathBufferSize);
-
-
-	//画像ファイルの読み込み
-	DirectX::ScratchImage image{};
-	std::wstring filePathW = ConvertString(fullPath);
-	HRESULT hr = DirectX::LoadFromWICFile(filePathW.c_str(), DirectX::WIC_FLAGS_FORCE_SRGB, nullptr, image);
-	assert(SUCCEEDED(hr));
-
-	// ミニマップの生成
-	DirectX::ScratchImage mipImages{};
-	hr = DirectX::GenerateMipMaps(image.GetImages(), image.GetImageCount(), image.GetMetadata(), DirectX::TEX_FILTER_SRGB, 0, mipImages);
-	assert(SUCCEEDED(hr));
-
-	DirectX::TexMetadata metadata = mipImages_.GetMetadata();
-
-	//テクスチャバッファ生成
-	textureBuffers_[index] = CreateTextureResource(dxCommon_->GetDevice(), metadata);
-
-	//テクスチャバッファへの画像データ転送
-	UploadTextureData(textureBuffers_[index], mipImages);
-
-	//SRV作成
-	CreateShaderResourceView(dxCommon_->GetDevice(), dxCommon_->GetsrvDescriptorHeap());
-}
-
 
 
 ID3D12Resource* TextureManager::CreateTextureResource(ID3D12Device* device, const DirectX::TexMetadata& metadata)
@@ -192,7 +151,7 @@ void TextureManager::CreateShaderResourceView(ID3D12Device* device, ID3D12Descri
 	// SRVを作成するDescriptorHeapの場所を決める
 	textureSrvHandleCPU_ = GetCPUDescriptorHandle(srvDescriptorHeap, device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV), 1);
 	textureSrvHandleGPU_ = GetGPUDescriptorHandle(srvDescriptorHeap, device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV), 1);
-	
+
 	// SRVの生成
 	device->CreateShaderResourceView(textureResource_, &srvDesc_, textureSrvHandleCPU_);
 
@@ -205,7 +164,7 @@ void TextureManager::CreateShaderResourceView(ID3D12Device* device, ID3D12Descri
 	textureSrvHandleGPU2_ = GetGPUDescriptorHandle(srvDescriptorHeap, device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV), 2);
 
 	device->CreateShaderResourceView(textureResource2_, &srvDesc2_, textureSrvHandleCPU2_);
-	
+
 
 }
 
@@ -238,4 +197,3 @@ D3D12_GPU_DESCRIPTOR_HANDLE TextureManager::GetGPUDescriptorHandle(ID3D12Descrip
 	handleGPU.ptr += (descriptorSize * index);
 	return handleGPU;
 }
-

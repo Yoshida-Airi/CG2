@@ -18,7 +18,7 @@ void Model::Initialize(WindowAPI* winApp, DirectXCommon* dxComon, MyEngine* engi
 	kClientWidth_ = winApp_->GetWidth();
 
 	textureSrvHandleGPU_ = texture->GetTextureSrvHandleGPU();
-	mipImages2 = texture_->LoadTexture(modelData_.material.textureFilePath);
+	
 
 	modelData_ = LoadObjFile("Resources", "plane.obj");
 
