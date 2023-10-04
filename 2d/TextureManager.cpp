@@ -1,5 +1,8 @@
 #include "TextureManager.h"
 
+//デフォルトテクスチャ格納ディレクトリ
+std::string TextureManager::kDefaultTextureDirectoryPath = "Resources/";
+
 
 TextureManager::~TextureManager()
 {
@@ -49,6 +52,42 @@ DirectX::ScratchImage TextureManager::LoadTexture(const std::string& filePath)
 	// ミニマップ付きのデータを返す
 	return mipImages;
 }
+
+
+void TextureManager::LoadTexture(uint32_t index, const std::string& fileName)
+{
+	//ディレクトリパストファイル名を連結してフルパスを得る
+	std::string fullPath = kDefaultTextureDirectoryPath + fileName;
+	////ワイド文字に変換した際の文字列バッファサイズを計算
+	//int filePathBufferSize = MultiByteToWideChar(CP_ACP, 0, fullPath.c_str(), -1, nullptr, 0);
+	////ワイド文字列に変換
+	//std::vector<wchar_t>wfilePath(filePathBufferSize);
+	//MultiByteToWideChar(CP_ACP, 0, fullPath.c_str(), -1, wfilePath.data(), filePathBufferSize);
+
+
+	//画像ファイルの読み込み
+	DirectX::ScratchImage image{};
+	std::wstring filePathW = ConvertString(fullPath);
+	HRESULT hr = DirectX::LoadFromWICFile(filePathW.c_str(), DirectX::WIC_FLAGS_FORCE_SRGB, nullptr, image);
+	assert(SUCCEEDED(hr));
+
+	// ミニマップの生成
+	DirectX::ScratchImage mipImages{};
+	hr = DirectX::GenerateMipMaps(image.GetImages(), image.GetImageCount(), image.GetMetadata(), DirectX::TEX_FILTER_SRGB, 0, mipImages);
+	assert(SUCCEEDED(hr));
+
+	DirectX::TexMetadata metadata = mipImages_.GetMetadata();
+
+	//テクスチャバッファ生成
+	textureBuffers_[index] = CreateTextureResource(dxCommon_->GetDevice(), metadata);
+
+	//テクスチャバッファへの画像データ転送
+	UploadTextureData(textureBuffers_[index], mipImages);
+
+	//SRV作成
+	CreateShaderResourceView(dxCommon_->GetDevice(), dxCommon_->GetsrvDescriptorHeap());
+}
+
 
 
 ID3D12Resource* TextureManager::CreateTextureResource(ID3D12Device* device, const DirectX::TexMetadata& metadata)

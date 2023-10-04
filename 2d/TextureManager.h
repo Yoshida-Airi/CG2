@@ -28,6 +28,21 @@ public:
 	/// <returns></returns>
 	DirectX::ScratchImage LoadTexture(const std::string& filePath);
 
+
+	/// <summary>
+	/// テクスチャ読み込み
+	/// </summary>
+	/// <param name="index">テクスチャ番号</param>
+	void LoadTexture(uint32_t index, const std::string& fileName);
+
+	void SetTextureIndex(uint32_t textureIndex)
+	{
+		textureIndex_ = textureIndex;
+	}
+
+	uint32_t GetTextureIndex()const { return textureIndex_; };
+
+
 private:
 
 	DirectXCommon* dxCommon_;
@@ -46,9 +61,6 @@ private:
 	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc_;
 	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc2_;
 
-
-	
-
 	D3D12_CPU_DESCRIPTOR_HANDLE textureSrvHandleCPU_;
 	D3D12_GPU_DESCRIPTOR_HANDLE textureSrvHandleGPU_;
 
@@ -57,6 +69,18 @@ private:
 
 
 	D3D12_DEPTH_STENCIL_VIEW_DESC dsvDesc_;
+
+
+	//SRVの最大個数
+	static const size_t kMaxSRVCount = 2056;
+	//デフォルトテクスチャ格納ディレクトリ
+	static std::string kDefaultTextureDirectoryPath;
+
+	//テクスチャバッファ
+	std::array <ID3D12Resource*, kMaxSRVCount> textureBuffers_;
+
+	//テクスチャ番号
+	uint32_t textureIndex_ = 0;
 
 
 private:
