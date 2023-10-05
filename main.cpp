@@ -33,7 +33,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	for (int i = 0; i < KmaxTriangle; i++)
 	{
-		textureManager->Initialize(dxCommon);
+		textureManager->Initialize(dxCommon, engine);
 	}
 
 
