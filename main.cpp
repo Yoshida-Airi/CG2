@@ -60,11 +60,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	imGuiManager->Initialize(winApp, dxCommon);
 
-
+	model->Initialize(winApp, dxCommon, engine, texture);
 	sphere->Initialize(winApp, dxCommon, engine,texture);
 	sprite->Initialize(winApp, dxCommon, engine, texture, spriteData);
-	model->Initialize(winApp, dxCommon, engine, texture);
-
+	
 	// ウィンドウの×ボタンが押されるまでループ
 	while (WindowAPI::ProcessMessage() == 0)
 	{
@@ -78,19 +77,17 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		imGuiManager->Begin();
 
 
-
+		model->Update();
 		sphere->Update();
 		sprite->Update();
-		model->Update();
-
+		
 		imGuiManager->End();
 
 		
-
+		model->Draw();
 		sphere->Draw();
 		sprite->Draw();
-		model->Draw();
-
+		
 		imGuiManager->Draw();
 		engine->PostDraw();
 		dxCommon->PostDraw();

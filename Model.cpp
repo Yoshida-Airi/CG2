@@ -5,6 +5,7 @@ Model::~Model()
 	vertexResource_->Release();
 	wvpResource_->Release();
 	materialResource_->Release();
+	lightResource_->Release();
 }
 
 void Model::Initialize(WindowAPI* winApp, DirectXCommon* dxComon, MyEngine* engine, TextureManager* texture)
@@ -22,6 +23,15 @@ void Model::Initialize(WindowAPI* winApp, DirectXCommon* dxComon, MyEngine* engi
 
 	modelData_ = LoadObjFile("Resources", "plane.obj");
 
+	VertexBuffer();
+	MaterialBuffer();
+	WvpBuffer();
+	LightBuffer();
+
+	materialData_->color = { 1.0f,1.0f,1.0f,1.0f };
+	materialData_->enableLighting = true;
+	materialData_->uvTransform = MakeIdentity4x4();
+
 	transform_ =
 	{
 		{1.0f,1.0f,1.0f},
@@ -36,9 +46,12 @@ void Model::Initialize(WindowAPI* winApp, DirectXCommon* dxComon, MyEngine* engi
 		{0.0f, 0.0f, -10.0f}
 	};
 
-	VertexBuffer();
-	MaterialBuffer();
-	WvpBuffer();
+	//ライトのデフォルト値
+
+	lightData_->color = { 1.0f,1.0f,1.0f,1.0f };
+	lightData_->direction = { -1.0f,-1.0f,1.0f };
+	lightData_->intensity = 1.0f;
+
 
 }
 
@@ -77,9 +90,10 @@ void Model::Draw()
 	//マテリアルCBufferの場所を設定
 	dxCommon_->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
 	dxCommon_->GetCommandList()->SetGraphicsRootConstantBufferView(1, wvpResource_->GetGPUVirtualAddress());
+	dxCommon_->GetCommandList()->SetGraphicsRootConstantBufferView(3, lightResource_->GetGPUVirtualAddress());
 
 	// SRVのDescriptorTableの先頭を設定。
-	dxCommon_->GetCommandList()->SetGraphicsRootDescriptorTable(2, textureSrvHandleGPU_);
+	dxCommon_->GetCommandList()->SetGraphicsRootDescriptorTable(2, texture_->GetTextureSrvHandleGPU());
 	//描画
 	dxCommon_->GetCommandList()->DrawInstanced(UINT(modelData_.vertices.size()), 1, 0, 0);
 
@@ -129,8 +143,11 @@ void Model::WvpBuffer()
 }
 
 
-
-
+void Model::LightBuffer()
+{
+	lightResource_ = engine_->CreateBufferResource(sizeof(DirectionalLight));
+	lightResource_->Map(0, nullptr, reinterpret_cast<void**>(&lightData_));
+}
 
 
 ModelData Model::LoadObjFile(const std::string& directoryPath, const std::string& filename)
@@ -166,6 +183,7 @@ ModelData Model::LoadObjFile(const std::string& directoryPath, const std::string
 		{
 			Vector2 texccoord;
 			s >> texccoord.x >> texccoord.y;
+			texccoord.y = 1.0f - texccoord.y;
 			texcoords_.push_back(texccoord);
 		}
 		else if (identifier == "vn")
@@ -244,7 +262,7 @@ MaterialData Model::LoadMaterialTemplateFile(const std::string& directoryPath, c
 		s >> identifier;
 
 		//identifierに応じた処理
-		if (identifier == "map_kd")
+		if (identifier == "map_Kd")
 		{
 			std::string textureFilename;
 			s >> textureFilename;

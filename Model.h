@@ -69,6 +69,9 @@ private:
 
 	D3D12_GPU_DESCRIPTOR_HANDLE textureSrvHandleGPU_;
 
+	ID3D12Resource* lightResource_ = nullptr;
+	DirectionalLight* lightData_ = nullptr;
+
 	/// <summary>
 	/// Objファイルを読むための関数
 	/// </summary>
@@ -93,6 +96,11 @@ private:
 	/// wvpのバッファの取得
 	/// </summary>
 	void WvpBuffer();
+
+	/// <summary>
+	/// ライトのバッファの取得
+	/// </summary>
+	void LightBuffer();
 
 };
 

@@ -94,7 +94,7 @@ void Sprite::Draw()
 	dxCommon_->GetCommandList()->IASetIndexBuffer(&indexBufferView_);
 	dxCommon_->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
 	dxCommon_->GetCommandList()->SetGraphicsRootConstantBufferView(1, transformationmatrixResource->GetGPUVirtualAddress());
-	dxCommon_->GetCommandList()->SetGraphicsRootDescriptorTable(2, textureSrvHandleGPU_);
+	/*dxCommon_->GetCommandList()->SetGraphicsRootDescriptorTable(2, textureSrvHandleGPU_);*/
 	//描画
 	/*dxCommon_->GetCommandList()->DrawInstanced(6, 1, 0, 0);*/
 	/*dxCommon_->GetCommandList()->DrawIndexedInstanced(6, 1, 0, 0, 0);*/
