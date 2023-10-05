@@ -4,19 +4,21 @@
 TextureManager::~TextureManager()
 {
 	textureResource_->Release();
+	intermediateResource_->Release();
 }
 
 /// <summary>
 /// 初期化
 /// </summary>
-void TextureManager::Initialize(DirectXCommon* dxCommon)
+void TextureManager::Initialize(DirectXCommon* dxCommon, MyEngine* engine)
 {
 	dxCommon_ = dxCommon;
+	engine_ = engine;
 	srvDescriptoHeap_ = dxCommon->GetSrvDescriptorHeap();
 	//textureを読む
 	mipImages_ = LoadTexture("Resources/uvChecker.png");
-	const DirectX::TexMetadata&metadata = mipImages_.GetMetadata();
-	textureResource_ = CreateTextureResource(dxCommon_->GetDevice(), metadata);
+	DirectX::TexMetadata metadata = mipImages_.GetMetadata();
+	textureResource_ = CreateTextureResource(metadata);
 	UploadTextureData(textureResource_, mipImages_);
 	CreateShaderResourceView(metadata);
 }
@@ -46,7 +48,8 @@ DirectX::ScratchImage TextureManager::LoadTexture(const std::string& filePath)
 }
 
 //ダイレクト12のテクスチャリソースを作る
-ID3D12Resource* TextureManager::CreateTextureResource(ID3D12Device* device, const DirectX::TexMetadata& metadata)
+ID3D12Resource* TextureManager::CreateTextureResource(DirectX::TexMetadata& metadata)
+
 {
 	//1.metadataを基にリソースの設定
 	D3D12_RESOURCE_DESC resourceDesc{};
@@ -61,18 +64,16 @@ ID3D12Resource* TextureManager::CreateTextureResource(ID3D12Device* device, cons
 
 	//2.利用するヒープの設定
 	D3D12_HEAP_PROPERTIES heapProperties{};
-	heapProperties.Type = D3D12_HEAP_TYPE_CUSTOM;	//細かい設定を行う
-	heapProperties.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_WRITE_BACK;	//WriteBackポリシーでCPUアクセス可能
-	heapProperties.MemoryPoolPreference = D3D12_MEMORY_POOL_L0;	//プロセッサの近くに配置
-
+	heapProperties.Type = D3D12_HEAP_TYPE_DEFAULT;	//細かい設定を行う
+	
 
 	//3.リソースを生成する
 	ID3D12Resource* resource = nullptr;
-	HRESULT hr = device->CreateCommittedResource(
+	HRESULT hr =dxCommon_->GetDevice()->CreateCommittedResource(
 		&heapProperties,	//Heapの設定
 		D3D12_HEAP_FLAG_NONE,	//Heapの特殊な設定。
 		&resourceDesc,	//resourceの設定
-		D3D12_RESOURCE_STATE_GENERIC_READ,	//初回のResourceState。Textureは基本読むだけ
+		D3D12_RESOURCE_STATE_COPY_DEST,	//初回のResourceState。Textureは基本読むだけ
 		nullptr,	//Clear最適化。使わないのでNULL
 		IID_PPV_ARGS(&resource));	//作成するResourceポインタへのポインタ
 	assert(SUCCEEDED(hr));
@@ -80,25 +81,26 @@ ID3D12Resource* TextureManager::CreateTextureResource(ID3D12Device* device, cons
 	return resource;
 }
 
-void TextureManager::UploadTextureData(ID3D12Resource* texture, const DirectX::ScratchImage& mipImages)
+[[nodiscard]]
+ID3D12Resource* TextureManager::UploadTextureData(ID3D12Resource* texture, const DirectX::ScratchImage& mipImage)
 {
-	//Meta情報を取得
-	const DirectX::TexMetadata& metadata = mipImages.GetMetadata();
-	//全MipMapについて
-	for (size_t mipLevel = 0; mipLevel < metadata.mipLevels; ++mipLevel)
-	{
-		//MipMapLevelを指定して各Imageを取得
-		const DirectX::Image* img = mipImages.GetImage(mipLevel, 0, 0);
-		//Textureｍに転送
-		HRESULT hr = texture->WriteToSubresource(
-			UINT(mipLevel),
-			nullptr,		//全領域へコピー
-			img->pixels,	//元データアドレス
-			UINT(img->rowPitch),	//1ラインサイズ
-			UINT(img->slicePitch)	//1枚サイズ
-		);
-		assert(SUCCEEDED(hr));
-	}
+	std::vector<D3D12_SUBRESOURCE_DATA>subresources;
+	DirectX::PrepareUpload(dxCommon_->GetDevice(), mipImage.GetImages(), mipImage.GetImageCount(), mipImage.GetMetadata(), subresources);
+	uint64_t intermediateSize = GetRequiredIntermediateSize(texture, 0, UINT(subresources.size()));
+	intermediateResource_ = engine_->CreateBufferResource(intermediateSize);
+	UpdateSubresources(dxCommon_->GetCommandList(), texture, intermediateResource_, 0, 0, UINT(subresources.size()), subresources.data());
+
+	//テクスチャへの転送後は利用できるようにする
+	D3D12_RESOURCE_BARRIER barrier;
+	barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
+	barrier.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
+	barrier.Transition.pResource = texture;
+	barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
+	barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_COPY_DEST;
+	barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_GENERIC_READ;
+	dxCommon_->GetCommandList()->ResourceBarrier(1, &barrier);
+	return intermediateResource_;
+
 }
 
 void TextureManager::CreateShaderResourceView(const DirectX::TexMetadata& metadata)

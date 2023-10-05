@@ -1,9 +1,12 @@
 #pragma once
+#include"externals/DirectXTex/d3dx12.h"
 #include"externals/DirectXTex/DirectXTex.h"
 #include"ConvertString.h"
 #include"DirectXCommon.h"
+#include"MyEngine.h"
 
 #include<d3d12.h>
+#include<vector>
 
 #pragma comment(lib,"d3d12.lib")
 
@@ -18,7 +21,7 @@ public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize(DirectXCommon* dxCommon);
+	void Initialize(DirectXCommon* dxCommon, MyEngine* engine);
 
 	/// <summary>
 	/// 更新処理
@@ -30,9 +33,12 @@ public:
 private:
 
 	DirectXCommon* dxCommon_;
+	MyEngine* engine_;
 
 	DirectX::ScratchImage mipImages_;
 	ID3D12Resource* textureResource_;
+	ID3D12Resource* intermediateResource_;
+
 	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc_{};
 	ID3D12DescriptorHeap* srvDescriptoHeap_;
 
@@ -54,14 +60,14 @@ private:
 	/// <param name="device">デバイス</param>
 	/// <param name="meradata"></param>
 	/// <returns>テクスチャリソース</returns>
-	ID3D12Resource* CreateTextureResource(ID3D12Device* device, const DirectX::TexMetadata& meradata);
+	ID3D12Resource* CreateTextureResource(DirectX::TexMetadata& metadata);
 
 	/// <summary>
 	/// TextureResource2データを転送する
 	/// </summary>
 	/// <param name="texture">画像</param>
 	/// <param name="mipImages">ミップマップ</param>
-	void UploadTextureData(ID3D12Resource* texture, const DirectX::ScratchImage& mipImages);
+	ID3D12Resource* UploadTextureData(ID3D12Resource* texture, const DirectX::ScratchImage& mipImages);
 
 	/// <summary>
 	/// シェーダーリソース
