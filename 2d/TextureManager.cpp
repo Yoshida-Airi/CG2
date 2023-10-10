@@ -8,8 +8,11 @@ TextureManager::~TextureManager()
 	depthStencilResource_->Release();
 }
 
-void TextureManager::Initialize(DirectXCommon* dxCommon, int32_t width, int32_t height)
+void TextureManager::Initialize(WindowAPI*winApp, DirectXCommon* dxCommon, int32_t width, int32_t height)
 {
+	winApp_ = winApp;
+	dxCommon_ = dxCommon;
+
 	mipImages_ = LoadTexture("resources/uvChecker.png");
 	metadata_ = mipImages_.GetMetadata();
 	textureResource_ = CreateTextureResource(dxCommon->GetDevice(), metadata_);
@@ -29,7 +32,31 @@ void TextureManager::Initialize(DirectXCommon* dxCommon, int32_t width, int32_t 
 
 }
 
+void TextureManager::LoadObjTexture(uint32_t index, const std::string& filePath)
+{
+	DirectX::ScratchImage mipImages = LoadTexture(filePath);
+	DirectX::TexMetadata metadata = mipImages.GetMetadata();
+	textureBuffers_.at(index) = CreateTextureResource(dxCommon_->GetDevice(), metadata);
+	UploadTextureData(textureBuffers_.at(index), mipImages);
+	
+	// metaDataをもとにSRVの設定
+	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc;
+	srvDesc.Format = metadata.format;
+	srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
+	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;	//2Dテクスチャ
+	srvDesc.Texture2D.MipLevels = UINT(metadata.mipLevels);
 
+	// SRVを作成するDescriptorHeapの場所を決める
+
+	D3D12_CPU_DESCRIPTOR_HANDLE textureSrvHandleCPU;
+	D3D12_GPU_DESCRIPTOR_HANDLE textureSrvHandleGPU;
+	textureSrvHandleCPU = GetCPUDescriptorHandle(dxCommon_->GetsrvDescriptorHeap(), dxCommon_->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV), 1);
+	textureSrvHandleGPU = GetGPUDescriptorHandle(dxCommon_->GetsrvDescriptorHeap(), dxCommon_->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV), 1);
+
+	// SRVの生成
+	dxCommon_->GetDevice()->CreateShaderResourceView(textureBuffers_.at(index), &srvDesc, textureSrvHandleCPU);
+
+}
 
 DirectX::ScratchImage TextureManager::LoadTexture(const std::string& filePath)
 {

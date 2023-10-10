@@ -19,9 +19,9 @@ void Model::Initialize(WindowAPI* winApp, DirectXCommon* dxComon, MyEngine* engi
 	kClientWidth_ = winApp_->GetWidth();
 
 	textureSrvHandleGPU_ = texture->GetTextureSrvHandleGPU();
-	
 
-	modelData_ = LoadObjFile("Resources", "plane.obj");
+	modelData_ = LoadObjFile("resources", "plane.obj");
+	texture->LoadObjTexture(0, modelData_.material.textureFilePath);
 
 	VertexBuffer();
 	MaterialBuffer();
@@ -247,21 +247,20 @@ ModelData Model::LoadObjFile(const std::string& directoryPath, const std::string
 MaterialData Model::LoadMaterialTemplateFile(const std::string& directoryPath, const std::string& filename)
 {
 	//1.中で必要となる変数の宣言
-	MaterialData materialData;	//構築するMaterialData
-	std::string line;	//ファイルから読んだ1行を格納するもの
+	MaterialData materialData;
+	std::string line;
 
 	//2.ファイルを開く
-	std::ifstream file(directoryPath + "/" + filename);
-	assert(file.is_open());//とりあえず開けなかったら止める
+	std::ifstream file(directoryPath + "/" + filename);	
+	assert(file.is_open());
 
 	//3.実際にファイルを読み、MaterialDataを構築していく
-	while (std::getline(file, line));
+	while (std::getline(file, line))
 	{
 		std::string identifier;
 		std::istringstream s(line);
 		s >> identifier;
 
-		//identifierに応じた処理
 		if (identifier == "map_Kd")
 		{
 			std::string textureFilename;
@@ -269,8 +268,10 @@ MaterialData Model::LoadMaterialTemplateFile(const std::string& directoryPath, c
 			//連結してファイルパスにする
 			materialData.textureFilePath = directoryPath + "/" + textureFilename;
 		}
+
 	}
 
 	//4.MaterialDataを返す
 	return materialData;
+
 }

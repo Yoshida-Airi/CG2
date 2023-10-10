@@ -2,7 +2,9 @@
 #include"externals/DirectXTex/DirectXTex.h"
 #include"ConvertString.h"
 #include"DirectXCommon.h"
+#include"WindowAPI.h"
 #include<d3d12.h>
+#include<array>
 
 class TextureManager
 {
@@ -13,7 +15,7 @@ public:
 	/// <summary>
 	///	初期化
 	/// </summary>
-	void Initialize(DirectXCommon* dxCommon, int32_t width, int32_t height);
+	void Initialize(WindowAPI*winApp, DirectXCommon* dxCommon, int32_t width, int32_t height);
 
 
 	D3D12_GPU_DESCRIPTOR_HANDLE GetTextureSrvHandleGPU() { return textureSrvHandleGPU_; };
@@ -21,8 +23,12 @@ public:
 
 	D3D12_GPU_DESCRIPTOR_HANDLE GetTextureSrvHandleGPU2() { return textureSrvHandleGPU2_; };
 
+	void LoadObjTexture(uint32_t index, const std::string& filePath);
 
 private:
+	WindowAPI* winApp_;
+	DirectXCommon* dxCommon_;
+
 	DirectX::TexMetadata metadata_;
 	DirectX::TexMetadata metadata2_;
 
@@ -38,8 +44,6 @@ private:
 	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc2_;
 
 
-
-
 	D3D12_CPU_DESCRIPTOR_HANDLE textureSrvHandleCPU_;
 	D3D12_GPU_DESCRIPTOR_HANDLE textureSrvHandleGPU_;
 
@@ -49,6 +53,10 @@ private:
 
 	D3D12_DEPTH_STENCIL_VIEW_DESC dsvDesc_;
 
+
+	static const size_t kMaxSRVCount = 2056;
+
+	std::array<ID3D12Resource*, kMaxSRVCount>textureBuffers_;
 
 private:
 	/// <summary>
