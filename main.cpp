@@ -33,7 +33,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	for (int i = 0; i < KmaxTriangle; i++)
 	{
-		textureManager->Initialize(dxCommon);
+		textureManager->Initialize(dxCommon,engine);
 	}
 
 
@@ -145,8 +145,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			triangle[i]->Update();
 		}
 
-	
-		triangle[0]->SetTextureSrvHandleGPU(textureManager->GetTextureSrvHandleGPU());
 	
 		imGuiManager->End();
 

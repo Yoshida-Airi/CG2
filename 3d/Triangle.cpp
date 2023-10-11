@@ -34,7 +34,7 @@ void Triangle::Initialize(WindowAPI* winApp, DirectXCommon* direct, MyEngine* en
 	MaterialBuffer();
 	WvpBuffer();
 
-
+	texture->LoadTexture(1, "resources/uvChecker.png");
 
 	//頂点の設定
 	vertexData_[0].position = data.vertex[0];
@@ -84,7 +84,7 @@ void Triangle::Draw()
 	//wvp用のCbufferの場所を設定
 	dxCommon_->GetCommandList()->SetGraphicsRootConstantBufferView(1, wvpResource_->GetGPUVirtualAddress());
 	//SRVのDescriptorTableの先頭を設定。2はrootParamater[2]である。
-	dxCommon_->GetCommandList()->SetGraphicsRootDescriptorTable(2, textureSrvHandleGPU_);
+	dxCommon_->GetCommandList()->SetGraphicsRootDescriptorTable(2, texture_->GetGPUHandle(1));
 	//描画
 	dxCommon_->GetCommandList()->DrawInstanced(3, 1, 0, 0);
 }

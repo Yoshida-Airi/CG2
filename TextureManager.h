@@ -1,15 +1,21 @@
 #pragma once
-#include"externals/DirectXTex/DirectXTex.h"
-#include"ConvertString.h"
 #include"DirectXCommon.h"
-
-#include<d3d12.h>
-
-#pragma comment(lib,"d3d12.lib")
-
+#include"MyEngine.h"
+#include"externals/DirectXTex/DirectXTex.h"
+#include"externals/DirectXTex/d3dx12.h"
+#include<wrl.h>
+#include<array>
 class TextureManager
 {
 public:
+
+	struct Texture
+	{
+		D3D12_CPU_DESCRIPTOR_HANDLE textureSrvHandleCPU;
+		D3D12_GPU_DESCRIPTOR_HANDLE textureSrvHandleGPU;
+		ID3D12Resource* textureResource;
+	};
+	
 	/// <summary>
 	/// デストラクタ
 	/// </summary>
@@ -18,54 +24,44 @@ public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize(DirectXCommon* dxCommon);
+	/// <param name="directX"></param>
+	/// <param name="engine"></param>
+	void Initialize(DirectXCommon* directX, MyEngine* engine);
 
 	/// <summary>
 	/// 更新処理
 	/// </summary>
 	void Update();
 
-	D3D12_GPU_DESCRIPTOR_HANDLE GetTextureSrvHandleGPU()const { return textureSrvHandleGPU_; }
+	/// <summary>
+	/// 画像読み込み
+	/// </summary>
+	/// <param name="index"></param>
+	/// <param name="filePath"></param>
+	void LoadTexture(uint32_t index, const std::string& filePath);
+
+	//ゲッター
+	D3D12_GPU_DESCRIPTOR_HANDLE GetGPUHandle(uint32_t index)
+	{
+		return textures_.at(index).textureSrvHandleGPU;
+	}
 
 private:
 
 	DirectXCommon* dxCommon_;
+	MyEngine* engine_;
 
-	DirectX::ScratchImage mipImages_;
-	ID3D12Resource* textureResource_;
-	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc_{};
-	ID3D12DescriptorHeap* srvDescriptoHeap_;
+	static const size_t kMaxSRVCount = 2056;
+	std::array<Texture, kMaxSRVCount> textures_;
 
-	D3D12_CPU_DESCRIPTOR_HANDLE textureSrvHandleCPU_ = {};
-	D3D12_GPU_DESCRIPTOR_HANDLE textureSrvHandleGPU_ = {};
 
-private:
 
-	/// <summary>
-	/// Textureデータを読む
-	/// </summary>
-	/// <param name="filePath">テクスチャ</param>
-	/// <returns>テクスチャデータ</returns>
-	DirectX::ScratchImage LoadTexture(const std::string& filePath);
+	//中間リソース
+	std::array<ID3D12Resource*, kMaxSRVCount> intermediateResource;
 
-	/// <summary>
-	/// ダイレクトX12のテクスチャリソースを作る
-	/// </summary>
-	/// <param name="device">デバイス</param>
-	/// <param name="meradata"></param>
-	/// <returns>テクスチャリソース</returns>
-	ID3D12Resource* CreateTextureResource(ID3D12Device* device, const DirectX::TexMetadata& meradata);
+	DirectX::ScratchImage ImageFileOpen(const std::string& filePath);
+	ID3D12Resource* CreateTextureResource(ID3D12Device* device, const DirectX::TexMetadata& metadata);
 
-	/// <summary>
-	/// TextureResource2データを転送する
-	/// </summary>
-	/// <param name="texture">画像</param>
-	/// <param name="mipImages">ミップマップ</param>
-	void UploadTextureData(ID3D12Resource* texture, const DirectX::ScratchImage& mipImages);
-
-	/// <summary>
-	/// シェーダーリソース
-	/// </summary>
-	void CreateShaderResourceView(const DirectX::TexMetadata& metadata);
-
+	[[nodiscard]]
+	ID3D12Resource* UploadTextureData(ID3D12Resource* texture, const DirectX::ScratchImage& mipImages);
 };
