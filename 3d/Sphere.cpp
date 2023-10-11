@@ -18,7 +18,7 @@ void Sphere::Initialize(WindowAPI* winApp, DirectXCommon* dxComon, MyEngine* eng
 	kClientHeight_ = winApp_->GetHeight();
 	kClientWidth_ = winApp_->GetWidth();
 
-	textureSrvHandleGPU_ = texture->GetTextureSrvHandleGPU();
+	textureSrvHandleGPU_ = texture->GetTextureSrvHandleGPU(3);
 	textureSrvHandleGPU2_ = texture->GetTextureSrvHandleGPU2();
 
 	

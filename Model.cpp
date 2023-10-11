@@ -18,10 +18,8 @@ void Model::Initialize(WindowAPI* winApp, DirectXCommon* dxComon, MyEngine* engi
 	kClientHeight_ = winApp_->GetHeight();
 	kClientWidth_ = winApp_->GetWidth();
 
-	textureSrvHandleGPU_ = texture->GetTextureSrvHandleGPU();
-
-	modelData_ = LoadObjFile("resources", "plane.obj");
-	texture->LoadObjTexture(0, modelData_.material.textureFilePath);
+	modelData_ = LoadObjFile("Resources", "plane.obj");
+	texture->LoadObjTexture(3, modelData_.material.textureFilePath);
 
 	VertexBuffer();
 	MaterialBuffer();
@@ -93,7 +91,7 @@ void Model::Draw()
 	dxCommon_->GetCommandList()->SetGraphicsRootConstantBufferView(3, lightResource_->GetGPUVirtualAddress());
 
 	// SRVのDescriptorTableの先頭を設定。
-	dxCommon_->GetCommandList()->SetGraphicsRootDescriptorTable(2, texture_->GetTextureSrvHandleGPU());
+	dxCommon_->GetCommandList()->SetGraphicsRootDescriptorTable(2, texture_->GetTextureSrvHandleGPU(3));
 	//描画
 	dxCommon_->GetCommandList()->DrawInstanced(UINT(modelData_.vertices.size()), 1, 0, 0);
 

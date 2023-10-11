@@ -13,21 +13,21 @@ void TextureManager::Initialize(WindowAPI*winApp, DirectXCommon* dxCommon, int32
 	winApp_ = winApp;
 	dxCommon_ = dxCommon;
 
-	mipImages_ = LoadTexture("resources/uvChecker.png");
-	metadata_ = mipImages_.GetMetadata();
-	textureResource_ = CreateTextureResource(dxCommon->GetDevice(), metadata_);
+	//mipImages_ = LoadTexture("resources/uvChecker.png");
+	//metadata_ = mipImages_.GetMetadata();
+	//textureResource_ = CreateTextureResource(dxCommon->GetDevice(), metadata_);
 
-	mipImages2_ = LoadTexture("resources/monsterBall.png");
-	metadata2_ = mipImages2_.GetMetadata();
-	textureResource2_ = CreateTextureResource(dxCommon->GetDevice(), metadata2_);
+	//mipImages2_ = LoadTexture("resources/monsterBall.png");
+	//metadata2_ = mipImages2_.GetMetadata();
+	//textureResource2_ = CreateTextureResource(dxCommon->GetDevice(), metadata2_);
 
 
 	depthStencilResource_ = CreateDepthStencilTextureResource(dxCommon->GetDevice(), width, height);
 
 	UploadTextureData(textureResource_, mipImages_);
-	UploadTextureData(textureResource2_, mipImages2_);
+	//UploadTextureData(textureResource2_, mipImages2_);
 
-	CreateShaderResourceView(dxCommon->GetDevice(), dxCommon->GetsrvDescriptorHeap());
+	//CreateShaderResourceView(dxCommon->GetDevice(), dxCommon->GetsrvDescriptorHeap());
 	CreateDepthStencilView(dxCommon->GetDevice(), dxCommon->GetDsvDescriptorHeap());
 
 }
@@ -36,8 +36,8 @@ void TextureManager::LoadObjTexture(uint32_t index, const std::string& filePath)
 {
 	DirectX::ScratchImage mipImages = LoadTexture(filePath);
 	DirectX::TexMetadata metadata = mipImages.GetMetadata();
-	textureBuffers_.at(index) = CreateTextureResource(dxCommon_->GetDevice(), metadata);
-	UploadTextureData(textureBuffers_.at(index), mipImages);
+	textures_.at(index)->textureBuffer = CreateTextureResource(dxCommon_->GetDevice(), metadata);
+	UploadTextureData(textures_.at(index)->textureBuffer, mipImages);
 	
 	// metaDataをもとにSRVの設定
 	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc;
@@ -48,13 +48,16 @@ void TextureManager::LoadObjTexture(uint32_t index, const std::string& filePath)
 
 	// SRVを作成するDescriptorHeapの場所を決める
 
-	D3D12_CPU_DESCRIPTOR_HANDLE textureSrvHandleCPU;
-	D3D12_GPU_DESCRIPTOR_HANDLE textureSrvHandleGPU;
-	textureSrvHandleCPU = GetCPUDescriptorHandle(dxCommon_->GetsrvDescriptorHeap(), dxCommon_->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV), 1);
-	textureSrvHandleGPU = GetGPUDescriptorHandle(dxCommon_->GetsrvDescriptorHeap(), dxCommon_->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV), 1);
+
+	textures_.at(index)->textureSrvHandleCPU_ = GetCPUDescriptorHandle(dxCommon_->GetsrvDescriptorHeap(), dxCommon_->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV), index);
+	textures_.at(index)->textureSrvHandleGPU_ = GetGPUDescriptorHandle(dxCommon_->GetsrvDescriptorHeap(), dxCommon_->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV), index);
+
+	textures_.at(index)->textureSrvHandleCPU_.ptr += dxCommon_->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+	textures_.at(index)->textureSrvHandleGPU_.ptr += dxCommon_->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+
 
 	// SRVの生成
-	dxCommon_->GetDevice()->CreateShaderResourceView(textureBuffers_.at(index), &srvDesc, textureSrvHandleCPU);
+	dxCommon_->GetDevice()->CreateShaderResourceView(textures_.at(index)->textureBuffer, &srvDesc, textures_.at(index)->textureSrvHandleCPU_);
 
 }
 
@@ -145,6 +148,7 @@ ID3D12Resource* TextureManager::CreateDepthStencilTextureResource(ID3D12Device* 
 
 	return resource;
 }
+
 
 void TextureManager::UploadTextureData(ID3D12Resource* texture, const DirectX::ScratchImage& mipImages)
 {

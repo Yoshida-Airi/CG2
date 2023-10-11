@@ -16,7 +16,7 @@ void Sprite::Initialize(WindowAPI* winApp, DirectXCommon* dxcommon, MyEngine* en
 	dxCommon_ = dxcommon;
 	engine_ = engine;
 
-	textureSrvHandleGPU_ = texture->GetTextureSrvHandleGPU();
+	textureSrvHandleGPU_ = texture->GetTextureSrvHandleGPU(3);
 
 	VertexBuffer();
 	MaterialBuffer();

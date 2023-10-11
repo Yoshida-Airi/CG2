@@ -1,10 +1,20 @@
 #pragma once
 #include"externals/DirectXTex/DirectXTex.h"
+#include"externals/DirectXTex/d3dx12.h"
 #include"ConvertString.h"
 #include"DirectXCommon.h"
 #include"WindowAPI.h"
 #include<d3d12.h>
 #include<array>
+
+
+struct Texture
+{
+	ID3D12Resource* textureBuffer;
+	D3D12_CPU_DESCRIPTOR_HANDLE textureSrvHandleCPU_;
+	D3D12_GPU_DESCRIPTOR_HANDLE textureSrvHandleGPU_;
+	std::string& filePath;
+};
 
 class TextureManager
 {
@@ -18,7 +28,10 @@ public:
 	void Initialize(WindowAPI*winApp, DirectXCommon* dxCommon, int32_t width, int32_t height);
 
 
-	D3D12_GPU_DESCRIPTOR_HANDLE GetTextureSrvHandleGPU() { return textureSrvHandleGPU_; };
+	D3D12_GPU_DESCRIPTOR_HANDLE GetTextureSrvHandleGPU(uint32_t index)
+	{
+		return textures_.at(index)->textureSrvHandleGPU_;
+	};
 
 
 	D3D12_GPU_DESCRIPTOR_HANDLE GetTextureSrvHandleGPU2() { return textureSrvHandleGPU2_; };
@@ -54,9 +67,9 @@ private:
 	D3D12_DEPTH_STENCIL_VIEW_DESC dsvDesc_;
 
 
-	static const size_t kMaxSRVCount = 2056;
+	static const size_t kMaxTextureCount = 2056;
 
-	std::array<ID3D12Resource*, kMaxSRVCount>textureBuffers_;
+	std::array<Texture*, kMaxTextureCount>textures_;
 
 private:
 	/// <summary>
