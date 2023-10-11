@@ -30,17 +30,18 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	dxCommon->Initialize(winApp);
 	engine->Initialize(dxCommon, winApp);
 
+
 	
 	SpriteData* spriteData = new SpriteData;
-	/*Sphere* sphere;
-	Sprite* sprite;*/
+	Sphere* sphere;
+	Sprite* sprite;
 	Model* model;
 
-	/*sphere = new Sphere;
-	sprite = new Sprite;*/
+	sphere = new Sphere;
+	sprite = new Sprite;
 	model = new Model;
 
-	/*spriteData->vertex[0] = { 0.0f,360.0f,0.0f,1.0f };
+	spriteData->vertex[0] = { 0.0f,360.0f,0.0f,1.0f };
 	spriteData->vertex[1] = { 0.0f,0.0f,0.0f,1.0f };
 	spriteData->vertex[2] = { 640.0f,360.0f,0.0f,1.0f };
 	spriteData->vertex[3] = { 0.0f,0.0f,0.0f,1.0f };
@@ -52,18 +53,23 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		{1.0f,1.0f,1.0f},
 		{0.0f,0.0f,0.0f},
 		{0.0f,0.0f,0.0f}
-	};*/
+	};
 	
 	CoInitializeEx(0, COINIT_MULTITHREADED);
 
-	texture->Initialize(dxCommon,kWindowWidth, kWindowHeight);
+	texture->Initialize(dxCommon, engine, kWindowWidth, kWindowHeight);
+
+	uint32_t uvTexture= texture->LoadTexture("Resources/uvChecker.png");
+	uint32_t monsterTexture = texture->LoadTexture("Resources/monsterBall.png");
 
 	imGuiManager->Initialize(winApp, dxCommon);
 
 	model->Initialize(winApp, dxCommon, engine, texture);
-	//sphere->Initialize(winApp, dxCommon, engine,texture);
-	//sprite->Initialize(winApp, dxCommon, engine, texture, spriteData);
+	sphere->Initialize(winApp, dxCommon, engine, texture, uvTexture,monsterTexture);
+	sprite->Initialize(winApp, dxCommon, engine, texture, spriteData, uvTexture);
 	
+	
+
 	// ウィンドウの×ボタンが押されるまでループ
 	while (WindowAPI::ProcessMessage() == 0)
 	{
@@ -78,15 +84,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 
 		model->Update();
-		/*sphere->Update();
-		sprite->Update();*/
+		sphere->Update();
+		sprite->Update();
 		
 		imGuiManager->End();
 
 		
 		model->Draw();
-		/*sphere->Draw();
-		sprite->Draw();*/
+		sphere->Draw();
+		sprite->Draw();
 		
 		imGuiManager->Draw();
 		engine->PostDraw();
@@ -98,10 +104,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	CoUninitialize();
 
 
-
-	/*delete sphere;
-	delete sprite;*/
+	delete sphere;
+	delete sprite;
 	delete model;
+
+	delete spriteData;
 
 	delete texture;
 	delete imGuiManager;

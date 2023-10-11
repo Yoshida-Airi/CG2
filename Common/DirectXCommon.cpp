@@ -19,7 +19,6 @@ DirectXCommon::~DirectXCommon()
 	fence_->Release();
 	rtvDescriptorHeap_->Release();
 	srvDescriptorHeap_->Release();
-	dsvDescriptorHeap_->Release();
 	swapChainResources_[0]->Release();
 	swapChainResources_[1]->Release();
 	swapChain_->Release();
@@ -29,6 +28,11 @@ DirectXCommon::~DirectXCommon()
 	device_->Release();
 	useAdapter_->Release();
 	dxgiFactory_->Release();
+
+	depthStencilResource_->Release();
+	dsvDescriptorHeap_->Release();
+	
+	
 
 #ifdef _DEBUG
 	debugController_->Release();
@@ -381,6 +385,17 @@ void DirectXCommon::CreateFinalRenderTargets()
 	//二つ目を作る
 	device_->CreateRenderTargetView(swapChainResources_[1], &rtvDesc_, rtvHandles_[1]);
 
+
+	depthStencilResource_ = CreateDepthStencilTextureResource(device_, winApp_->GetWidth(), winApp_->GetHeight());
+	dsvDescriptorHeap_ = CreateDescriptorHeap(D3D12_DESCRIPTOR_HEAP_TYPE_DSV, 1, false);
+
+	dsvDesc_.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;	//Format。基本的にはResourceに合わせる
+	dsvDesc_.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;	//2dTexture
+	//DSVHeapの先頭にDSVを作る
+	device_->CreateDepthStencilView(depthStencilResource_, &dsvDesc_, dsvDescriptorHeap_->GetCPUDescriptorHandleForHeapStart());
+
+
+
 }
 
 /// 全画面クリア
@@ -411,3 +426,41 @@ void DirectXCommon::CreateFence() {
 	HRESULT hr = device_->CreateFence(fenceValue_, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&fence_));
 	assert(SUCCEEDED(hr));
 }
+
+ID3D12Resource* DirectXCommon::CreateDepthStencilTextureResource(ID3D12Device* device, int32_t width, int32_t height)
+{
+	//生成するResourceの設定
+	D3D12_RESOURCE_DESC resourceDesc{};
+	resourceDesc.Width = width;		//Textureの幅
+	resourceDesc.Height = height;	//Textureの高さ
+	resourceDesc.MipLevels = 1;		//mipmapの数
+	resourceDesc.DepthOrArraySize = 1;	//奥行き　or　配列Textureの配列数
+	resourceDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;	//DepthStencilとして利用可能なフォーマット
+	resourceDesc.SampleDesc.Count = 1;		//サンプリングカウント　1固定
+	resourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;	//2次元
+	resourceDesc.Flags = D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL;	//DepthStencilとして使う通知
+
+	//利用するHeapの設定
+	D3D12_HEAP_PROPERTIES heapProperties{};
+	heapProperties.Type = D3D12_HEAP_TYPE_DEFAULT;	//VRAM上に作る
+
+	//深度値のクリア設定
+	D3D12_CLEAR_VALUE depthClearValue{};
+	depthClearValue.DepthStencil.Depth = 1.0f;	//1.0f(最大値)でクリア
+	depthClearValue.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;	//フォーマット。resourceと合わせる
+
+	//Resourceの生成
+	ID3D12Resource* resource = nullptr;
+	HRESULT hr = device->CreateCommittedResource(
+		&heapProperties,	//Heaoの設定
+		D3D12_HEAP_FLAG_NONE,	//heapの特殊な設定。
+		&resourceDesc,	//Resourceの設定
+		D3D12_RESOURCE_STATE_DEPTH_WRITE,	//深度値を書き込む状態にしておく
+		&depthClearValue,	//Clear最適値
+		IID_PPV_ARGS(&resource)	//作成するResourceポインタへのポインタ
+	);
+	assert(SUCCEEDED(hr));
+
+	return resource;
+}
+

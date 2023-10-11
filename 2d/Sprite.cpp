@@ -10,13 +10,15 @@ Sprite::~Sprite()
 }
 
 
-void Sprite::Initialize(WindowAPI* winApp, DirectXCommon* dxcommon, MyEngine* engine, TextureManager* texture, SpriteData* data)
+void Sprite::Initialize(WindowAPI* winApp, DirectXCommon* dxcommon, MyEngine* engine, TextureManager* texture, SpriteData* data,uint32_t textureHandle)
 {
 	winApp_ = winApp;
 	dxCommon_ = dxcommon;
 	engine_ = engine;
+	texture_ = texture;
+	
+	textureHandle_ = textureHandle;
 
-	textureSrvHandleGPU_ = texture->GetTextureSrvHandleGPU();
 
 	VertexBuffer();
 	MaterialBuffer();
@@ -94,10 +96,10 @@ void Sprite::Draw()
 	dxCommon_->GetCommandList()->IASetIndexBuffer(&indexBufferView_);
 	dxCommon_->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
 	dxCommon_->GetCommandList()->SetGraphicsRootConstantBufferView(1, transformationmatrixResource->GetGPUVirtualAddress());
-	/*dxCommon_->GetCommandList()->SetGraphicsRootDescriptorTable(2, textureSrvHandleGPU_);*/
+	dxCommon_->GetCommandList()->SetGraphicsRootDescriptorTable(2, texture_->GetGPUHandle(textureHandle_));
 	//描画
 	/*dxCommon_->GetCommandList()->DrawInstanced(6, 1, 0, 0);*/
-	/*dxCommon_->GetCommandList()->DrawIndexedInstanced(6, 1, 0, 0, 0);*/
+	dxCommon_->GetCommandList()->DrawIndexedInstanced(6, 1, 0, 0, 0);
 }
 
 

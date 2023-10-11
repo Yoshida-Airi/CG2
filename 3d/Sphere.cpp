@@ -8,18 +8,17 @@ Sphere::~Sphere()
 	lightResource_->Release();
 }
 
-void Sphere::Initialize(WindowAPI* winApp, DirectXCommon* dxComon, MyEngine* engine, TextureManager* texture)
+void Sphere::Initialize(WindowAPI* winApp, DirectXCommon* dxComon, MyEngine* engine, TextureManager* texture, uint32_t textureHandle, uint32_t textureHandle2)
 {
 	winApp_ = winApp;
 	dxCommon_ = dxComon;
 	engine_ = engine;
 	texture_ = texture;
+	textureHandle_ = textureHandle;
+	textureHandle2_ = textureHandle2;
 
 	kClientHeight_ = winApp_->GetHeight();
 	kClientWidth_ = winApp_->GetWidth();
-
-	textureSrvHandleGPU_ = texture->GetTextureSrvHandleGPU();
-	textureSrvHandleGPU2_ = texture->GetTextureSrvHandleGPU2();
 
 	
 
@@ -197,10 +196,10 @@ void Sphere::Draw()
 	dxCommon_->GetCommandList()->SetGraphicsRootConstantBufferView(3, lightResource_->GetGPUVirtualAddress());
 	dxCommon_->GetCommandList()->SetGraphicsRootConstantBufferView(1, wvpResource_->GetGPUVirtualAddress());
 	
-	//// SRVのDescriptorTableの先頭を設定。
-	//dxCommon_->GetCommandList()->SetGraphicsRootDescriptorTable(2, useMonsterBall ? textureSrvHandleGPU2_ : textureSrvHandleGPU_);
+	// SRVのDescriptorTableの先頭を設定。
+	dxCommon_->GetCommandList()->SetGraphicsRootDescriptorTable(2, useMonsterBall ? texture_->GetGPUHandle(textureHandle_) : texture_->GetGPUHandle(textureHandle2_));
 	//描画
-	/*dxCommon_->GetCommandList()->DrawInstanced(totalVertex, 1, 0, 0);*/
+	dxCommon_->GetCommandList()->DrawInstanced(totalVertex, 1, 0, 0);
 
 }
 

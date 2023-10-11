@@ -30,7 +30,7 @@ public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize(WindowAPI* winApp, DirectXCommon* dxcommon, MyEngine* engine, TextureManager* texture, SpriteData* data);
+	void Initialize(WindowAPI* winApp, DirectXCommon* dxcommon, MyEngine* engine, TextureManager* texture, SpriteData* data, uint32_t textureHandle);
 
 	/// <summary>
 	/// 更新処理
@@ -73,6 +73,8 @@ private:
 	DirectXCommon* dxCommon_;
 	MyEngine* engine_;
 	TextureManager* texture_;
+
+	uint32_t textureHandle_;
 
 	VertexData* vertexData_ = nullptr;
 	Material* materialData_ = nullptr;

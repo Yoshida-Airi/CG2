@@ -18,10 +18,9 @@ void Model::Initialize(WindowAPI* winApp, DirectXCommon* dxComon, MyEngine* engi
 	kClientHeight_ = winApp_->GetHeight();
 	kClientWidth_ = winApp_->GetWidth();
 
-	textureSrvHandleGPU_ = texture->GetTextureSrvHandleGPU();
 
-
-	modelData_ = LoadObjFile("Resources", "plane.obj");
+	modelData_ = LoadObjFile("Resources", "cube.obj");
+	textureHandle_ = texture->LoadTexture(modelData_.material.textureFilePath);
 
 	VertexBuffer();
 	MaterialBuffer();
@@ -93,7 +92,7 @@ void Model::Draw()
 	dxCommon_->GetCommandList()->SetGraphicsRootConstantBufferView(3, lightResource_->GetGPUVirtualAddress());
 
 	// SRVのDescriptorTableの先頭を設定。
-	dxCommon_->GetCommandList()->SetGraphicsRootDescriptorTable(2, texture_->GetTextureSrvHandleGPU());
+	dxCommon_->GetCommandList()->SetGraphicsRootDescriptorTable(2, texture_->GetGPUHandle(textureHandle_));
 	//描画
 	dxCommon_->GetCommandList()->DrawInstanced(UINT(modelData_.vertices.size()), 1, 0, 0);
 
@@ -255,7 +254,7 @@ MaterialData Model::LoadMaterialTemplateFile(const std::string& directoryPath, c
 	assert(file.is_open());//とりあえず開けなかったら止める
 
 	//3.実際にファイルを読み、MaterialDataを構築していく
-	while (std::getline(file, line));
+	while (std::getline(file, line))
 	{
 		std::string identifier;
 		std::istringstream s(line);

@@ -84,6 +84,16 @@ private:
 	/// </summary>
 	void ClearRenderTarget();
 
+	/// <summary>
+	/// 深度の書き込みも出来るテクスチャリソースを作る
+	/// </summary>
+	/// /// <param name="device"></param>
+	/// <param name="width">ウィンドウの幅</param>
+	/// <param name="height">ウィンドウの高さ</param>
+	/// <returns></returns>
+	ID3D12Resource* CreateDepthStencilTextureResource(ID3D12Device* device, int32_t width, int32_t height);
+
+
 
 private://プライベート変数
 
@@ -114,6 +124,8 @@ private://プライベート変数
 	HANDLE fenceEvent_ = nullptr;
 	IDXGIAdapter4* useAdapter_ = nullptr;
 
+	D3D12_DEPTH_STENCIL_VIEW_DESC dsvDesc_;
+	ID3D12Resource* depthStencilResource_;
 
 	ID3D12Debug1* debugController_ = nullptr;
 
