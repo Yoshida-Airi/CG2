@@ -21,7 +21,7 @@ void Triangle::Initialize(WindowAPI* winApp, DirectXCommon* direct, MyEngine* en
 	kClientHeight_ = winApp_->GetHeight();
 	kClientWidth_ = winApp_->GetWidth();
 
-	textureSrvHandleGPU_ = texture->GetTextureSrvHandleGPU(3);
+	textureSrvHandleGPU_ = texture->GetTextureSrvHandleGPU();
 
 	cameraTransform_ =
 	{

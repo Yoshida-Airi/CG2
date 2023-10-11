@@ -8,59 +8,28 @@ TextureManager::~TextureManager()
 	depthStencilResource_->Release();
 }
 
-void TextureManager::Initialize(WindowAPI*winApp, DirectXCommon* dxCommon,MyEngine*engine, int32_t width, int32_t height)
+void TextureManager::Initialize(DirectXCommon* dxCommon, int32_t width, int32_t height)
 {
-	winApp_ = winApp;
-	dxCommon_ = dxCommon;
-	engine_ = engine;
+	mipImages_ = LoadTexture("resources/uvChecker.png");
+	metadata_ = mipImages_.GetMetadata();
+	textureResource_ = CreateTextureResource(dxCommon->GetDevice(), metadata_);
 
-	//mipImages_ = LoadTexture("resources/uvChecker.png");
-	//metadata_ = mipImages_.GetMetadata();
-	//textureResource_ = CreateTextureResource(dxCommon->GetDevice(), metadata_);
-
-	//mipImages2_ = LoadTexture("resources/monsterBall.png");
-	//metadata2_ = mipImages2_.GetMetadata();
-	//textureResource2_ = CreateTextureResource(dxCommon->GetDevice(), metadata2_);
+	mipImages2_ = LoadTexture("resources/monsterBall.png");
+	metadata2_ = mipImages2_.GetMetadata();
+	textureResource2_ = CreateTextureResource(dxCommon->GetDevice(), metadata2_);
 
 
-	depthStencilResource_ = CreateDepthStencilTextureResource(dxCommon_->GetDevice(), width, height);
+	depthStencilResource_ = CreateDepthStencilTextureResource(dxCommon->GetDevice(), width, height);
 
-	/*UploadTextureData(textureResource_, mipImages_);*/
-	//UploadTextureData(textureResource2_, mipImages2_);
+	UploadTextureData(textureResource_, mipImages_);
+	UploadTextureData(textureResource2_, mipImages2_);
 
-	//CreateShaderResourceView(dxCommon->GetDevice(), dxCommon->GetsrvDescriptorHeap());
-	CreateDepthStencilView(dxCommon_->GetDevice(), dxCommon_->GetDsvDescriptorHeap());
+	CreateShaderResourceView(dxCommon->GetDevice(), dxCommon->GetsrvDescriptorHeap());
+	CreateDepthStencilView(dxCommon->GetDevice(), dxCommon->GetDsvDescriptorHeap());
 
 }
 
-void TextureManager::LoadObjTexture(uint32_t index, const std::string& filePath)
-{
-	DirectX::ScratchImage mipImages = LoadTexture(filePath);
-	DirectX::TexMetadata metadata = mipImages.GetMetadata();
-	textures_.at(index)->textureBuffer = CreateTextureResource(dxCommon_->GetDevice(), metadata);
-	UploadTextureData(textures_.at(index)->textureBuffer, mipImages);
-	
-	// metaDataをもとにSRVの設定
-	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc;
-	srvDesc.Format = metadata.format;
-	srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
-	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;	//2Dテクスチャ
-	srvDesc.Texture2D.MipLevels = UINT(metadata.mipLevels);
 
-	// SRVを作成するDescriptorHeapの場所を決める
-
-
-	textures_.at(index)->textureSrvHandleCPU_ = GetCPUDescriptorHandle(dxCommon_->GetsrvDescriptorHeap(), dxCommon_->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV), index);
-	textures_.at(index)->textureSrvHandleGPU_ = GetGPUDescriptorHandle(dxCommon_->GetsrvDescriptorHeap(), dxCommon_->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV), index);
-
-	textures_.at(index)->textureSrvHandleCPU_.ptr += dxCommon_->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
-	textures_.at(index)->textureSrvHandleGPU_.ptr += dxCommon_->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
-
-
-	// SRVの生成
-	dxCommon_->GetDevice()->CreateShaderResourceView(textures_.at(index)->textureBuffer, &srvDesc, textures_.at(index)->textureSrvHandleCPU_);
-
-}
 
 DirectX::ScratchImage TextureManager::LoadTexture(const std::string& filePath)
 {
@@ -100,8 +69,7 @@ ID3D12Resource* TextureManager::CreateTextureResource(ID3D12Device* device, cons
 
 	// Resourceの生成
 	ID3D12Resource* resource = nullptr;
-	HRESULT hr = device->CreateCommittedResource
-	(
+	HRESULT hr = device->CreateCommittedResource(
 		&heapProperties,
 		D3D12_HEAP_FLAG_NONE,
 		&resourceDesc,
@@ -151,10 +119,8 @@ ID3D12Resource* TextureManager::CreateDepthStencilTextureResource(ID3D12Device* 
 	return resource;
 }
 
-
 void TextureManager::UploadTextureData(ID3D12Resource* texture, const DirectX::ScratchImage& mipImages)
 {
-
 	// Meta情報を取得
 	const DirectX::TexMetadata& metadata = mipImages.GetMetadata();
 	// 全MipMapについて

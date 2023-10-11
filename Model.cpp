@@ -18,8 +18,10 @@ void Model::Initialize(WindowAPI* winApp, DirectXCommon* dxComon, MyEngine* engi
 	kClientHeight_ = winApp_->GetHeight();
 	kClientWidth_ = winApp_->GetWidth();
 
+	textureSrvHandleGPU_ = texture->GetTextureSrvHandleGPU();
+
+
 	modelData_ = LoadObjFile("Resources", "plane.obj");
-	texture->LoadObjTexture(10, modelData_.material.textureFilePath);
 
 	VertexBuffer();
 	MaterialBuffer();
@@ -84,14 +86,14 @@ void Model::Draw()
 	dxCommon_->GetCommandList()->IASetVertexBuffers(0, 1, &vertexBufferView_);
 	//形状を設定。PS0にせっていしているものとはまた別。同じものを設定する
 	dxCommon_->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	
+
 	//マテリアルCBufferの場所を設定
 	dxCommon_->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
 	dxCommon_->GetCommandList()->SetGraphicsRootConstantBufferView(1, wvpResource_->GetGPUVirtualAddress());
 	dxCommon_->GetCommandList()->SetGraphicsRootConstantBufferView(3, lightResource_->GetGPUVirtualAddress());
 
 	// SRVのDescriptorTableの先頭を設定。
-	dxCommon_->GetCommandList()->SetGraphicsRootDescriptorTable(2, texture_->GetTextureSrvHandleGPU(3));
+	dxCommon_->GetCommandList()->SetGraphicsRootDescriptorTable(2, texture_->GetTextureSrvHandleGPU());
 	//描画
 	dxCommon_->GetCommandList()->DrawInstanced(UINT(modelData_.vertices.size()), 1, 0, 0);
 
@@ -102,7 +104,7 @@ void Model::Draw()
 void Model::VertexBuffer()
 {
 	//頂点用リソースを作る
-	vertexResource_ = engine_->CreateBufferResource(sizeof(VertexData) * modelData_.vertices.size());	
+	vertexResource_ = engine_->CreateBufferResource(sizeof(VertexData) * modelData_.vertices.size());
 	//リソースの先頭のアドレスから使う
 	vertexBufferView_.BufferLocation = vertexResource_->GetGPUVirtualAddress();
 	//使用するリソースのサイズは頂点3つ分のサイズ
@@ -112,7 +114,7 @@ void Model::VertexBuffer()
 	//書き込むためのアドレスを取得
 	vertexResource_->Map(0, nullptr, reinterpret_cast<void**>(&vertexData_));
 	//頂点データをリソースにコピー
-	std::memcpy(vertexData_, modelData_.vertices.data(), sizeof(VertexData) * modelData_.vertices.size());	
+	std::memcpy(vertexData_, modelData_.vertices.data(), sizeof(VertexData) * modelData_.vertices.size());
 }
 
 /// <summary>
@@ -226,7 +228,7 @@ ModelData Model::LoadObjFile(const std::string& directoryPath, const std::string
 			modelData_.vertices.push_back(triangle[1]);
 			modelData_.vertices.push_back(triangle[0]);
 		}
-		
+
 		else if (identifier == "mtllib")
 		{
 			//materialTemplateLibraryファイルの名前を取得する
@@ -245,20 +247,21 @@ ModelData Model::LoadObjFile(const std::string& directoryPath, const std::string
 MaterialData Model::LoadMaterialTemplateFile(const std::string& directoryPath, const std::string& filename)
 {
 	//1.中で必要となる変数の宣言
-	MaterialData materialData;
-	std::string line;
+	MaterialData materialData;	//構築するMaterialData
+	std::string line;	//ファイルから読んだ1行を格納するもの
 
 	//2.ファイルを開く
-	std::ifstream file(directoryPath + "/" + filename);	
-	assert(file.is_open());
+	std::ifstream file(directoryPath + "/" + filename);
+	assert(file.is_open());//とりあえず開けなかったら止める
 
 	//3.実際にファイルを読み、MaterialDataを構築していく
-	while (std::getline(file, line))
+	while (std::getline(file, line));
 	{
 		std::string identifier;
 		std::istringstream s(line);
 		s >> identifier;
 
+		//identifierに応じた処理
 		if (identifier == "map_Kd")
 		{
 			std::string textureFilename;
@@ -266,10 +269,8 @@ MaterialData Model::LoadMaterialTemplateFile(const std::string& directoryPath, c
 			//連結してファイルパスにする
 			materialData.textureFilePath = directoryPath + "/" + textureFilename;
 		}
-
 	}
 
 	//4.MaterialDataを返す
 	return materialData;
-
 }

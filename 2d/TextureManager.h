@@ -1,22 +1,8 @@
 #pragma once
 #include"externals/DirectXTex/DirectXTex.h"
-#include"externals/DirectXTex/d3dx12.h"
 #include"ConvertString.h"
 #include"DirectXCommon.h"
-#include"MyEngine.h"
-#include"WindowAPI.h"
 #include<d3d12.h>
-#include<array>
-#include<vector>
-
-
-struct Texture
-{
-	ID3D12Resource* textureBuffer;
-	D3D12_CPU_DESCRIPTOR_HANDLE textureSrvHandleCPU_;
-	D3D12_GPU_DESCRIPTOR_HANDLE textureSrvHandleGPU_;
-	std::string& filePath;
-};
 
 class TextureManager
 {
@@ -27,24 +13,16 @@ public:
 	/// <summary>
 	///	初期化
 	/// </summary>
-	void Initialize(WindowAPI*winApp, DirectXCommon* dxCommon,MyEngine*engine, int32_t width, int32_t height);
+	void Initialize(DirectXCommon* dxCommon, int32_t width, int32_t height);
 
 
-	D3D12_GPU_DESCRIPTOR_HANDLE GetTextureSrvHandleGPU(uint32_t index)
-	{
-		return textures_.at(index)->textureSrvHandleGPU_;
-	};
+	D3D12_GPU_DESCRIPTOR_HANDLE GetTextureSrvHandleGPU() { return textureSrvHandleGPU_; };
 
 
 	D3D12_GPU_DESCRIPTOR_HANDLE GetTextureSrvHandleGPU2() { return textureSrvHandleGPU2_; };
 
-	void LoadObjTexture(uint32_t index, const std::string& filePath);
 
 private:
-	WindowAPI* winApp_;
-	DirectXCommon* dxCommon_;
-	MyEngine* engine_;
-
 	DirectX::TexMetadata metadata_;
 	DirectX::TexMetadata metadata2_;
 
@@ -60,6 +38,8 @@ private:
 	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc2_;
 
 
+
+
 	D3D12_CPU_DESCRIPTOR_HANDLE textureSrvHandleCPU_;
 	D3D12_GPU_DESCRIPTOR_HANDLE textureSrvHandleGPU_;
 
@@ -69,10 +49,6 @@ private:
 
 	D3D12_DEPTH_STENCIL_VIEW_DESC dsvDesc_;
 
-
-	static const size_t kMaxTextureCount = 2056;
-
-	std::array<Texture*, kMaxTextureCount>textures_;
 
 private:
 	/// <summary>
