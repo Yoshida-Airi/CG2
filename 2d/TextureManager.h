@@ -3,9 +3,11 @@
 #include"externals/DirectXTex/d3dx12.h"
 #include"ConvertString.h"
 #include"DirectXCommon.h"
+#include"MyEngine.h"
 #include"WindowAPI.h"
 #include<d3d12.h>
 #include<array>
+#include<vector>
 
 
 struct Texture
@@ -25,7 +27,7 @@ public:
 	/// <summary>
 	///	初期化
 	/// </summary>
-	void Initialize(WindowAPI*winApp, DirectXCommon* dxCommon, int32_t width, int32_t height);
+	void Initialize(WindowAPI*winApp, DirectXCommon* dxCommon,MyEngine*engine, int32_t width, int32_t height);
 
 
 	D3D12_GPU_DESCRIPTOR_HANDLE GetTextureSrvHandleGPU(uint32_t index)
@@ -41,6 +43,7 @@ public:
 private:
 	WindowAPI* winApp_;
 	DirectXCommon* dxCommon_;
+	MyEngine* engine_;
 
 	DirectX::TexMetadata metadata_;
 	DirectX::TexMetadata metadata2_;

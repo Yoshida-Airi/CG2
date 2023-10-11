@@ -8,10 +8,11 @@ TextureManager::~TextureManager()
 	depthStencilResource_->Release();
 }
 
-void TextureManager::Initialize(WindowAPI*winApp, DirectXCommon* dxCommon, int32_t width, int32_t height)
+void TextureManager::Initialize(WindowAPI*winApp, DirectXCommon* dxCommon,MyEngine*engine, int32_t width, int32_t height)
 {
 	winApp_ = winApp;
 	dxCommon_ = dxCommon;
+	engine_ = engine;
 
 	//mipImages_ = LoadTexture("resources/uvChecker.png");
 	//metadata_ = mipImages_.GetMetadata();
@@ -22,13 +23,13 @@ void TextureManager::Initialize(WindowAPI*winApp, DirectXCommon* dxCommon, int32
 	//textureResource2_ = CreateTextureResource(dxCommon->GetDevice(), metadata2_);
 
 
-	depthStencilResource_ = CreateDepthStencilTextureResource(dxCommon->GetDevice(), width, height);
+	depthStencilResource_ = CreateDepthStencilTextureResource(dxCommon_->GetDevice(), width, height);
 
-	UploadTextureData(textureResource_, mipImages_);
+	/*UploadTextureData(textureResource_, mipImages_);*/
 	//UploadTextureData(textureResource2_, mipImages2_);
 
 	//CreateShaderResourceView(dxCommon->GetDevice(), dxCommon->GetsrvDescriptorHeap());
-	CreateDepthStencilView(dxCommon->GetDevice(), dxCommon->GetDsvDescriptorHeap());
+	CreateDepthStencilView(dxCommon_->GetDevice(), dxCommon_->GetDsvDescriptorHeap());
 
 }
 
@@ -99,7 +100,8 @@ ID3D12Resource* TextureManager::CreateTextureResource(ID3D12Device* device, cons
 
 	// Resourceの生成
 	ID3D12Resource* resource = nullptr;
-	HRESULT hr = device->CreateCommittedResource(
+	HRESULT hr = device->CreateCommittedResource
+	(
 		&heapProperties,
 		D3D12_HEAP_FLAG_NONE,
 		&resourceDesc,
@@ -152,6 +154,7 @@ ID3D12Resource* TextureManager::CreateDepthStencilTextureResource(ID3D12Device* 
 
 void TextureManager::UploadTextureData(ID3D12Resource* texture, const DirectX::ScratchImage& mipImages)
 {
+
 	// Meta情報を取得
 	const DirectX::TexMetadata& metadata = mipImages.GetMetadata();
 	// 全MipMapについて

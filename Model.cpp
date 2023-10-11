@@ -19,7 +19,7 @@ void Model::Initialize(WindowAPI* winApp, DirectXCommon* dxComon, MyEngine* engi
 	kClientWidth_ = winApp_->GetWidth();
 
 	modelData_ = LoadObjFile("Resources", "plane.obj");
-	texture->LoadObjTexture(3, modelData_.material.textureFilePath);
+	texture->LoadObjTexture(10, modelData_.material.textureFilePath);
 
 	VertexBuffer();
 	MaterialBuffer();
