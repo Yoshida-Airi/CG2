@@ -39,8 +39,6 @@ public:
 	void Update();
 	void Draw();
 
-	Model* CreateModelFromObj(const std::string& directoryPath, const std::string& filename);
-
 private:
 
 	WindowAPI* winApp_;
@@ -76,6 +74,9 @@ private:
 	ID3D12Resource* lightResource_ = nullptr;
 	DirectionalLight* lightData_ = nullptr;
 
+
+
+private:
 	/// <summary>
 	/// Objファイルを読むための関数
 	/// </summary>

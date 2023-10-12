@@ -42,7 +42,7 @@ void Model::Initialize(WindowAPI* winApp, DirectXCommon* dxComon, MyEngine* engi
 	{
 		{1.0f, 1.0f, 1.0f },
 		{0.0f, 0.0f, 0.0f },
-		{0.0f, 0.0f, -10.0f}
+		{0.0f, 0.4f, -10.0f}
 	};
 
 	//ライトのデフォルト値
