@@ -8,7 +8,7 @@ Model::~Model()
 	lightResource_->Release();
 }
 
-void Model::Initialize(WindowAPI* winApp, DirectXCommon* dxComon, MyEngine* engine, TextureManager* texture)
+void Model::Initialize(WindowAPI* winApp, DirectXCommon* dxComon, MyEngine* engine, TextureManager* texture, const std::string& directoryPath, const std::string& filename)
 {
 	winApp_ = winApp;
 	dxCommon_ = dxComon;
@@ -19,7 +19,7 @@ void Model::Initialize(WindowAPI* winApp, DirectXCommon* dxComon, MyEngine* engi
 	kClientWidth_ = winApp_->GetWidth();
 
 
-	modelData_ = LoadObjFile("Resources", "cube.obj");
+	modelData_ = LoadObjFile(directoryPath, filename);
 	textureHandle_ = texture->LoadTexture(modelData_.material.textureFilePath);
 
 	VertexBuffer();

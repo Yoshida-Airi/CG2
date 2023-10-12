@@ -36,11 +36,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	Sphere* sphere;
 	Sprite* sprite;
 	Model* model;
+	Model* model2;
 
 	sphere = new Sphere;
 	sprite = new Sprite;
 	model = new Model;
-
+	model2 = new Model;
 	spriteData->vertex[0] = { 0.0f,360.0f,0.0f,1.0f };
 	spriteData->vertex[1] = { 0.0f,0.0f,0.0f,1.0f };
 	spriteData->vertex[2] = { 640.0f,360.0f,0.0f,1.0f };
@@ -64,7 +65,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	imGuiManager->Initialize(winApp, dxCommon);
 
-	model->Initialize(winApp, dxCommon, engine, texture);
+	model->Initialize(winApp, dxCommon, engine, texture, "Resources", "cube.Obj");
+	model2->Initialize(winApp, dxCommon, engine, texture, "Resources", "plane.Obj");
 	sphere->Initialize(winApp, dxCommon, engine, texture, uvTexture,monsterTexture);
 	sprite->Initialize(winApp, dxCommon, engine, texture, spriteData, uvTexture);
 	
@@ -84,13 +86,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 
 		model->Update();
+		model2->Update();
 		sphere->Update();
 		sprite->Update();
 		
 		imGuiManager->End();
 
 		
-		model->Draw();
+		/*model->Draw();*/
+		model2->Draw();
 		sphere->Draw();
 		sprite->Draw();
 		
@@ -107,6 +111,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	delete sphere;
 	delete sprite;
 	delete model;
+	delete model2;
 
 	delete spriteData;
 
