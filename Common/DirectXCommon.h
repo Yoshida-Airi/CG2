@@ -124,7 +124,7 @@ private://プライベート変数
 	HANDLE fenceEvent_ = nullptr;
 	IDXGIAdapter4* useAdapter_ = nullptr;
 
-	D3D12_DEPTH_STENCIL_VIEW_DESC dsvDesc_;
+
 	ID3D12Resource* depthStencilResource_;
 
 	ID3D12Debug1* debugController_ = nullptr;

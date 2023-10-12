@@ -60,8 +60,7 @@ private:
 	std::array<ID3D12Resource*, kMaxTextureCount> intermediateResource;
 
 	uint32_t descriptorSizeSRV;
-	uint32_t descriptorSizeRTV;
-	uint32_t descriptorSizeDSV;
+	
 
 private:
 

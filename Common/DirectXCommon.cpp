@@ -389,6 +389,7 @@ void DirectXCommon::CreateFinalRenderTargets()
 	depthStencilResource_ = CreateDepthStencilTextureResource(device_, winApp_->GetWidth(), winApp_->GetHeight());
 	dsvDescriptorHeap_ = CreateDescriptorHeap(D3D12_DESCRIPTOR_HEAP_TYPE_DSV, 1, false);
 
+	D3D12_DEPTH_STENCIL_VIEW_DESC dsvDesc_{};
 	dsvDesc_.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;	//Format。基本的にはResourceに合わせる
 	dsvDesc_.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;	//2dTexture
 	//DSVHeapの先頭にDSVを作る
