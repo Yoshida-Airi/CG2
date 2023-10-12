@@ -15,10 +15,12 @@ DirectXCommon::DirectXCommon()
 //デストラクタ
 DirectXCommon::~DirectXCommon()
 {
+
 	CloseHandle(fenceEvent_);
 	fence_->Release();
 	rtvDescriptorHeap_->Release();
 	srvDescriptorHeap_->Release();
+	dsvDescriptorHeap_->Release();
 	swapChainResources_[0]->Release();
 	swapChainResources_[1]->Release();
 	swapChain_->Release();
@@ -29,8 +31,6 @@ DirectXCommon::~DirectXCommon()
 	useAdapter_->Release();
 	dxgiFactory_->Release();
 
-	depthStencilResource_->Release();
-	dsvDescriptorHeap_->Release();
 	
 	
 
@@ -385,15 +385,6 @@ void DirectXCommon::CreateFinalRenderTargets()
 	//二つ目を作る
 	device_->CreateRenderTargetView(swapChainResources_[1], &rtvDesc_, rtvHandles_[1]);
 
-
-	depthStencilResource_ = CreateDepthStencilTextureResource(device_, winApp_->GetWidth(), winApp_->GetHeight());
-	dsvDescriptorHeap_ = CreateDescriptorHeap(D3D12_DESCRIPTOR_HEAP_TYPE_DSV, 1, false);
-
-	D3D12_DEPTH_STENCIL_VIEW_DESC dsvDesc_{};
-	dsvDesc_.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;	//Format。基本的にはResourceに合わせる
-	dsvDesc_.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;	//2dTexture
-	//DSVHeapの先頭にDSVを作る
-	device_->CreateDepthStencilView(depthStencilResource_, &dsvDesc_, dsvDescriptorHeap_->GetCPUDescriptorHandleForHeapStart());
 
 
 

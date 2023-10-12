@@ -115,9 +115,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	delete spriteData;
 
-	delete texture;
+	
 	delete imGuiManager;
 	delete engine;
+	delete texture;
 	delete dxCommon;
 	delete winApp;
 

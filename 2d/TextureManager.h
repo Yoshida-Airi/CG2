@@ -62,6 +62,10 @@ private:
 	uint32_t descriptorSizeSRV;
 	
 
+	D3D12_DEPTH_STENCIL_VIEW_DESC dsvDesc_;
+	ID3D12Resource* depthStencilResource_;
+
+
 private:
 
 
@@ -75,4 +79,16 @@ private:
 	D3D12_CPU_DESCRIPTOR_HANDLE GetCPUDescriptorHandle(Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> descriptorHeap, uint32_t descriptorSize, uint32_t index);
 	D3D12_GPU_DESCRIPTOR_HANDLE GetGPUDescriptorHandle(Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> descriptorHeap, uint32_t descriptorSize, uint32_t index);
 	
+	/// <summary>
+	/// 深度の書き込みも出来るテクスチャリソースを作る
+	/// </summary>
+	/// /// <param name="device"></param>
+	/// <param name="width">ウィンドウの幅</param>
+	/// <param name="height">ウィンドウの高さ</param>
+	/// <returns></returns>
+	ID3D12Resource* CreateDepthStencilTextureResource(ID3D12Device* device, int32_t width, int32_t height);
+
+	void CreateDepthStencilView(ID3D12Device* device, ID3D12DescriptorHeap* dsvDescriptorHeap);
+
+
 };
