@@ -66,7 +66,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	imGuiManager->Initialize(winApp, dxCommon);
 
 	model->Initialize(winApp, dxCommon, engine, texture, "Resources", "cube.Obj");
-	model2->Initialize(winApp, dxCommon, engine, texture, "Resources", "plane.Obj");
+	model2->Initialize(winApp, dxCommon, engine, texture, "Resources", "axis.Obj");
 	sphere->Initialize(winApp, dxCommon, engine, texture, uvTexture,monsterTexture);
 	sprite->Initialize(winApp, dxCommon, engine, texture, spriteData, uvTexture);
 	
@@ -93,7 +93,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		imGuiManager->End();
 
 		
-		/*model->Draw();*/
+		model->Draw();
 		model2->Draw();
 		sphere->Draw();
 		sprite->Draw();
