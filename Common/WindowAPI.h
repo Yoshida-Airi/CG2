@@ -41,15 +41,15 @@ public:
 	HWND GetHwnd() const { return hwnd_; }
 	int32_t GetWidth() const { return Width_; };
 	int32_t GetHeight() const { return Height_; };
+	WNDCLASS GetWinCLASS()const { return wc_; };
 
-private:
 	/*=====================================*/
 	/* 　　　　   プライベート変数    　       */
 	/*=====================================*/
 
 	//タイトル
 	const wchar_t* Title_ = nullptr;
-	HINSTANCE hInst_ = {};	//インスタンスハンドル
+
 	HWND hwnd_ = nullptr;			//ウィンドウハンドル
 	int32_t Width_ = 0;		//ウィンドウの横幅
 	int32_t Height_ = 0;	//ウィンドウの縦幅

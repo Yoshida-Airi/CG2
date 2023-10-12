@@ -8,6 +8,7 @@
 #include"Sprite.h"
 #include"Sphere.h"
 #include"Model.h"
+#include"Input.h"
 
 const wchar_t* kWindowTitle = L"CG2";
 
@@ -20,7 +21,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	MyEngine* engine = new MyEngine;
 	ImGuiManager* imGuiManager = new ImGuiManager;
 	TextureManager* texture = new TextureManager;
-
+	Input* input = new Input;
 
 	//アプリケーションの開始
 	const uint32_t kWindowWidth = 1280;
@@ -29,7 +30,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	winApp->StartApp(kWindowTitle, kWindowWidth, kWindowHeight);
 	dxCommon->Initialize(winApp);
 	engine->Initialize(dxCommon, winApp);
-
+	input->Initialize(winApp);
 
 	
 	SpriteData* spriteData = new SpriteData;
@@ -85,6 +86,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		imGuiManager->Begin();
 
 
+		if (input->TriggerKey(DIK_0))
+		{
+			OutputDebugStringA("Hit\n");
+		}
+
+		input->Update();
 		model->Update();
 		model2->Update();
 		sphere->Update();
@@ -115,7 +122,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	delete spriteData;
 
-	
+	delete input;
 	delete imGuiManager;
 	delete engine;
 	delete texture;
