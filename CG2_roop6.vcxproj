@@ -90,6 +90,7 @@
     <ClCompile Include="Common\DirectXCommon.cpp" />
     <ClCompile Include="Common\MyEngine.cpp" />
     <ClCompile Include="Common\WindowAPI.cpp" />
+    <ClCompile Include="CSVReader.cpp" />
     <ClCompile Include="externals\imgui\imgui.cpp" />
     <ClCompile Include="externals\imgui\imgui_demo.cpp" />
     <ClCompile Include="externals\imgui\imgui_draw.cpp" />
@@ -112,6 +113,7 @@
     <ClInclude Include="Common\DirectXCommon.h" />
     <ClInclude Include="Common\MyEngine.h" />
     <ClInclude Include="Common\WindowAPI.h" />
+    <ClInclude Include="CSVReader.h" />
     <ClInclude Include="externals\imgui\imconfig.h" />
     <ClInclude Include="externals\imgui\imgui.h" />
     <ClInclude Include="externals\imgui\imgui_impl_dx12.h" />

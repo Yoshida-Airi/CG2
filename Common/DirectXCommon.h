@@ -128,8 +128,6 @@ private://プライベート変数
 	Microsoft::WRL::ComPtr< IDXGIAdapter4> useAdapter_ = nullptr;
 
 
-	ID3D12Resource* depthStencilResource_;
-
 	Microsoft::WRL::ComPtr< ID3D12Debug1> debugController_ = nullptr;
 
 };
