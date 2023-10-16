@@ -19,9 +19,9 @@ WindowAPI::~WindowAPI()
 }
 
 //開始
-void WindowAPI::StartApp(const wchar_t* title, int32_t width, int32_t height)
+void WindowAPI::StartApp(const wchar_t* title)
 {
-	Initialize(title, width, height);
+	Initialize(title);
 }
 
 
@@ -73,9 +73,9 @@ LRESULT CALLBACK WindowAPI::WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARA
 }
 
 //ウィンドウの初期化
-bool WindowAPI::Initialize(const wchar_t* title, int32_t width, int32_t height)
+bool WindowAPI::Initialize(const wchar_t* title)
 {
-	if (!InitializeWindow(title, width, height))
+	if (!InitializeWindow(title))
 	{
 		return false;
 	}
@@ -85,11 +85,11 @@ bool WindowAPI::Initialize(const wchar_t* title, int32_t width, int32_t height)
 
 
 //ウィンドウクラスの登録(初期化)
-bool WindowAPI::InitializeWindow(const wchar_t* title, int32_t width, int32_t height)
+bool WindowAPI::InitializeWindow(const wchar_t* title)
 {
 	Title_ = title;
-	Width_ = width;
-	Height_ = height;
+	Width_ = WindowAPI::kWindowWidth;
+	Height_ = WindowAPI::kWindowHeight;
 
 	//ウィンドウクラスの登録(設定をWindowsに伝える)
 	//ウィンドウプロシージャ

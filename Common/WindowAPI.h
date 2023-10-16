@@ -29,7 +29,7 @@ public:
 	/// <summary>
 	/// アプリケーションの開始
 	/// </summary>
-	void StartApp(const wchar_t* title, int32_t width, int32_t height);
+	void StartApp(const wchar_t* title);
 
 	/// <summary>
 	/// メッセージの処理
@@ -43,10 +43,18 @@ public:
 	int32_t GetHeight() const { return Height_; };
 	WNDCLASS GetWinCLASS()const { return wc_; };
 
+public:
+	//アプリケーションの開始
+	static const uint32_t kWindowWidth = 1280;
+	static const uint32_t kWindowHeight = 720;
+
+
+
+
 	/*=====================================*/
 	/* 　　　　   プライベート変数    　       */
 	/*=====================================*/
-
+private:
 	//タイトル
 	const wchar_t* Title_ = nullptr;
 
@@ -66,9 +74,9 @@ private:
 	/*=====================================*/
 
 	//初期化
-	bool Initialize(const wchar_t* title, int32_t width, int32_t height);
+	bool Initialize(const wchar_t* title);
 	//ウィンドウクラスを登録
-	bool InitializeWindow(const wchar_t* title, int32_t width, int32_t height);
+	bool InitializeWindow(const wchar_t* title);
 
 	//ウィンドウプロシージャ
 	static LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);

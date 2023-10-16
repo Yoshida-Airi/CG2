@@ -15,39 +15,7 @@ DirectXCommon::DirectXCommon()
 //デストラクタ
 DirectXCommon::~DirectXCommon()
 {
-
 	CloseHandle(fenceEvent_);
-	/*fence_->Release();*/
-	//rtvDescriptorHeap_->Release();
-	srvDescriptorHeap_->Release();
-	dsvDescriptorHeap_->Release();
-	/*swapChainResources_[0]->Release();
-	swapChainResources_[1]->Release();*/
-	/*swapChain_->Release();*/
-	//commandList_->Release();
-	//commandAllocator_->Release();
-	//commandQueue_->Release();
-	/*device_->Release();*/
-	/*useAdapter_->Release();*/
-	//dxgiFactory_->Release();
-
-	
-	
-
-#ifdef _DEBUG
-	//debugController_->Release();
-#endif
-
-	////リソースリークチェック
-	//IDXGIDebug1* debug;
-	//if (SUCCEEDED(DXGIGetDebugInterface1(0, IID_PPV_ARGS(&debug))))
-	//{
-	//	debug->ReportLiveObjects(DXGI_DEBUG_ALL, DXGI_DEBUG_RLO_ALL);
-	//	debug->ReportLiveObjects(DXGI_DEBUG_APP, DXGI_DEBUG_RLO_ALL);
-	//	debug->ReportLiveObjects(DXGI_DEBUG_D3D12, DXGI_DEBUG_RLO_ALL);
-	//	debug->Release();
-	//}
-
 }
 
 //初期化

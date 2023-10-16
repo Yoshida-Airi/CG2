@@ -32,18 +32,15 @@ struct D3DResourceLeakChecker
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
 	WindowAPI* winApp = new WindowAPI;
-	DirectXCommon* dxCommon = new DirectXCommon;
-	MyEngine* engine = new MyEngine;
-	ImGuiManager* imGuiManager = new ImGuiManager;
-	TextureManager* texture = new TextureManager;
-	Input* input = new Input;
+	//DirectXCommon* dxCommon = new DirectXCommon;
+	//MyEngine* engine = new MyEngine;
+	//ImGuiManager* imGuiManager = new ImGuiManager;
+	//TextureManager* texture = new TextureManager;
+	//Input* input = new Input;
 
-	//アプリケーションの開始
-	const uint32_t kWindowWidth = 1280;
-	const uint32_t kWindowHeight = 720;
 
-	winApp->StartApp(kWindowTitle, kWindowWidth, kWindowHeight);
-	dxCommon->Initialize(winApp);
+	winApp->StartApp(kWindowTitle);
+	/*dxCommon->Initialize(winApp);
 	engine->Initialize(dxCommon, winApp);
 	input->Initialize(winApp);
 
@@ -86,7 +83,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	sphere->Initialize(winApp, dxCommon, engine, texture, uvTexture,monsterTexture);
 	sprite->Initialize(winApp, dxCommon, engine, texture, spriteData, uvTexture);
 	
-	
+	*/
 
 	// ウィンドウの×ボタンが押されるまでループ
 	while (WindowAPI::ProcessMessage() == 0)
@@ -96,7 +93,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		/* 　　　　   メインループ　　    　       */
 		/*=====================================*/
 
-		dxCommon->PreDraw();
+	/*	dxCommon->PreDraw();
 		engine->PreDraw();
 		imGuiManager->Begin();
 
@@ -122,28 +119,28 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		
 		imGuiManager->Draw();
 		engine->PostDraw();
-		dxCommon->PostDraw();
+		dxCommon->PostDraw();*/
 
 
 	}
 
-	D3DResourceLeakChecker leakCheak;
+	//D3DResourceLeakChecker leakCheak;
 
-	CoUninitialize();
+	//CoUninitialize();
 
 
-	delete sphere;
-	delete sprite;
-	delete model;
-	delete model2;
+	//delete sphere;
+	//delete sprite;
+	//delete model;
+	//delete model2;
 
-	delete spriteData;
+	//delete spriteData;
 
-	delete input;
-	delete imGuiManager;
-	delete engine;
-	delete texture;
-	delete dxCommon;
+	//delete input;
+	//delete imGuiManager;
+	//delete engine;
+	//delete texture;
+	//delete dxCommon;
 	delete winApp;
 
 	return 0;
