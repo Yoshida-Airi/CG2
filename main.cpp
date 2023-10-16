@@ -115,8 +115,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		imGuiManager->End();
 
 		
-	/*	model->Draw();
-		model2->Draw();*/
+		model->Draw();
+		model2->Draw();
 		sphere->Draw();
 		sprite->Draw();
 		
