@@ -1,15 +1,6 @@
 #pragma once
-#include<Windows.h>
-#include"WindowAPI.h"
-#include"DirectXCommon.h"
-#include"MyEngine.h"
-#include"Triangle.h"
-#include"ImGuiManager.h"
-#include"TextureManager.h"
-#include"Sprite.h"
-#include"Sphere.h"
-#include"Model.h"
-#include"Input.h"
+#include"GamePlayScene.h"
+#include"TitleScene.h"
 
 struct D3DResourceLeakChecker
 {
@@ -37,23 +28,8 @@ public:
 
 private:
 
-	const wchar_t* kWindowTitle = L"CG2";
-	WindowAPI* winApp = nullptr;
-	DirectXCommon* dxCommon = nullptr;
-	MyEngine* engine = nullptr;
-	ImGuiManager* imGuiManager = nullptr;
-	TextureManager* texture = nullptr;
-	Input* input = nullptr;
-
-	//アプリケーションの開始
-	const uint32_t kWindowWidth = 1280;
-	const uint32_t kWindowHeight = 720;
-
-	SpriteData* spriteData = nullptr;
-	Sphere* sphere;
-	Sprite* sprite;
-	Model* model;
-	Model* model2;
+	GamePlayScene* scene_ = nullptr;
+	TitleScene* titleScene_ = nullptr;
 
 };
 

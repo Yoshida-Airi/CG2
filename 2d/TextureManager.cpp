@@ -24,7 +24,7 @@ void TextureManager::Update()
 
 uint32_t TextureManager::LoadTexture(const std::string& filePath)
 {
-	uint32_t index = kMaxTextureCount + 1;
+	uint32_t index = TextureCount_ + 1;
 	for (int i = 0; i < kMaxTextureCount; ++i) {
 		if (IsusedTexture[i] == false) {
 			index = i;
@@ -185,3 +185,6 @@ void TextureManager::CreateDepthStencilView(ID3D12Device* device, ID3D12Descript
 	//DSVHeapの先頭にDSVを作る
 	device->CreateDepthStencilView(depthStencilResource_.Get(), &dsvDesc_, dsvDescriptorHeap->GetCPUDescriptorHandleForHeapStart());
 }
+
+//静的メンバ変数の宣言と初期化
+TextureManager* TextureManager::instance = NULL;

@@ -5,20 +5,9 @@ Sphere::~Sphere()
 	
 }
 
-void Sphere::Initialize(WindowAPI* winApp, DirectXCommon* dxComon, MyEngine* engine, TextureManager* texture, uint32_t textureHandle)
+void Sphere::Initialize()
 {
-	winApp_ = winApp;
-	dxCommon_ = dxComon;
-	engine_ = engine;
-	texture_ = texture;
-	textureHandle_ = textureHandle;
 	
-
-	kClientHeight_ = winApp_->GetHeight();
-	kClientWidth_ = winApp_->GetWidth();
-
-	
-
 	VertexBuffer();
 	MaterialBuffer();
 	WvpBuffer();
@@ -182,7 +171,7 @@ void Sphere::Update()
 	
 }
 
-void Sphere::Draw()
+void Sphere::Draw(uint32_t textureHandle)
 {
 	//VBVを設定
 	dxCommon_->GetCommandList()->IASetVertexBuffers(0, 1, &vertexBufferView_);
@@ -194,7 +183,7 @@ void Sphere::Draw()
 	dxCommon_->GetCommandList()->SetGraphicsRootConstantBufferView(1, wvpResource_->GetGPUVirtualAddress());
 	
 	// SRVのDescriptorTableの先頭を設定。
-	dxCommon_->GetCommandList()->SetGraphicsRootDescriptorTable(2, texture_->GetGPUHandle(textureHandle_));
+	dxCommon_->GetCommandList()->SetGraphicsRootDescriptorTable(2, texture_->GetGPUHandle(textureHandle));
 	//描画
 	dxCommon_->GetCommandList()->DrawInstanced(totalVertex, 1, 0, 0);
 

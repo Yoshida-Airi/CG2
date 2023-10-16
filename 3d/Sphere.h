@@ -21,18 +21,18 @@ public:
 
 	~Sphere();
 
-	void Initialize(WindowAPI* winApp, DirectXCommon* dxComon, MyEngine* engine, TextureManager* texture, uint32_t textureHandle);
+	void Initialize();
 
 	void Update();
 
-	void Draw();
+	void Draw(uint32_t textureHandle);
 
 private:
 
-	WindowAPI* winApp_;
-	DirectXCommon* dxCommon_;
-	MyEngine* engine_;
-	TextureManager* texture_;
+	WindowAPI* winApp_ = WindowAPI::GetInstance();
+	DirectXCommon* dxCommon_ = DirectXCommon::GetInstance();
+	MyEngine* engine_ = MyEngine::GetInstance();
+	TextureManager* texture_ = TextureManager::GetInstance();
 
 	uint32_t textureHandle_;
 
@@ -75,8 +75,7 @@ private:
 	Transform cameraTransform_ = {};
 
 	D3D12_GPU_DESCRIPTOR_HANDLE textureSrvHandleGPU_;
-	D3D12_GPU_DESCRIPTOR_HANDLE textureSrvHandleGPU2_;
-
+	
 
 private:
 	/// <summary>

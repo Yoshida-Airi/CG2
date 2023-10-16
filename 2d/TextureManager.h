@@ -5,9 +5,23 @@
 #include"externals/DirectXTex/d3dx12.h"
 #include<wrl.h>
 #include<array>
+
 class TextureManager
 {
 public:
+
+	/// <summary>
+	/// シングルトン
+	/// </summary>
+	/// <returns></returns>
+	static TextureManager* GetInstance()
+	{
+		if (instance == NULL)
+		{
+			instance = new TextureManager;
+		}
+		return instance;
+	}
 
 	struct Texture
 	{
@@ -26,7 +40,7 @@ public:
 	/// </summary>
 	/// <param name="directX"></param>
 	/// <param name="engine"></param>
-	void Initialize(DirectXCommon* directX, MyEngine* engine, int32_t width, int32_t height);
+	void Initialize();
 
 	/// <summary>
 	/// 更新処理
@@ -48,9 +62,10 @@ public:
 
 private:
 
-	DirectXCommon* dxCommon_;
-	MyEngine* engine_;
+	DirectXCommon* dxCommon_ = DirectXCommon::GetInstance();
+	MyEngine* engine_ = MyEngine::GetInstance();
 
+	uint32_t TextureCount_ = 0;
 	static const size_t kMaxTextureCount = 2056;
 	std::array<Texture, kMaxTextureCount> textures_;
 
@@ -61,6 +76,7 @@ private:
 
 	uint32_t descriptorSizeSRV;
 	
+	static TextureManager* instance;	//シングルトン
 
 	D3D12_DEPTH_STENCIL_VIEW_DESC dsvDesc_;
 	Microsoft::WRL::ComPtr< ID3D12Resource> depthStencilResource_;
