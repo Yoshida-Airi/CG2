@@ -354,6 +354,8 @@ void DirectXCommon::CreateFinalRenderTargets()
 	device_->CreateRenderTargetView(swapChainResources_[1].Get(), &rtvDesc_, rtvHandles_[1]);
 
 
+	depthStencilResource_ = CreateDepthStencilTextureResource(device_, WindowAPI::kWindowWidth, WindowAPI::kWindowHeight);
+	CreateDepthStencilView(device_, dsvDescriptorHeap_);
 
 
 }
@@ -387,7 +389,10 @@ void DirectXCommon::CreateFence() {
 	assert(SUCCEEDED(hr));
 }
 
-ID3D12Resource* DirectXCommon::CreateDepthStencilTextureResource(ID3D12Device* device, int32_t width, int32_t height)
+
+
+
+Microsoft::WRL::ComPtr< ID3D12Resource>DirectXCommon::CreateDepthStencilTextureResource(Microsoft::WRL::ComPtr< ID3D12Device> device, int32_t width, int32_t height)
 {
 	//生成するResourceの設定
 	D3D12_RESOURCE_DESC resourceDesc{};
@@ -410,7 +415,7 @@ ID3D12Resource* DirectXCommon::CreateDepthStencilTextureResource(ID3D12Device* d
 	depthClearValue.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;	//フォーマット。resourceと合わせる
 
 	//Resourceの生成
-	ID3D12Resource* resource = nullptr;
+	Microsoft::WRL::ComPtr< ID3D12Resource> resource = nullptr;
 	HRESULT hr = device->CreateCommittedResource(
 		&heapProperties,	//Heaoの設定
 		D3D12_HEAP_FLAG_NONE,	//heapの特殊な設定。
@@ -424,3 +429,11 @@ ID3D12Resource* DirectXCommon::CreateDepthStencilTextureResource(ID3D12Device* d
 	return resource;
 }
 
+
+void DirectXCommon::CreateDepthStencilView(Microsoft::WRL::ComPtr< ID3D12Device> device, Microsoft::WRL::ComPtr< ID3D12DescriptorHeap> dsvDescriptorHeap)
+{
+	dsvDesc_.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;	//Format。基本的にはResourceに合わせる
+	dsvDesc_.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;	//2dTexture
+	//DSVHeapの先頭にDSVを作る
+	device->CreateDepthStencilView(depthStencilResource_.Get(), &dsvDesc_, dsvDescriptorHeap->GetCPUDescriptorHandleForHeapStart());
+}

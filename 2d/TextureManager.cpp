@@ -10,11 +10,6 @@ void TextureManager::Initialize(DirectXCommon* directX, MyEngine* engine, int32_
 	dxCommon_ = directX;
 	engine_ = engine;
 
-	descriptorSizeSRV = dxCommon_->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
-
-	depthStencilResource_ = CreateDepthStencilTextureResource(dxCommon_->GetDevice(), width, height);
-	CreateDepthStencilView(dxCommon_->GetDevice(), dxCommon_->GetDsvDescriptorHeap());
-
 }
 
 void TextureManager::Update()
@@ -139,49 +134,3 @@ D3D12_GPU_DESCRIPTOR_HANDLE TextureManager::GetGPUDescriptorHandle(Microsoft::WR
 	return handleGPU;
 }
 
-
-Microsoft::WRL::ComPtr< ID3D12Resource>TextureManager::CreateDepthStencilTextureResource(Microsoft::WRL::ComPtr< ID3D12Device> device, int32_t width, int32_t height)
-{
-	//生成するResourceの設定
-	D3D12_RESOURCE_DESC resourceDesc{};
-	resourceDesc.Width = width;		//Textureの幅
-	resourceDesc.Height = height;	//Textureの高さ
-	resourceDesc.MipLevels = 1;		//mipmapの数
-	resourceDesc.DepthOrArraySize = 1;	//奥行き　or　配列Textureの配列数
-	resourceDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;	//DepthStencilとして利用可能なフォーマット
-	resourceDesc.SampleDesc.Count = 1;		//サンプリングカウント　1固定
-	resourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;	//2次元
-	resourceDesc.Flags = D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL;	//DepthStencilとして使う通知
-
-	//利用するHeapの設定
-	D3D12_HEAP_PROPERTIES heapProperties{};
-	heapProperties.Type = D3D12_HEAP_TYPE_DEFAULT;	//VRAM上に作る
-
-	//深度値のクリア設定
-	D3D12_CLEAR_VALUE depthClearValue{};
-	depthClearValue.DepthStencil.Depth = 1.0f;	//1.0f(最大値)でクリア
-	depthClearValue.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;	//フォーマット。resourceと合わせる
-
-	//Resourceの生成
-	Microsoft::WRL::ComPtr< ID3D12Resource> resource = nullptr;
-	HRESULT hr = device->CreateCommittedResource(
-		&heapProperties,	//Heaoの設定
-		D3D12_HEAP_FLAG_NONE,	//heapの特殊な設定。
-		&resourceDesc,	//Resourceの設定
-		D3D12_RESOURCE_STATE_DEPTH_WRITE,	//深度値を書き込む状態にしておく
-		&depthClearValue,	//Clear最適値
-		IID_PPV_ARGS(&resource)	//作成するResourceポインタへのポインタ
-	);
-	assert(SUCCEEDED(hr));
-
-	return resource;
-}
-
-
-void TextureManager::CreateDepthStencilView(ID3D12Device* device, ID3D12DescriptorHeap* dsvDescriptorHeap)
-{
-	dsvDesc_.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;	//Format。基本的にはResourceに合わせる
-	dsvDesc_.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;	//2dTexture
-	//DSVHeapの先頭にDSVを作る
-	device->CreateDepthStencilView(depthStencilResource_.Get(), &dsvDesc_, dsvDescriptorHeap->GetCPUDescriptorHandleForHeapStart());
-}
