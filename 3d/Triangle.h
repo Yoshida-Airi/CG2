@@ -56,9 +56,9 @@ private://プライベート変数
 	uint32_t kClientWidth_ = 0;
 	uint32_t kClientHeight_ = 0;
 
-	ID3D12Resource* vertexResource_;	//頂点リソース
-	ID3D12Resource* materialResource_;	//マテリアルリソース
-	ID3D12Resource* wvpResource_;	//wvpリソース
+	Microsoft::WRL::ComPtr < ID3D12Resource> vertexResource_;	//頂点リソース
+	Microsoft::WRL::ComPtr < ID3D12Resource> materialResource_;	//マテリアルリソース
+	Microsoft::WRL::ComPtr < ID3D12Resource> wvpResource_;	//wvpリソース
 
 	D3D12_VERTEX_BUFFER_VIEW vertexBufferView_;
 	D3D12_VERTEX_BUFFER_VIEW materialBufferView_;

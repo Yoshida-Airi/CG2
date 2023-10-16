@@ -31,9 +31,6 @@ struct D3DResourceLeakChecker
 //Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
-
-	D3DResourceLeakChecker leakCheak;
-
 	WindowAPI* winApp = new WindowAPI;
 	DirectXCommon* dxCommon = new DirectXCommon;
 	MyEngine* engine = new MyEngine;
@@ -129,6 +126,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 
 	}
+
+	D3DResourceLeakChecker leakCheak;
 
 	CoUninitialize();
 

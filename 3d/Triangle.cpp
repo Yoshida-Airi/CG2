@@ -6,9 +6,7 @@
 
 Triangle::~Triangle()
 {
-	vertexResource_->Release();
-	materialResource_->Release();
-	wvpResource_->Release();
+	
 }
 
 void Triangle::Initialize(WindowAPI* winApp, DirectXCommon* direct, MyEngine* engien, const TriangleData& data, TextureManager* texture)

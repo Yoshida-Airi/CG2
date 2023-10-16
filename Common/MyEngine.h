@@ -10,6 +10,7 @@
 
 #pragma comment(lib,"dxcompiler.lib")
 
+#include<wrl.h>
 
 class MyEngine
 {
@@ -33,7 +34,7 @@ public:
 	void PostDraw();
 
 
-	ID3D12Resource* CreateBufferResource(size_t sizeInBytes);
+	Microsoft::WRL::ComPtr< ID3D12Resource> CreateBufferResource(size_t sizeInBytes);
 
 private://プライベート変数
 
@@ -48,9 +49,9 @@ private://プライベート変数
 	IDxcIncludeHandler* includeHandler_ = nullptr;
 
 	D3D12_ROOT_SIGNATURE_DESC descriptionRootSignature_{};	//RootSignature作成
-	ID3D12RootSignature* rootSignature_ = nullptr;	//バイナリを元に生成
-	ID3DBlob* signatureBlob_ = nullptr;//シリアライズしてバイナリにする
-	ID3DBlob* errorBlob_ = nullptr;
+	Microsoft::WRL::ComPtr< ID3D12RootSignature> rootSignature_ = nullptr;	//バイナリを元に生成
+	Microsoft::WRL::ComPtr< ID3DBlob> signatureBlob_ = nullptr;	//シリアライズしてバイナリにする
+	Microsoft::WRL::ComPtr< ID3DBlob> errorBlob_ = nullptr;
 
 	D3D12_INPUT_ELEMENT_DESC inputElementDescs_[3] = {};//InputLayout
 	D3D12_INPUT_LAYOUT_DESC inputLayoutDesc_{};
@@ -59,13 +60,13 @@ private://プライベート変数
 
 	D3D12_RASTERIZER_DESC rasterizerDesc_{};//RasiterzerStateの設定
 
-	IDxcBlob* vertexShaderBlob_;
-	IDxcBlob* pixelShaderBlob_;
+	Microsoft::WRL::ComPtr< IDxcBlob> vertexShaderBlob_;
+	Microsoft::WRL::ComPtr< IDxcBlob> pixelShaderBlob_;
 
 	D3D12_DEPTH_STENCIL_DESC depthStencilDesc{};	//DepthStensilStateの設定
 
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC graphicsPipelineStateDesc_{};	//PSO
-	ID3D12PipelineState* graphicsPipelineState_ = nullptr;	//実際に生成
+	Microsoft::WRL::ComPtr< ID3D12PipelineState> graphicsPipelineState_ = nullptr;	//実際に生成
 
 	D3D12_RESOURCE_DESC vertexResourceDesc_{};	//頂点リソースの設定
 	ID3D12Resource* vertexResource_;	//実際に頂点リソースを作る

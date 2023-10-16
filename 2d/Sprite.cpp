@@ -3,7 +3,7 @@
 
 Sprite::~Sprite()
 {
-	vertexResource_->Release();
+	/*vertexResource_->Release();*/
 	materialResource_->Release();
 	transformationmatrixResource->Release();
 	indexResource_->Release();

@@ -40,10 +40,10 @@ private:
 	uint32_t kClientWidth_ = 0;
 	uint32_t kClientHeight_ = 0;
 
-	ID3D12Resource* vertexResource_;	//頂点リソース
-	ID3D12Resource* materialResource_;	//マテリアルリソース
-	ID3D12Resource* wvpResource_;	//wvpリソース
-	ID3D12Resource* lightResource_ = nullptr;
+	Microsoft::WRL::ComPtr < ID3D12Resource>vertexResource_;	//頂点リソース
+	Microsoft::WRL::ComPtr < ID3D12Resource> materialResource_;	//マテリアルリソース
+	Microsoft::WRL::ComPtr < ID3D12Resource> wvpResource_;	//wvpリソース
+	Microsoft::WRL::ComPtr < ID3D12Resource> lightResource_ = nullptr;
 
 	VertexData* vertexData_ = nullptr;
 	Material* materialData_ = nullptr;	//マテリアルデータ

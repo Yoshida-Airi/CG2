@@ -6,15 +6,6 @@
 
 MyEngine::~MyEngine()
 {
-	graphicsPipelineState_->Release();
-	signatureBlob_->Release();
-	if (errorBlob_)
-	{
-		errorBlob_->Release();
-	}
-	rootSignature_->Release();
-	pixelShaderBlob_->Release();
-	vertexShaderBlob_->Release();
 
 }
 
@@ -46,7 +37,7 @@ void MyEngine::PostDraw()
 
 }
 
-ID3D12Resource* MyEngine::CreateBufferResource(size_t sizeInBytes)
+Microsoft::WRL::ComPtr< ID3D12Resource> MyEngine::CreateBufferResource(size_t sizeInBytes)
 {
 
 	D3D12_HEAP_PROPERTIES uplodeHeapProperties{};
@@ -67,13 +58,13 @@ ID3D12Resource* MyEngine::CreateBufferResource(size_t sizeInBytes)
 	HRESULT hr;
 
 	//実際に頂点リソースを作る
-	ID3D12Resource* resource = nullptr;
+	Microsoft::WRL::ComPtr< ID3D12Resource> resource = nullptr;
 	hr = dxCommon_->GetDevice()->CreateCommittedResource(&uplodeHeapProperties, D3D12_HEAP_FLAG_NONE,
 		&vertexResourceDesc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr,
 		IID_PPV_ARGS(&resource));
 	assert(SUCCEEDED(hr));
 
-	return resource;
+	return resource.Get();
 }
 
 /*=====================================*/
@@ -327,7 +318,7 @@ void MyEngine::SetDepthStencilState()
 /// PSOを生成する
 void MyEngine::CreatePSO()
 {
-	graphicsPipelineStateDesc_.pRootSignature = rootSignature_;	//RootSignature
+	graphicsPipelineStateDesc_.pRootSignature = rootSignature_.Get();	//RootSignature
 	graphicsPipelineStateDesc_.InputLayout = inputLayoutDesc_;	//InputLayout
 	graphicsPipelineStateDesc_.VS = { vertexShaderBlob_->GetBufferPointer(),vertexShaderBlob_->GetBufferSize() };	//VertexShader
 	graphicsPipelineStateDesc_.PS = { pixelShaderBlob_->GetBufferPointer(),pixelShaderBlob_->GetBufferSize() };	//PixelShader
@@ -384,7 +375,7 @@ void MyEngine::SetCommand()
 	dxCommon_->GetCommandList()->RSSetViewports(1, &viewport_);	//Viewportを設定
 	dxCommon_->GetCommandList()->RSSetScissorRects(1, &scissorRect_);	//Scirssorを設定
 	//RootSignatureを設定。PSOに設定しているけど別途設定が必要
-	dxCommon_->GetCommandList()->SetGraphicsRootSignature(rootSignature_);
-	dxCommon_->GetCommandList()->SetPipelineState(graphicsPipelineState_);	//PSOを設定
+	dxCommon_->GetCommandList()->SetGraphicsRootSignature(rootSignature_.Get());
+	dxCommon_->GetCommandList()->SetPipelineState(graphicsPipelineState_.Get());	//PSOを設定
 
 }

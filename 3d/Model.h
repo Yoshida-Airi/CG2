@@ -54,15 +54,15 @@ private:
 	uint32_t kClientHeight_ = 0;
 
 	ModelData modelData_;	//モデル
-	ID3D12Resource* vertexResource_;	//頂点リソース
+	Microsoft::WRL::ComPtr<ID3D12Resource> vertexResource_;	//頂点リソース
 	VertexData* vertexData_ = nullptr;
 	D3D12_VERTEX_BUFFER_VIEW vertexBufferView_{};	//頂点バッファ
 
-	ID3D12Resource* wvpResource_;	//wvpリソース
+	Microsoft::WRL::ComPtr < ID3D12Resource> wvpResource_;	//wvpリソース
 	TransformationMatrix* wvpData_ = nullptr;	//wvpデータ
 	D3D12_VERTEX_BUFFER_VIEW wvpBufferView_;
 
-	ID3D12Resource* materialResource_;	//マテリアルリソース
+	Microsoft::WRL::ComPtr < ID3D12Resource> materialResource_;	//マテリアルリソース
 	Material* materialData_ = nullptr;	//マテリアルデータ
 	D3D12_VERTEX_BUFFER_VIEW materialBufferView_;
 
@@ -73,7 +73,7 @@ private:
 
 	D3D12_GPU_DESCRIPTOR_HANDLE textureSrvHandleGPU_;
 
-	ID3D12Resource* lightResource_ = nullptr;
+	Microsoft::WRL::ComPtr < ID3D12Resource> lightResource_ = nullptr;
 	DirectionalLight* lightData_ = nullptr;
 
 	/// <summary>

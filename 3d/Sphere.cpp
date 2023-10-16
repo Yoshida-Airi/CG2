@@ -2,10 +2,7 @@
 
 Sphere::~Sphere()
 {
-	vertexResource_->Release();
-	materialResource_->Release();
-	wvpResource_->Release();
-	lightResource_->Release();
+	
 }
 
 void Sphere::Initialize(WindowAPI* winApp, DirectXCommon* dxComon, MyEngine* engine, TextureManager* texture, uint32_t textureHandle, uint32_t textureHandle2)

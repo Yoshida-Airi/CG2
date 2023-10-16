@@ -2,10 +2,7 @@
 
 Model::~Model()
 {
-	vertexResource_->Release();
-	wvpResource_->Release();
-	materialResource_->Release();
-	lightResource_->Release();
+	
 }
 
 void Model::Initialize(WindowAPI* winApp, DirectXCommon* dxComon, MyEngine* engine, TextureManager* texture, const std::string& directoryPath, const std::string& filename)

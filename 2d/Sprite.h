@@ -10,6 +10,7 @@
 #include"Vector4.h"
 #include"Matrix4x4.h"
 
+#include<wrl.h>
 
 
 struct SpriteData
@@ -84,10 +85,10 @@ private:
 	Transform uvTransform_;
 	Matrix4x4 uvTransformMatrix_;
 
-	ID3D12Resource* vertexResource_ = nullptr;	//頂点リソース
-	ID3D12Resource* materialResource_ = nullptr;	//マテリアルリソース
-	ID3D12Resource* transformationmatrixResource = nullptr;	//トランスフォーメーションマトリックスリソース
-	ID3D12Resource* indexResource_ = nullptr;
+	Microsoft::WRL::ComPtr< ID3D12Resource> vertexResource_ = nullptr;	//頂点リソース
+	Microsoft::WRL::ComPtr < ID3D12Resource> materialResource_ = nullptr;	//マテリアルリソース
+	Microsoft::WRL::ComPtr < ID3D12Resource> transformationmatrixResource = nullptr;	//トランスフォーメーションマトリックスリソース
+	Microsoft::WRL::ComPtr < ID3D12Resource> indexResource_ = nullptr;
 
 	D3D12_GPU_DESCRIPTOR_HANDLE textureSrvHandleGPU_;
 
