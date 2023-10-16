@@ -379,3 +379,6 @@ void MyEngine::SetCommand()
 	dxCommon_->GetCommandList()->SetPipelineState(graphicsPipelineState_.Get());	//PSOを設定
 
 }
+
+//静的メンバ変数の宣言と初期化
+MyEngine* MyEngine::instance = NULL;

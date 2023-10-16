@@ -3,19 +3,13 @@
 
 Sprite::~Sprite()
 {
-	/*vertexResource_->Release();*/
-	materialResource_->Release();
-	transformationmatrixResource->Release();
-	indexResource_->Release();
+
 }
 
 
-void Sprite::Initialize(WindowAPI* winApp, DirectXCommon* dxcommon, MyEngine* engine, TextureManager* texture, SpriteData* data,uint32_t textureHandle)
+void Sprite::Initialize(SpriteData* data,uint32_t textureHandle)
 {
-	winApp_ = winApp;
-	dxCommon_ = dxcommon;
-	engine_ = engine;
-	texture_ = texture;
+
 	
 	textureHandle_ = textureHandle;
 

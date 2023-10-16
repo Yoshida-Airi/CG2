@@ -60,3 +60,7 @@ void ImGuiManager::Draw()
 	//実際のcommandListのImGuiの描画コマンド
 	ImGui_ImplDX12_RenderDrawData(ImGui::GetDrawData(), dxCommon_->GetCommandList());
 }
+
+
+//静的メンバ変数の宣言と初期化
+ImGuiManager* ImGuiManager::instance = NULL;

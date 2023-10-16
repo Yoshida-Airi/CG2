@@ -16,6 +16,19 @@ class MyEngine
 {
 public:
 
+	/// <summary>
+	/// シングルトン
+	/// </summary>
+	/// <returns></returns>
+	static MyEngine* GetInstance()
+	{
+		if (instance == NULL)
+		{
+			instance = new MyEngine;
+		}
+		return instance;
+	}
+
 	~MyEngine();
 
 	/// <summary>
@@ -74,6 +87,9 @@ private://プライベート変数
 
 	D3D12_VIEWPORT viewport_{};	//ビューポート
 	D3D12_RECT scissorRect_{};//シザー矩形
+
+
+	static MyEngine* instance;	//シングルトン
 
 
 
@@ -152,5 +168,7 @@ private://プライベート関数
 	/// コマンドを積む
 	/// </summary>
 	void SetCommand();
+
+
 
 };

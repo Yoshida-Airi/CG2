@@ -8,6 +8,21 @@
 class ImGuiManager
 {
 public:
+
+
+	/// <summary>
+	/// シングルトン
+	/// </summary>
+	/// <returns></returns>
+	static ImGuiManager* GetInstance()
+	{
+		if (instance == NULL)
+		{
+			instance = new ImGuiManager;
+		}
+		return instance;
+	}
+
 	~ImGuiManager();
 
 	void Initialize(WindowAPI* winApp, DirectXCommon* dxCommon);
@@ -24,6 +39,7 @@ private:
 	
 	ID3D12DescriptorHeap* srvDescriptorHeap_ = nullptr;
 
+	static ImGuiManager* instance;	//シングルトン
 
 
 };
