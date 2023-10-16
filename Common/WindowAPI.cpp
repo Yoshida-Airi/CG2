@@ -4,6 +4,15 @@
 /* 　　　　   パブリックメソッド　　　 　    */
 /*=====================================*/
 
+WindowAPI* WindowAPI::GetInstance()
+{
+	if (instance == NULL)
+	{
+		instance = new WindowAPI;
+	}
+	return instance;
+}
+
 //コンストラクタ
 WindowAPI::WindowAPI()
 {
@@ -140,3 +149,7 @@ bool WindowAPI::InitializeWindow(const wchar_t* title, int32_t width, int32_t he
 	return true;
 
 }
+
+//静的メンバ変数の宣言と初期化
+WindowAPI* WindowAPI::instance = NULL;
+

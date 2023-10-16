@@ -17,6 +17,12 @@ public:
 	/*=====================================*/
 
 	/// <summary>
+	/// シングルトン
+	/// </summary>
+	/// <returns></returns>
+	static WindowAPI* GetInstance();
+
+	/// <summary>
 	/// コンストラクタ
 	/// </summary>
 	WindowAPI();
@@ -59,6 +65,7 @@ public:
 	//ウィンドウクラスの登録(設定をWindowsに伝える)
 	WNDCLASS wc_ = {};
 
+	static WindowAPI* instance;	//シングルトン
 
 private:
 	/*=====================================*/

@@ -17,6 +17,13 @@
 class DirectXCommon
 {
 public:
+
+	/// <summary>
+	/// シングルトン
+	/// </summary>
+	/// <returns></returns>
+	static DirectXCommon* GetInstance();
+
 	DirectXCommon();
 	~DirectXCommon();
 
@@ -53,7 +60,7 @@ public:
 	ID3D12DescriptorHeap* GetsrvDescriptorHeap()const { return srvDescriptorHeap_.Get(); };
 	ID3D12DescriptorHeap* GetDsvDescriptorHeap()const { return dsvDescriptorHeap_.Get(); };
 
-	
+	static DirectXCommon* instance;	//シングルトン
 
 private:
 
@@ -86,17 +93,6 @@ private:
 	/// 全画面クリア
 	/// </summary>
 	void ClearRenderTarget();
-
-	/// <summary>
-	/// 深度の書き込みも出来るテクスチャリソースを作る
-	/// </summary>
-	/// /// <param name="device"></param>
-	/// <param name="width">ウィンドウの幅</param>
-	/// <param name="height">ウィンドウの高さ</param>
-	/// <returns></returns>
-	ID3D12Resource* CreateDepthStencilTextureResource(ID3D12Device* device, int32_t width, int32_t height);
-
-
 
 private://プライベート変数
 
