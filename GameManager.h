@@ -45,8 +45,14 @@ private:
 
 	const wchar_t* kWindowTitle = L"CG2";
 
-	WindowAPI* winApp = new WindowAPI;
-	DirectXCommon* dxCommon = new DirectXCommon;
+	WindowAPI*winApp=WindowAPI::GetInstance();
+	DirectXCommon* dxCommon = DirectXCommon::GetInstance();
+	MyEngine* engine = new MyEngine;
+	ImGuiManager* imGuiManager = new ImGuiManager;
+	TextureManager* texture = new TextureManager;
+	Input* input = new Input;
+
+	Sphere* sphere = new Sphere;
 
 };
 

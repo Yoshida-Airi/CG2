@@ -10,16 +10,12 @@ MyEngine::~MyEngine()
 }
 
 /// 初期化
-void MyEngine::Initialize(DirectXCommon* dxCommon, WindowAPI* winApp)
+void MyEngine::Initialize()
 {
-	dxCommon_ = dxCommon;
-	winApp_ = winApp;
-
 	IntializeDXC();//DXCの初期化
 	PSO();//パイプラインステートの設定
 	CreateViewport();//ビューポートの生成
 	CreateScissor();	//シザー矩形の生成
-
 
 }
 
@@ -349,8 +345,8 @@ void MyEngine::CreateViewport()
 {
 
 	//クライアント領域のサイズと一緒にして画面全体に表示
-	viewport_.Width = static_cast<float>(winApp_->GetWidth());
-	viewport_.Height = static_cast<float>(winApp_->GetHeight());
+	viewport_.Width = static_cast<float>(WindowAPI::kWindowWidth);
+	viewport_.Height = static_cast<float>(WindowAPI::kWindowHeight);
 
 	viewport_.TopLeftX = 0;
 	viewport_.TopLeftY = 0;
@@ -362,9 +358,9 @@ void MyEngine::CreateScissor()
 {
 	//基本的にビューポートと同じ矩形が構成されるようにする
 	scissorRect_.left = 0;
-	scissorRect_.right = winApp_->GetWidth();
+	scissorRect_.right = WindowAPI::kWindowWidth;
 	scissorRect_.top = 0;
-	scissorRect_.bottom = winApp_->GetHeight();
+	scissorRect_.bottom = WindowAPI::kWindowHeight;
 }
 
 /// 描画する

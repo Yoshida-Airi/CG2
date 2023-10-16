@@ -10,7 +10,7 @@ class ImGuiManager
 public:
 	~ImGuiManager();
 
-	void Initialize(WindowAPI* winApp, DirectXCommon* dxCommon);
+	void Initialize();
 
 	void Begin();
 
@@ -19,8 +19,8 @@ public:
 	void Draw();
 
 private:
-	WindowAPI* winApp_;
-	DirectXCommon* dxCommon_;
+	WindowAPI* winApp_ = WindowAPI::GetInstance();
+	DirectXCommon* dxCommon_ = DirectXCommon::GetInstance();
 	
 	ID3D12DescriptorHeap* srvDescriptorHeap_ = nullptr;
 

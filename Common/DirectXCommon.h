@@ -8,6 +8,7 @@
 
 #include"WindowAPI.h"
 
+
 #pragma comment(lib,"d3d12.lib")
 #pragma comment(lib,"dxgi.lib")
 #pragma comment(lib,"dxguid.lib")
@@ -17,13 +18,28 @@
 class DirectXCommon
 {
 public:
+
+	/// <summary>
+	/// シングルトン
+	/// </summary>
+	/// <returns></returns>
+	static DirectXCommon* GetInstance()
+	{
+		if (instance == NULL)
+		{
+			instance = new DirectXCommon;
+		}
+		return instance;
+	}
+
+
 	DirectXCommon();
 	~DirectXCommon();
 
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize(WindowAPI* winApp);
+	void Initialize();
 
 	/// <summary>
 	/// 描画前処理
@@ -104,7 +120,7 @@ private:
 private://プライベート変数
 
 	//ウィンドウアプリケーション管理
-	WindowAPI* winApp_;
+	WindowAPI* winApp_ = WindowAPI::GetInstance();
 
 
 	//Direct3D関連
@@ -136,5 +152,8 @@ private://プライベート変数
 
 	D3D12_DEPTH_STENCIL_VIEW_DESC dsvDesc_;
 	Microsoft::WRL::ComPtr< ID3D12Resource> depthStencilResource_;
+
+
+	static DirectXCommon* instance;	//シングルトン
 
 };

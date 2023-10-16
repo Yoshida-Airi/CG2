@@ -21,7 +21,7 @@ public:
 
 	~Sphere();
 
-	void Initialize(WindowAPI* winApp, DirectXCommon* dxComon, MyEngine* engine, TextureManager* texture, uint32_t textureHandle, uint32_t textureHandle2);
+	void Initialize(MyEngine* engine, TextureManager* texture, uint32_t textureHandle, uint32_t textureHandle2);
 
 	void Update();
 
@@ -29,16 +29,13 @@ public:
 
 private:
 
-	WindowAPI* winApp_;
-	DirectXCommon* dxCommon_;
+	WindowAPI* winApp_ = WindowAPI::GetInstance();
+	DirectXCommon* dxCommon_ = DirectXCommon::GetInstance();
 	MyEngine* engine_;
 	TextureManager* texture_;
 
 	uint32_t textureHandle_;
 	uint32_t textureHandle2_;
-
-	uint32_t kClientWidth_ = 0;
-	uint32_t kClientHeight_ = 0;
 
 	Microsoft::WRL::ComPtr < ID3D12Resource>vertexResource_;	//頂点リソース
 	Microsoft::WRL::ComPtr < ID3D12Resource> materialResource_;	//マテリアルリソース

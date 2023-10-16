@@ -12,7 +12,7 @@
 class Input
 {
 public:
-	void Initialize(WindowAPI* winApp);
+	void Initialize();
 
 	void Update();
 
@@ -38,7 +38,7 @@ public:
 
 private:
 
-	WindowAPI* winApp_;
+	WindowAPI* winApp_ = WindowAPI::GetInstance();
 
 	IDirectInput8* directInput = nullptr;
 	IDirectInputDevice8* keyboard = nullptr;	//キーボードデバイス

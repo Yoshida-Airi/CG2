@@ -71,7 +71,7 @@ void Sprite::Update()
 	Matrix4x4 worldmatrix = MakeAffinMatrix(transform_.scale, transform_.rotate, transform_.translate);
 	transformationMatrixData->World = worldmatrix;
 	Matrix4x4 viewMatrix = MakeIdentity4x4();
-	Matrix4x4 projectionMatrix = MakeOrthographicmatrix(0.0f, 0.0f, float(winApp_->GetWidth()), float(winApp_->GetHeight()), 0.0f, 100.0f);
+	Matrix4x4 projectionMatrix = MakeOrthographicmatrix(0.0f, 0.0f, float(WindowAPI::kWindowWidth), float(WindowAPI::kWindowHeight), 0.0f, 100.0f);
 	Matrix4x4 worldViewProjectionMatrix = Multiply(worldmatrix, Multiply(viewMatrix, projectionMatrix));
 	transformationMatrixData->WVP = worldViewProjectionMatrix;
 

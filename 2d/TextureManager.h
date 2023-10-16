@@ -26,7 +26,7 @@ public:
 	/// </summary>
 	/// <param name="directX"></param>
 	/// <param name="engine"></param>
-	void Initialize(DirectXCommon* directX, MyEngine* engine, int32_t width, int32_t height);
+	void Initialize(MyEngine* engine);
 
 	/// <summary>
 	/// 更新処理
@@ -48,7 +48,7 @@ public:
 
 private:
 
-	DirectXCommon* dxCommon_;
+	DirectXCommon* dxCommon_ = DirectXCommon::GetInstance();
 	MyEngine* engine_;
 
 	static const size_t kMaxTextureCount = 2056;

@@ -1,11 +1,8 @@
 #include "Input.h"
 
-void Input::Initialize(WindowAPI* winApp)
+void Input::Initialize()
 {
-	winApp_ = winApp;
-
 	//DirectInputの初期化
-	
 	HRESULT hr = DirectInput8Create(winApp_->GetWinCLASS().hInstance, DIRECTINPUT_VERSION, IID_IDirectInput8, (void**)&directInput, nullptr);
 	assert(SUCCEEDED(hr));
 

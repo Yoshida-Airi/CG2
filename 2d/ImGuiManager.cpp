@@ -7,11 +7,8 @@ ImGuiManager::~ImGuiManager()
 	ImGui::DestroyContext();
 }
 
-void ImGuiManager::Initialize(WindowAPI* winApp, DirectXCommon* dxCommon)
+void ImGuiManager::Initialize()
 {
-	winApp_ = winApp;
-	dxCommon_ = dxCommon;
-
 	srvDescriptorHeap_ = dxCommon_->GetsrvDescriptorHeap();
 
 	IMGUI_CHECKVERSION();

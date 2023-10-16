@@ -4,26 +4,28 @@
 /* 　　　　   パブリックメソッド　　　 　    */
 /*=====================================*/
 
+
 //コンストラクタ
 WindowAPI::WindowAPI()
 {
 
 }
 
+
 //デストラクタ
 WindowAPI::~WindowAPI()
 {
 	CloseWindow(hwnd_);
-
-
 }
+
+
+
 
 //開始
 void WindowAPI::StartApp(const wchar_t* title)
 {
 	Initialize(title);
 }
-
 
 
 bool WindowAPI::ProcessMessage()
@@ -140,3 +142,6 @@ bool WindowAPI::InitializeWindow(const wchar_t* title)
 	return true;
 
 }
+
+//静的メンバ変数の宣言と初期化
+WindowAPI* WindowAPI::instance = NULL;

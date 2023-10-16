@@ -1,6 +1,5 @@
 #include "DirectXCommon.h"
 
-
 /*=====================================*/
 /* 　　　　   パブリックメソッド　　　	　 */
 /*=====================================*/
@@ -19,10 +18,8 @@ DirectXCommon::~DirectXCommon()
 }
 
 //初期化
-void DirectXCommon::Initialize(WindowAPI* winApp)
+void DirectXCommon::Initialize()
 {
-	winApp_ = winApp;
-
 
 	// DXGIデバイス初期化
 	InitializeDXGIDevice();
@@ -300,8 +297,8 @@ void DirectXCommon::CreateSwapChain()
 	//スワップチェーンを生成する
 	//---------------------------------
 
-	swapChainDesc_.Width = winApp_->GetWidth();	//画面の幅。クライアント領域を同じものにしておく
-	swapChainDesc_.Height = winApp_->GetHeight();//画面の高さ。ウィンドウのクライアント領域を同じものにしておく
+	swapChainDesc_.Width = WindowAPI::kWindowWidth;	//画面の幅。クライアント領域を同じものにしておく
+	swapChainDesc_.Height = WindowAPI::kWindowHeight;//画面の高さ。ウィンドウのクライアント領域を同じものにしておく
 	swapChainDesc_.Format = DXGI_FORMAT_R8G8B8A8_UNORM;//色の形式
 	swapChainDesc_.SampleDesc.Count = 1;//マルチサンプルしない
 	swapChainDesc_.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;//描画のターゲットを利用する
@@ -437,3 +434,7 @@ void DirectXCommon::CreateDepthStencilView(Microsoft::WRL::ComPtr< ID3D12Device>
 	//DSVHeapの先頭にDSVを作る
 	device->CreateDepthStencilView(depthStencilResource_.Get(), &dsvDesc_, dsvDescriptorHeap->GetCPUDescriptorHandleForHeapStart());
 }
+
+
+//静的メンバ変数の宣言と初期化
+DirectXCommon* DirectXCommon::instance = NULL;

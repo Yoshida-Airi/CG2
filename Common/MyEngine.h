@@ -21,7 +21,7 @@ public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize(DirectXCommon* dxCommon, WindowAPI* winApp);
+	void Initialize();
 
 	/// <summary>
 	/// 描画前処理
@@ -39,8 +39,8 @@ public:
 private://プライベート変数
 
 	//ウィンドウアプリケーション管理
-	WindowAPI* winApp_;
-	DirectXCommon* dxCommon_;
+	WindowAPI* winApp_ = WindowAPI::GetInstance();
+	DirectXCommon* dxCommon_ = DirectXCommon::GetInstance();
 
 
 	HRESULT hr_;

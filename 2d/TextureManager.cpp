@@ -5,11 +5,9 @@ TextureManager::~TextureManager()
 
 }
 
-void TextureManager::Initialize(DirectXCommon* directX, MyEngine* engine, int32_t width, int32_t height)
+void TextureManager::Initialize(MyEngine* engine)
 {
-	dxCommon_ = directX;
 	engine_ = engine;
-
 }
 
 void TextureManager::Update()

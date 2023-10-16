@@ -17,6 +17,19 @@ public:
 	/*=====================================*/
 
 	/// <summary>
+	/// シングルトン
+	/// </summary>
+	/// <returns></returns>
+	static WindowAPI* GetInstance()
+	{
+		if (instance == NULL)
+		{
+			instance = new WindowAPI;
+		}
+		return instance;
+	}
+
+	/// <summary>
 	/// コンストラクタ
 	/// </summary>
 	WindowAPI();
@@ -39,8 +52,7 @@ public:
 
 	//ゲッター
 	HWND GetHwnd() const { return hwnd_; }
-	int32_t GetWidth() const { return Width_; };
-	int32_t GetHeight() const { return Height_; };
+
 	WNDCLASS GetWinCLASS()const { return wc_; };
 
 public:
@@ -49,12 +61,12 @@ public:
 	static const uint32_t kWindowHeight = 720;
 
 
-
+private:
 
 	/*=====================================*/
 	/* 　　　　   プライベート変数    　       */
 	/*=====================================*/
-private:
+
 	//タイトル
 	const wchar_t* Title_ = nullptr;
 
@@ -66,6 +78,9 @@ private:
 
 	//ウィンドウクラスの登録(設定をWindowsに伝える)
 	WNDCLASS wc_ = {};
+
+
+	static WindowAPI* instance;	//シングルトン
 
 
 private:

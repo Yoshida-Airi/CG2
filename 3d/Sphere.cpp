@@ -5,19 +5,13 @@ Sphere::~Sphere()
 	
 }
 
-void Sphere::Initialize(WindowAPI* winApp, DirectXCommon* dxComon, MyEngine* engine, TextureManager* texture, uint32_t textureHandle, uint32_t textureHandle2)
+void Sphere::Initialize(MyEngine* engine, TextureManager* texture, uint32_t textureHandle, uint32_t textureHandle2)
 {
-	winApp_ = winApp;
-	dxCommon_ = dxComon;
 	engine_ = engine;
 	texture_ = texture;
 	textureHandle_ = textureHandle;
 	textureHandle2_ = textureHandle2;
 
-	kClientHeight_ = winApp_->GetHeight();
-	kClientWidth_ = winApp_->GetWidth();
-
-	
 
 	VertexBuffer();
 	MaterialBuffer();
@@ -160,7 +154,7 @@ void Sphere::Update()
 
 	Matrix4x4 cameraMatrix = MakeAffinMatrix(cameraTransform_.scale, cameraTransform_.rotate, cameraTransform_.translate);
 	Matrix4x4 viewMatrix = Inverse(cameraMatrix);
-	Matrix4x4 projectionMatrix = MakePerspectiveFovMatrix(0.45f, float(kClientWidth_) / float(kClientHeight_), 0.1f, 100.0f);
+	Matrix4x4 projectionMatrix = MakePerspectiveFovMatrix(0.45f, float(WindowAPI::kWindowWidth) / float(WindowAPI::kWindowHeight), 0.1f, 100.0f);
 	//WVPMatrixを作る
 	Matrix4x4 worldViewProjectionMatrix = Multiply(worldMatrix, Multiply(viewMatrix, projectionMatrix));
 	wvpData_->WVP = worldViewProjectionMatrix;

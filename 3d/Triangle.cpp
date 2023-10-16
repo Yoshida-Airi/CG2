@@ -16,8 +16,8 @@ void Triangle::Initialize(WindowAPI* winApp, DirectXCommon* direct, MyEngine* en
 	engine_ = engien;
 	texture_ = texture;
 
-	kClientHeight_ = winApp_->GetHeight();
-	kClientWidth_ = winApp_->GetWidth();
+	kClientHeight_ = WindowAPI::kWindowHeight;
+	kClientWidth_ = WindowAPI::kWindowWidth;
 
 	
 

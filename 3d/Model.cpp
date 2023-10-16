@@ -12,8 +12,8 @@ void Model::Initialize(WindowAPI* winApp, DirectXCommon* dxComon, MyEngine* engi
 	engine_ = engine;
 	texture_ = texture;
 
-	kClientHeight_ = winApp_->GetHeight();
-	kClientWidth_ = winApp_->GetWidth();
+	kClientHeight_ = WindowAPI::kWindowHeight;
+	kClientWidth_ = WindowAPI::kWindowWidth;
 
 
 	modelData_ = LoadObjFile(directoryPath, filename);
