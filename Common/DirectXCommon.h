@@ -42,7 +42,7 @@ public:
 	/// <param name="numDescriptors">数</param>
 	/// <param name="shaderVisible"></param>
 	/// <returns></returns>
-	ID3D12DescriptorHeap* CreateDescriptorHeap(D3D12_DESCRIPTOR_HEAP_TYPE heapType, UINT numDescriptors, bool shaderVisible);
+	Microsoft::WRL::ComPtr< ID3D12DescriptorHeap> CreateDescriptorHeap(D3D12_DESCRIPTOR_HEAP_TYPE heapType, UINT numDescriptors, bool shaderVisible);
 
 
 	ID3D12Device* GetDevice()const { return device_.Get(); };
@@ -50,8 +50,8 @@ public:
 
 	DXGI_SWAP_CHAIN_DESC1 GetSwapChainDesc()const { return swapChainDesc_; };
 	D3D12_RENDER_TARGET_VIEW_DESC GetRtvDesc()const { return rtvDesc_; };
-	ID3D12DescriptorHeap* GetsrvDescriptorHeap()const { return srvDescriptorHeap_; };
-	ID3D12DescriptorHeap* GetDsvDescriptorHeap()const { return dsvDescriptorHeap_; };
+	ID3D12DescriptorHeap* GetsrvDescriptorHeap()const { return srvDescriptorHeap_.Get(); };
+	ID3D12DescriptorHeap* GetDsvDescriptorHeap()const { return dsvDescriptorHeap_.Get(); };
 
 	
 
@@ -113,9 +113,9 @@ private://プライベート変数
 	Microsoft::WRL::ComPtr< IDXGISwapChain4> swapChain_ = nullptr;	//スワップチェーン
 	DXGI_SWAP_CHAIN_DESC1 swapChainDesc_ = {};	//スワップチェーンデスク
 
-	ID3D12DescriptorHeap* rtvDescriptorHeap_ = nullptr;	//ディスクリプタヒープ
-	ID3D12DescriptorHeap* srvDescriptorHeap_ = nullptr;
-	ID3D12DescriptorHeap* dsvDescriptorHeap_ = nullptr;
+	Microsoft::WRL::ComPtr< ID3D12DescriptorHeap> rtvDescriptorHeap_ = nullptr;	//ディスクリプタヒープ
+	Microsoft::WRL::ComPtr < ID3D12DescriptorHeap> srvDescriptorHeap_ = nullptr;
+	Microsoft::WRL::ComPtr < ID3D12DescriptorHeap> dsvDescriptorHeap_ = nullptr;
 
 
  	Microsoft::WRL::ComPtr< ID3D12Resource> swapChainResources_[2] = { nullptr };	//スワップチェーンリソース

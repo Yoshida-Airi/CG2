@@ -18,7 +18,7 @@ DirectXCommon::~DirectXCommon()
 
 	CloseHandle(fenceEvent_);
 	/*fence_->Release();*/
-	rtvDescriptorHeap_->Release();
+	//rtvDescriptorHeap_->Release();
 	srvDescriptorHeap_->Release();
 	dsvDescriptorHeap_->Release();
 	/*swapChainResources_[0]->Release();
@@ -152,9 +152,9 @@ void DirectXCommon::PostDraw()
 
 }
 
-ID3D12DescriptorHeap* DirectXCommon::CreateDescriptorHeap(D3D12_DESCRIPTOR_HEAP_TYPE heapType, UINT numDescriptors, bool shaderVisible)
+Microsoft::WRL::ComPtr< ID3D12DescriptorHeap>DirectXCommon::CreateDescriptorHeap(D3D12_DESCRIPTOR_HEAP_TYPE heapType, UINT numDescriptors, bool shaderVisible)
 {
-	ID3D12DescriptorHeap* descriptorHeap = nullptr;
+	Microsoft::WRL::ComPtr< ID3D12DescriptorHeap> descriptorHeap = nullptr;
 	D3D12_DESCRIPTOR_HEAP_DESC descriptorHeapDesc{};
 	descriptorHeapDesc.Type = heapType;
 	descriptorHeapDesc.NumDescriptors = numDescriptors;
