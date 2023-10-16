@@ -12,6 +12,8 @@
 #pragma comment(lib,"dxgi.lib")
 #pragma comment(lib,"dxguid.lib")
 
+#include<wrl.h>
+
 class DirectXCommon
 {
 public:
@@ -43,14 +45,15 @@ public:
 	ID3D12DescriptorHeap* CreateDescriptorHeap(D3D12_DESCRIPTOR_HEAP_TYPE heapType, UINT numDescriptors, bool shaderVisible);
 
 
-	ID3D12Device* GetDevice()const { return device_; };
-	ID3D12GraphicsCommandList* GetCommandList()const { return commandList_; };
+	ID3D12Device* GetDevice()const { return device_.Get(); };
+	ID3D12GraphicsCommandList* GetCommandList()const { return commandList_.Get(); };
 
 	DXGI_SWAP_CHAIN_DESC1 GetSwapChainDesc()const { return swapChainDesc_; };
 	D3D12_RENDER_TARGET_VIEW_DESC GetRtvDesc()const { return rtvDesc_; };
 	ID3D12DescriptorHeap* GetsrvDescriptorHeap()const { return srvDescriptorHeap_; };
 	ID3D12DescriptorHeap* GetDsvDescriptorHeap()const { return dsvDescriptorHeap_; };
 
+	
 
 private:
 
@@ -102,12 +105,12 @@ private://プライベート変数
 
 
 	//Direct3D関連
-	IDXGIFactory7* dxgiFactory_ = nullptr;	//ファクトリー
-	ID3D12Device* device_ = nullptr;	//デバイス
-	ID3D12CommandAllocator* commandAllocator_ = nullptr;	//コマンドアロケータ
-	ID3D12GraphicsCommandList* commandList_ = nullptr;	//コマンドリスト
-	ID3D12CommandQueue* commandQueue_ = nullptr;	//コマンドキュー
-	IDXGISwapChain4* swapChain_ = nullptr;	//スワップチェーン
+	Microsoft::WRL::ComPtr< IDXGIFactory7> dxgiFactory_ = nullptr;	//ファクトリー
+	Microsoft::WRL::ComPtr< ID3D12Device> device_ = nullptr;	//デバイス
+	Microsoft::WRL::ComPtr<ID3D12CommandAllocator> commandAllocator_ = nullptr;	//コマンドアロケータ
+	Microsoft::WRL::ComPtr< ID3D12GraphicsCommandList> commandList_ = nullptr;	//コマンドリスト
+	Microsoft::WRL::ComPtr< ID3D12CommandQueue> commandQueue_ = nullptr;	//コマンドキュー
+	Microsoft::WRL::ComPtr< IDXGISwapChain4> swapChain_ = nullptr;	//スワップチェーン
 	DXGI_SWAP_CHAIN_DESC1 swapChainDesc_ = {};	//スワップチェーンデスク
 
 	ID3D12DescriptorHeap* rtvDescriptorHeap_ = nullptr;	//ディスクリプタヒープ
@@ -115,18 +118,18 @@ private://プライベート変数
 	ID3D12DescriptorHeap* dsvDescriptorHeap_ = nullptr;
 
 
-	ID3D12Resource* swapChainResources_[2] = { nullptr };	//スワップチェーンリソース
+ 	Microsoft::WRL::ComPtr< ID3D12Resource> swapChainResources_[2] = { nullptr };	//スワップチェーンリソース
 	D3D12_RENDER_TARGET_VIEW_DESC rtvDesc_{};	//rtv
 	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandles_[2];//RTVを二つ作るのでディスクリプタを二つ用意
 	D3D12_RESOURCE_BARRIER barrier_{};	//トランスフォームバリア
-	ID3D12Fence* fence_ = nullptr;	//フェンス
+	Microsoft::WRL::ComPtr< ID3D12Fence> fence_ = nullptr;	//フェンス
 	uint64_t fenceValue_ = 0;	//フェンスの値
 	HANDLE fenceEvent_ = nullptr;
-	IDXGIAdapter4* useAdapter_ = nullptr;
+	Microsoft::WRL::ComPtr< IDXGIAdapter4> useAdapter_ = nullptr;
 
 
 	ID3D12Resource* depthStencilResource_;
 
-	ID3D12Debug1* debugController_ = nullptr;
+	Microsoft::WRL::ComPtr< ID3D12Debug1> debugController_ = nullptr;
 
 };
