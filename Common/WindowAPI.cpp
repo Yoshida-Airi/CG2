@@ -14,8 +14,6 @@ WindowAPI::WindowAPI()
 WindowAPI::~WindowAPI()
 {
 	CloseWindow(hwnd_);
-
-
 }
 
 //開始
