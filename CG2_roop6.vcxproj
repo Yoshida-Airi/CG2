@@ -97,13 +97,13 @@
     <ClCompile Include="externals\imgui\imgui_impl_win32.cpp" />
     <ClCompile Include="externals\imgui\imgui_tables.cpp" />
     <ClCompile Include="externals\imgui\imgui_widgets.cpp" />
-    <ClCompile Include="GameTitleScene.cpp" />
     <ClCompile Include="Input\Input.cpp" />
     <ClCompile Include="Logger\ConvertString.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Math\MathUtilty.cpp" />
     <ClCompile Include="Scene\GameManager.cpp" />
     <ClCompile Include="Scene\GamePlayScene.cpp" />
+    <ClCompile Include="Scene\GameTitleScene.cpp" />
     <ClCompile Include="Utilty\CSVReader.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -124,7 +124,6 @@
     <ClInclude Include="externals\imgui\imstb_rectpack.h" />
     <ClInclude Include="externals\imgui\imstb_textedit.h" />
     <ClInclude Include="externals\imgui\imstb_truetype.h" />
-    <ClInclude Include="GameTitleScene.h" />
     <ClInclude Include="Input\Input.h" />
     <ClInclude Include="Logger\ConvertString.h" />
     <ClInclude Include="Math\MathUtilty.h" />
@@ -135,6 +134,7 @@
     <ClInclude Include="Math\Vector4.h" />
     <ClInclude Include="Scene\GameManager.h" />
     <ClInclude Include="Scene\GamePlayScene.h" />
+    <ClInclude Include="Scene\GameTitleScene.h" />
     <ClInclude Include="Utilty\CSVReader.h" />
   </ItemGroup>
   <ItemGroup>

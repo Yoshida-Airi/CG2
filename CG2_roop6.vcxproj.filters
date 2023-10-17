@@ -138,8 +138,8 @@
     <ClCompile Include="Utilty\CSVReader.cpp">
       <Filter>ソース ファイル\Utilty</Filter>
     </ClCompile>
-    <ClCompile Include="GameTitleScene.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="Scene\GameTitleScene.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -227,8 +227,8 @@
     <ClInclude Include="Utilty\CSVReader.h">
       <Filter>ヘッダー ファイル\Utilty</Filter>
     </ClInclude>
-    <ClInclude Include="GameTitleScene.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="Scene\GameTitleScene.h">
+      <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
