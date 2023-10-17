@@ -61,7 +61,7 @@ void GamePlayScene::Initialize()
 
 	model->Initialize("Resources", "cube.Obj");
 	model2->Initialize("Resources", "axis.Obj");
-	sphere->Initialize(uvTexture);
+	sphere->Initialize(monsterTexture);
 	sprite->Initialize(spriteData, uvTexture);
 
 }
