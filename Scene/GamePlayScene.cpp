@@ -2,18 +2,8 @@
 
 void GamePlayScene::Initialize()
 {
-	winApp = WindowAPI::GetInstance();
-	dxCommon = DirectXCommon::GetInstance();
-	engine = MyEngine::GetInstance();
-	imGuiManager = ImGuiManager::GetInstance();
 	texture = TextureManager::GetInstance();
 	input = Input::GetInstance();
-
-	winApp->StartApp(kWindowTitle, kWindowWidth, kWindowHeight);
-	dxCommon->Initialize();
-	engine->Initialize();
-	input->Initialize();
-
 
 	spriteData = new SpriteData;
 	sphere = new Sphere;
@@ -35,14 +25,11 @@ void GamePlayScene::Initialize()
 		{0.0f,0.0f,0.0f}
 	};
 
-	CoInitializeEx(0, COINIT_MULTITHREADED);
-
-	texture->Initialize(kWindowWidth, kWindowHeight);
+	
 
 	uvTexture = texture->LoadTexture("Resources/uvChecker.png");
 	monsterTexture = texture->LoadTexture("Resources/monsterBall.png");
 
-	imGuiManager->Initialize();
 
 	transform_=
 	{
@@ -68,10 +55,7 @@ void GamePlayScene::Initialize()
 
 void GamePlayScene::Update()
 {
-	dxCommon->PreDraw();
-	engine->PreDraw();
-	imGuiManager->Begin();
-
+	
 
 	if (input->TriggerKey(DIK_UP))
 	{
@@ -84,13 +68,13 @@ void GamePlayScene::Update()
 	}
 
 
+
 	input->Update();
 	model->Update(transform_);
 	model2->Update(transform2_);
 	sphere->Update();
 	sprite->Update();
 
-	imGuiManager->End();
 }
 
 void GamePlayScene::Draw()
@@ -101,30 +85,17 @@ void GamePlayScene::Draw()
 	sphere->Draw();
 	sprite->Draw();
 
-	imGuiManager->Draw();
-	engine->PostDraw();
-	dxCommon->PostDraw();
+
 
 }
 
 void GamePlayScene::Finalize()
 {
-	D3DResourceLeakChecker leakCheak;
-
-	CoUninitialize();
-
+	
 	delete sphere;
 	delete sprite;
 	delete model;
 	delete model2;
-
 	delete spriteData;
-
-	delete input;
-	delete imGuiManager;
-	delete engine;
-	delete texture;
-	delete dxCommon;
-	delete winApp;
-
+	
 }

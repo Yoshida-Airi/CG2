@@ -123,6 +123,7 @@
     <ClInclude Include="externals\imgui\imstb_rectpack.h" />
     <ClInclude Include="externals\imgui\imstb_textedit.h" />
     <ClInclude Include="externals\imgui\imstb_truetype.h" />
+    <ClInclude Include="GameTitleScene.h" />
     <ClInclude Include="Input\Input.h" />
     <ClInclude Include="Logger\ConvertString.h" />
     <ClInclude Include="Math\MathUtilty.h" />
