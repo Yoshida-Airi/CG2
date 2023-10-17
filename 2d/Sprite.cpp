@@ -7,12 +7,12 @@ Sprite::~Sprite()
 }
 
 
-void Sprite::Initialize(WindowAPI* winApp, DirectXCommon* dxcommon, MyEngine* engine, TextureManager* texture, SpriteData* data,uint32_t textureHandle)
+void Sprite::Initialize(SpriteData* data,uint32_t textureHandle)
 {
-	winApp_ = winApp;
-	dxCommon_ = dxcommon;
-	engine_ = engine;
-	texture_ = texture;
+	winApp_ = WindowAPI::GetInstance();
+	dxCommon_ = DirectXCommon::GetInstance();
+	engine_ = MyEngine::GetInstance();
+	texture_ = TextureManager::GetInstance();
 	
 	textureHandle_ = textureHandle;
 

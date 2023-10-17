@@ -31,7 +31,7 @@ public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize(WindowAPI* winApp, DirectXCommon* dxcommon, MyEngine* engine, TextureManager* texture, SpriteData* data, uint32_t textureHandle);
+	void Initialize(SpriteData* data, uint32_t textureHandle);
 
 	/// <summary>
 	/// 更新処理

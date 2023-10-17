@@ -2,17 +2,17 @@
 
 void GamePlayScene::Initialize()
 {
-	winApp = new WindowAPI;
-	dxCommon = new DirectXCommon;
-	engine = new MyEngine;
-	imGuiManager = new ImGuiManager;
-	texture = new TextureManager;
-	input = new Input;
+	winApp = WindowAPI::GetInstance();
+	dxCommon = DirectXCommon::GetInstance();
+	engine = MyEngine::GetInstance();
+	imGuiManager = ImGuiManager::GetInstance();
+	texture = TextureManager::GetInstance();
+	input = Input::GetInstance();
 
 	winApp->StartApp(kWindowTitle, kWindowWidth, kWindowHeight);
-	dxCommon->Initialize(winApp);
-	engine->Initialize(dxCommon, winApp);
-	input->Initialize(winApp);
+	dxCommon->Initialize();
+	engine->Initialize();
+	input->Initialize();
 
 
 	spriteData = new SpriteData;
@@ -37,12 +37,12 @@ void GamePlayScene::Initialize()
 
 	CoInitializeEx(0, COINIT_MULTITHREADED);
 
-	texture->Initialize(dxCommon, engine, kWindowWidth, kWindowHeight);
+	texture->Initialize(kWindowWidth, kWindowHeight);
 
 	uvTexture = texture->LoadTexture("Resources/uvChecker.png");
 	monsterTexture = texture->LoadTexture("Resources/monsterBall.png");
 
-	imGuiManager->Initialize(winApp, dxCommon);
+	imGuiManager->Initialize();
 
 	transform_=
 	{
@@ -59,10 +59,10 @@ void GamePlayScene::Initialize()
 	};
 
 
-	model->Initialize(winApp, dxCommon, engine, texture,  "Resources", "cube.Obj");
-	model2->Initialize(winApp, dxCommon, engine, texture,  "Resources", "axis.Obj");
-	sphere->Initialize(winApp, dxCommon, engine, texture, monsterTexture);
-	sprite->Initialize(winApp, dxCommon, engine, texture, spriteData, uvTexture);
+	model->Initialize("Resources", "cube.Obj");
+	model2->Initialize("Resources", "axis.Obj");
+	sphere->Initialize(uvTexture);
+	sprite->Initialize(spriteData, uvTexture);
 
 }
 

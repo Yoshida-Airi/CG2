@@ -1,8 +1,17 @@
 #include "Input.h"
 
-void Input::Initialize(WindowAPI* winApp)
+Input* Input::GetInstance()
 {
-	winApp_ = winApp;
+	if (instance == NULL)
+	{
+		instance = new Input;
+	}
+	return instance;
+}
+
+void Input::Initialize()
+{
+	winApp_ = WindowAPI::GetInstance();
 
 	//DirectInputの初期化
 	
@@ -56,3 +65,5 @@ bool Input::TriggerKey(BYTE keyNumber)
 
 	return false;
 }
+
+Input* Input::instance = NULL;

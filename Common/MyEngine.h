@@ -16,12 +16,14 @@ class MyEngine
 {
 public:
 
+	static MyEngine* GetInstance();
+
 	~MyEngine();
 
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize(DirectXCommon* dxCommon, WindowAPI* winApp);
+	void Initialize();
 
 	/// <summary>
 	/// 描画前処理
@@ -75,7 +77,7 @@ private://プライベート変数
 	D3D12_VIEWPORT viewport_{};	//ビューポート
 	D3D12_RECT scissorRect_{};//シザー矩形
 
-
+	static MyEngine* instance;
 
 private://プライベート関数
 

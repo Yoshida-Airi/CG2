@@ -4,16 +4,26 @@
 /* 　　　　   パブリックメソッド　　　	　 */
 /*=====================================*/
 
+MyEngine* MyEngine::GetInstance()
+{
+	if (instance == NULL)
+	{
+		instance = new MyEngine;
+	}
+
+	return instance;
+}
+
 MyEngine::~MyEngine()
 {
 
 }
 
 /// 初期化
-void MyEngine::Initialize(DirectXCommon* dxCommon, WindowAPI* winApp)
+void MyEngine::Initialize()
 {
-	dxCommon_ = dxCommon;
-	winApp_ = winApp;
+	dxCommon_ = DirectXCommon::GetInstance();
+	winApp_ = WindowAPI::GetInstance();
 
 	IntializeDXC();//DXCの初期化
 	PSO();//パイプラインステートの設定
@@ -379,3 +389,5 @@ void MyEngine::SetCommand()
 	dxCommon_->GetCommandList()->SetPipelineState(graphicsPipelineState_.Get());	//PSOを設定
 
 }
+
+MyEngine* MyEngine::instance = NULL;

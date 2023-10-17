@@ -17,13 +17,16 @@
 class DirectXCommon
 {
 public:
+
+	static DirectXCommon* GetInstance();
+
 	DirectXCommon();
 	~DirectXCommon();
 
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize(WindowAPI* winApp);
+	void Initialize();
 
 	/// <summary>
 	/// 描画前処理
@@ -53,7 +56,8 @@ public:
 	ID3D12DescriptorHeap* GetsrvDescriptorHeap()const { return srvDescriptorHeap_.Get(); };
 	ID3D12DescriptorHeap* GetDsvDescriptorHeap()const { return dsvDescriptorHeap_.Get(); };
 
-	
+	//静的メンバ変数の宣言と初期化
+	static DirectXCommon* instance;
 
 private:
 

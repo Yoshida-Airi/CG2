@@ -16,6 +16,10 @@ public:
 	/* 　　　　   パブリックメソッド　　　	　 */
 	/*=====================================*/
 
+	//シングルトン
+	static WindowAPI* GetInstance();
+
+
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
@@ -43,6 +47,8 @@ public:
 	int32_t GetHeight() const { return Height_; };
 	WNDCLASS GetWinCLASS()const { return wc_; };
 
+
+private:
 	/*=====================================*/
 	/* 　　　　   プライベート変数    　       */
 	/*=====================================*/
@@ -59,6 +65,7 @@ public:
 	//ウィンドウクラスの登録(設定をWindowsに伝える)
 	WNDCLASS wc_ = {};
 
+	static WindowAPI* instance;	//シングルトン
 
 private:
 	/*=====================================*/

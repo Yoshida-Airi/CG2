@@ -21,7 +21,7 @@ public:
 
 	~Sphere();
 
-	void Initialize(WindowAPI* winApp, DirectXCommon* dxComon, MyEngine* engine, TextureManager* texture, uint32_t textureHandle);
+	void Initialize(uint32_t textureHandle);
 
 	void Update();
 

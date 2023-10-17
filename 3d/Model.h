@@ -35,11 +35,9 @@ public:
 
 	~Model();
 
-	void Initialize(WindowAPI* winApp, DirectXCommon* dxComon, MyEngine* engine, TextureManager* texture, const std::string& directoryPath, const std::string& filename);
+	void Initialize(const std::string& directoryPath, const std::string& filename);
 	void Update(Transform transform);
 	void Draw();
-
-	Model* CreateModelFromObj(const std::string& directoryPath, const std::string& filename);
 
 private:
 

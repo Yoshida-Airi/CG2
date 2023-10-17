@@ -5,12 +5,12 @@ Sphere::~Sphere()
 	
 }
 
-void Sphere::Initialize(WindowAPI* winApp, DirectXCommon* dxComon, MyEngine* engine, TextureManager* texture, uint32_t textureHandle)
+void Sphere::Initialize(uint32_t textureHandle)
 {
-	winApp_ = winApp;
-	dxCommon_ = dxComon;
-	engine_ = engine;
-	texture_ = texture;
+	winApp_ = WindowAPI::GetInstance();
+	dxCommon_ = DirectXCommon::GetInstance();
+	engine_ = MyEngine::GetInstance();
+	texture_ = TextureManager::GetInstance();
 	textureHandle_ = textureHandle;
 	
 

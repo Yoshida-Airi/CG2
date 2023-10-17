@@ -6,6 +6,15 @@
 /*=====================================*/
 
 
+DirectXCommon* DirectXCommon::GetInstance()
+{
+	if (instance == NULL)
+	{
+		instance = new DirectXCommon;
+	}
+	return instance;
+}
+
 //コンストラクタ
 DirectXCommon::DirectXCommon()
 {
@@ -19,9 +28,9 @@ DirectXCommon::~DirectXCommon()
 }
 
 //初期化
-void DirectXCommon::Initialize(WindowAPI* winApp)
+void DirectXCommon::Initialize()
 {
-	winApp_ = winApp;
+	winApp_ = WindowAPI::GetInstance();
 
 
 	// DXGIデバイス初期化
@@ -424,3 +433,5 @@ ID3D12Resource* DirectXCommon::CreateDepthStencilTextureResource(ID3D12Device* d
 	return resource;
 }
 
+//静的メンバ変数の宣言と初期化
+DirectXCommon* DirectXCommon::instance = NULL;

@@ -9,6 +9,8 @@ class TextureManager
 {
 public:
 
+	static TextureManager* GetInstance();
+
 	struct Texture
 	{
 		D3D12_CPU_DESCRIPTOR_HANDLE textureSrvHandleCPU;
@@ -26,7 +28,7 @@ public:
 	/// </summary>
 	/// <param name="directX"></param>
 	/// <param name="engine"></param>
-	void Initialize(DirectXCommon* directX, MyEngine* engine, int32_t width, int32_t height);
+	void Initialize(int32_t width, int32_t height);
 
 	/// <summary>
 	/// 更新処理
@@ -51,13 +53,14 @@ private:
 	DirectXCommon* dxCommon_;
 	MyEngine* engine_;
 
-	static const size_t kMaxTextureCount = 2056;
-	std::array<Texture, kMaxTextureCount> textures_;
+	static const size_t kMaxTexture = 2056;	//最大テクスチャ数
+	uint32_t TextureCount = 0;	//現在のテクスチャ数
+	std::array<Texture, kMaxTexture> textures_;
 
-	bool IsusedTexture[kMaxTextureCount];
+	bool IsusedTexture[kMaxTexture];
 
 	//中間リソース
-	std::array<Microsoft::WRL::ComPtr<ID3D12Resource>, kMaxTextureCount> intermediateResource;
+	std::array<Microsoft::WRL::ComPtr<ID3D12Resource>, kMaxTexture> intermediateResource;
 
 	uint32_t descriptorSizeSRV;
 	
@@ -65,6 +68,7 @@ private:
 	D3D12_DEPTH_STENCIL_VIEW_DESC dsvDesc_;
 	Microsoft::WRL::ComPtr< ID3D12Resource> depthStencilResource_;
 
+	static TextureManager* instance;
 
 private:
 

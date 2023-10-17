@@ -1,5 +1,15 @@
 #include "ImGuiManager.h"
 
+ImGuiManager* ImGuiManager::GetInstance()
+{
+	if (instance == NULL)
+	{
+		instance = new ImGuiManager;
+	}
+
+	return instance;
+}
+
 ImGuiManager::~ImGuiManager()
 {
 	ImGui_ImplDX12_Shutdown();
@@ -7,10 +17,10 @@ ImGuiManager::~ImGuiManager()
 	ImGui::DestroyContext();
 }
 
-void ImGuiManager::Initialize(WindowAPI* winApp, DirectXCommon* dxCommon)
+void ImGuiManager::Initialize()
 {
-	winApp_ = winApp;
-	dxCommon_ = dxCommon;
+	winApp_ = WindowAPI::GetInstance();
+	dxCommon_ = DirectXCommon::GetInstance();
 
 	srvDescriptorHeap_ = dxCommon_->GetsrvDescriptorHeap();
 
@@ -60,3 +70,5 @@ void ImGuiManager::Draw()
 	//実際のcommandListのImGuiの描画コマンド
 	ImGui_ImplDX12_RenderDrawData(ImGui::GetDrawData(), dxCommon_->GetCommandList());
 }
+
+ImGuiManager* ImGuiManager::instance = NULL;

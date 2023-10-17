@@ -12,16 +12,14 @@
 class Input
 {
 public:
-	void Initialize(WindowAPI* winApp);
+	static Input* GetInstance();
+
+	void Initialize();
 
 	void Update();
 
 	/*void Draw();*/
 
-	bool IsPressKey(uint8_t key);	//キーを押した状態か
-	bool IsTriggerKey(uint8_t key);	//キーを押した瞬間か
-	bool IsReleaseKey(uint8_t key); //キーを離した瞬間か
-	
 	/// <summary>
 	/// キーの押下をチェック
 	/// </summary>
@@ -44,4 +42,7 @@ private:
 	IDirectInputDevice8* keyboard = nullptr;	//キーボードデバイス
 	BYTE key[256] = {};
 	BYTE keyPre[256] = {};	//前回の全キーの状態
+
+	static Input* instance;
+
 };

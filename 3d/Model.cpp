@@ -5,19 +5,19 @@ Model::~Model()
 	
 }
 
-void Model::Initialize(WindowAPI* winApp, DirectXCommon* dxComon, MyEngine* engine, TextureManager* texture, const std::string& directoryPath, const std::string& filename)
+void Model::Initialize(const std::string& directoryPath, const std::string& filename)
 {
-	winApp_ = winApp;
-	dxCommon_ = dxComon;
-	engine_ = engine;
-	texture_ = texture;
+	winApp_ = WindowAPI::GetInstance();
+	dxCommon_ = DirectXCommon::GetInstance();
+	engine_ = MyEngine::GetInstance();
+	texture_ = TextureManager::GetInstance();
 
 	kClientHeight_ = winApp_->GetHeight();
 	kClientWidth_ = winApp_->GetWidth();
 
 
 	modelData_ = LoadObjFile(directoryPath, filename);
-	textureHandle_ = texture->LoadTexture(modelData_.material.textureFilePath);
+	textureHandle_ = texture_->LoadTexture(modelData_.material.textureFilePath);
 
 	VertexBuffer();
 	MaterialBuffer();
@@ -59,17 +59,6 @@ void Model::Update(Transform transform)
 	wvpData_->WVP = worldViewProjectionMatrix;
 	wvpData_->World = worldMatrix;
 
-	ImGui::Begin("obj");
-
-	float rotate[] = { transform_.rotate.x,transform_.rotate.y,transform_.rotate.z };
-	ImGui::SliderFloat3("rotate", rotate, -2.0f, 2.0f);
-
-	transform_.rotate.x = rotate[0];
-	transform_.rotate.y = rotate[1];
-	transform_.rotate.z = rotate[2];
-
-
-	ImGui::End();
 }
 
 void Model::Draw()
