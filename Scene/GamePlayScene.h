@@ -1,11 +1,7 @@
 #pragma once
 #include<Windows.h>
-#include"WindowAPI.h"
-#include"DirectXCommon.h"
-#include"MyEngine.h"
 #include"Triangle.h"
 #include"ImGuiManager.h"
-#include"TextureManager.h"
 #include"Sprite.h"
 #include"Sphere.h"
 #include"Model.h"

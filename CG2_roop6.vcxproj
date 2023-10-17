@@ -125,6 +125,7 @@
     <ClInclude Include="externals\imgui\imstb_textedit.h" />
     <ClInclude Include="externals\imgui\imstb_truetype.h" />
     <ClInclude Include="Input\Input.h" />
+    <ClInclude Include="LeakCheck.h" />
     <ClInclude Include="Logger\ConvertString.h" />
     <ClInclude Include="Math\MathUtilty.h" />
     <ClInclude Include="Math\Matrix4x4.h" />

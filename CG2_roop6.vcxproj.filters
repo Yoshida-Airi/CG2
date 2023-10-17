@@ -230,6 +230,9 @@
     <ClInclude Include="Scene\GameTitleScene.h">
       <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="LeakCheck.h">
+      <Filter>ヘッダー ファイル\Logger</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shaders\Object3d.PS.hlsl">
