@@ -55,6 +55,18 @@
     <Filter Include="ヘッダー ファイル\Utilty">
       <UniqueIdentifier>{a1c963e1-56dc-4ae9-8ed7-3035409afc13}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Input">
+      <UniqueIdentifier>{fb358255-74c2-4079-a5a3-e62c066bf641}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Input">
+      <UniqueIdentifier>{1c80003f-88c2-487a-9c55-3fa9b889bb91}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Scene">
+      <UniqueIdentifier>{2c8d5794-7ac9-47e6-b5ba-90b7ec9a0104}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Scene">
+      <UniqueIdentifier>{9f07648e-a374-45e5-9c13-edc0730a96db}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -114,17 +126,17 @@
     <ClCompile Include="3d\Model.cpp">
       <Filter>ソース ファイル\3d</Filter>
     </ClCompile>
-    <ClCompile Include="Input.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="Input\Input.cpp">
+      <Filter>ソース ファイル\Input</Filter>
     </ClCompile>
-    <ClCompile Include="CSVReader.cpp">
+    <ClCompile Include="Scene\GamePlayScene.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\GameManager.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Utilty\CSVReader.cpp">
       <Filter>ソース ファイル\Utilty</Filter>
-    </ClCompile>
-    <ClCompile Include="GamePlayScene.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="GameManager.cpp">
-      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -200,17 +212,17 @@
     <ClInclude Include="3d\Model.h">
       <Filter>ヘッダー ファイル\3d</Filter>
     </ClInclude>
-    <ClInclude Include="Input.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="Input\Input.h">
+      <Filter>ヘッダー ファイル\Input</Filter>
     </ClInclude>
-    <ClInclude Include="CSVReader.h">
+    <ClInclude Include="Scene\GameManager.h">
+      <Filter>ヘッダー ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\GamePlayScene.h">
+      <Filter>ヘッダー ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilty\CSVReader.h">
       <Filter>ヘッダー ファイル\Utilty</Filter>
-    </ClInclude>
-    <ClInclude Include="GamePlayScene.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GameManager.h">
-      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

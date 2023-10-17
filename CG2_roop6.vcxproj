@@ -52,7 +52,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <AdditionalIncludeDirectories>$(ProjectDir)Logger;$(ProjectDir)2d;$(ProjectDir);$(ProjectDir)3d;$(ProjectDir)Resources\Shaders;$(ProjectDir)Math;$(ProjectDir)Common;$(ProjectDir)Resources\Shaders;$(ProjectDir)Resources;$(ProjectDir)Math;$(ProjectDir)Logger;$(ProjectDir)2d;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Scene;$(ProjectDir)Input;$(ProjectDir)Logger;$(ProjectDir)2d;$(ProjectDir);$(ProjectDir)3d;$(ProjectDir)Resources\Shaders;$(ProjectDir)Math;$(ProjectDir)Common;$(ProjectDir)Resources\Shaders;$(ProjectDir)Resources;$(ProjectDir)Math;$(ProjectDir)Logger;$(ProjectDir)2d;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -71,7 +71,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalIncludeDirectories>$(ProjectDir)Logger;$(ProjectDir)2d;$(ProjectDir);$(ProjectDir)3d;$(ProjectDir)Resources\Shaders;$(ProjectDir)Math;$(ProjectDir)Common;$(ProjectDir)Resource\Shader;$(ProjectDir)Resource;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Scene;$(ProjectDir)Input;$(ProjectDir)Logger;$(ProjectDir)2d;$(ProjectDir);$(ProjectDir)3d;$(ProjectDir)Resources\Shaders;$(ProjectDir)Math;$(ProjectDir)Common;$(ProjectDir)Resource\Shader;$(ProjectDir)Resource;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -90,7 +90,6 @@
     <ClCompile Include="Common\DirectXCommon.cpp" />
     <ClCompile Include="Common\MyEngine.cpp" />
     <ClCompile Include="Common\WindowAPI.cpp" />
-    <ClCompile Include="CSVReader.cpp" />
     <ClCompile Include="externals\imgui\imgui.cpp" />
     <ClCompile Include="externals\imgui\imgui_demo.cpp" />
     <ClCompile Include="externals\imgui\imgui_draw.cpp" />
@@ -98,12 +97,13 @@
     <ClCompile Include="externals\imgui\imgui_impl_win32.cpp" />
     <ClCompile Include="externals\imgui\imgui_tables.cpp" />
     <ClCompile Include="externals\imgui\imgui_widgets.cpp" />
-    <ClCompile Include="GameManager.cpp" />
-    <ClCompile Include="GamePlayScene.cpp" />
-    <ClCompile Include="Input.cpp" />
+    <ClCompile Include="Input\Input.cpp" />
     <ClCompile Include="Logger\ConvertString.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Math\MathUtilty.cpp" />
+    <ClCompile Include="Scene\GameManager.cpp" />
+    <ClCompile Include="Scene\GamePlayScene.cpp" />
+    <ClCompile Include="Utilty\CSVReader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="2d\ImGuiManager.h" />
@@ -115,7 +115,6 @@
     <ClInclude Include="Common\DirectXCommon.h" />
     <ClInclude Include="Common\MyEngine.h" />
     <ClInclude Include="Common\WindowAPI.h" />
-    <ClInclude Include="CSVReader.h" />
     <ClInclude Include="externals\imgui\imconfig.h" />
     <ClInclude Include="externals\imgui\imgui.h" />
     <ClInclude Include="externals\imgui\imgui_impl_dx12.h" />
@@ -124,9 +123,7 @@
     <ClInclude Include="externals\imgui\imstb_rectpack.h" />
     <ClInclude Include="externals\imgui\imstb_textedit.h" />
     <ClInclude Include="externals\imgui\imstb_truetype.h" />
-    <ClInclude Include="GameManager.h" />
-    <ClInclude Include="GamePlayScene.h" />
-    <ClInclude Include="Input.h" />
+    <ClInclude Include="Input\Input.h" />
     <ClInclude Include="Logger\ConvertString.h" />
     <ClInclude Include="Math\MathUtilty.h" />
     <ClInclude Include="Math\Matrix4x4.h" />
@@ -134,6 +131,9 @@
     <ClInclude Include="Math\Vector2.h" />
     <ClInclude Include="Math\Vector3.h" />
     <ClInclude Include="Math\Vector4.h" />
+    <ClInclude Include="Scene\GameManager.h" />
+    <ClInclude Include="Scene\GamePlayScene.h" />
+    <ClInclude Include="Utilty\CSVReader.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shaders\Object3d.PS.hlsl">
