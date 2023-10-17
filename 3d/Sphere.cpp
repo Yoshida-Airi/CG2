@@ -166,19 +166,20 @@ void Sphere::Update()
 	wvpData_->WVP = worldViewProjectionMatrix;
 	wvpData_->World = worldMatrix;
 
+#ifdef _DEBUG
 	ImGui::Begin("texture");
 	ImGui::Checkbox("useMonsterBall", &useMonsterBall);
-	
+
 	float direction[] = { lightData_->direction.x,lightData_->direction.y,lightData_->direction.z };
 	ImGui::SliderFloat3("lightDirection", direction, -1.0f, 1.0f);
 
 	lightData_->direction.x = direction[0];
 	lightData_->direction.y = direction[1];
 	lightData_->direction.z = direction[2];
-
-	
-
 	ImGui::End();
+#endif // _DEBUG
+
+
 	
 }
 

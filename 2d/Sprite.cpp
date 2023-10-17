@@ -77,6 +77,7 @@ void Sprite::Update()
 	uvTransformMatrix_ = Multiply(uvTransformMatrix_, MakeTranselateMatrix(uvTransform_.translate));
 	materialData_->uvTransform = uvTransformMatrix_;
 
+#ifdef _DEBUG
 	ImGui::Begin("UVTransform");
 
 	ImGui::DragFloat2("UVTranslate", &uvTransform_.translate.x, 0.01f, -10.0f, 10.0f);
@@ -84,6 +85,9 @@ void Sprite::Update()
 	ImGui::SliderAngle("UVRotate", &uvTransform_.rotate.z);
 
 	ImGui::End();
+#endif // _DEBUG
+
+	
 
 }
 

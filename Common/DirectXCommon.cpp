@@ -378,6 +378,9 @@ void DirectXCommon::ClearRenderTarget()
 	D3D12_CPU_DESCRIPTOR_HANDLE dsvhandle = dsvDescriptorHeap_->GetCPUDescriptorHandleForHeapStart();
 	commandList_->OMSetRenderTargets(1, &rtvHandles_[backBufferIndex], false, &dsvhandle);
 
+	ID3D12DescriptorHeap* descriptorHeaps[] = { srvDescriptorHeap_.Get() };
+
+
 	////描画先のRTVを設定する
 	//commandList_->OMSetRenderTargets(1, &rtvHandles_[backBufferIndex], false, nullptr);
 	
@@ -387,6 +390,8 @@ void DirectXCommon::ClearRenderTarget()
 
 	//指定した深度で画面全体をクリアする
 	commandList_->ClearDepthStencilView(dsvhandle, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
+		
+	commandList_->SetDescriptorHeaps(1, descriptorHeaps);
 }
 
 void DirectXCommon::CreateFence() {
