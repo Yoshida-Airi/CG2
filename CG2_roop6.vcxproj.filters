@@ -141,6 +141,9 @@
     <ClCompile Include="Scene\GameTitleScene.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3d\Triangle.h">
@@ -232,6 +235,9 @@
     </ClInclude>
     <ClInclude Include="LeakCheck.h">
       <Filter>ヘッダー ファイル\Logger</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
