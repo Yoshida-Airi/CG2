@@ -17,22 +17,24 @@ void GameManager::Initialize()
 	CoInitializeEx(0, COINIT_MULTITHREADED);
 	texture->Initialize(kWindowWidth, kWindowHeight);
 
-
 	imGuiManager->Initialize();
 
-	gameScene = new GamePlayScene;
-	gameScene->Initialize();
+	/*gameScene = new GamePlayScene;
+	gameScene->Initialize();*/
+	title = new GameTitleScene;
+	title->Initialize();
 }
 
 void GameManager::Update()
 {
 	dxCommon->PreDraw();
 	engine->PreDraw();
-
 	imGuiManager->Begin();
 
-	gameScene->Update();
 
+
+	/*gameScene->Update();*/
+	title->Update();
 
 
 	imGuiManager->End();
@@ -40,7 +42,8 @@ void GameManager::Update()
 
 void GameManager::Draw()
 {
-	gameScene->Draw();
+	/*gameScene->Draw();*/
+	title->Draw();
 
 	imGuiManager->Draw();
 	engine->PostDraw();
@@ -52,7 +55,8 @@ void GameManager::Finalize()
 	D3DResourceLeakChecker leakCheak;
 	CoUninitialize();
 
-	gameScene->Finalize();
+	/*gameScene->Finalize();*/
+	title->Finalize();
 
 	delete engine;
 	delete texture;

@@ -1,5 +1,6 @@
 #pragma once
 #include"GamePlayScene.h"
+#include"GameTitleScene.h"
 
 struct D3DResourceLeakChecker
 {
@@ -28,12 +29,15 @@ public:
 
 private:
 	GamePlayScene* gameScene = nullptr;
+	GameTitleScene* title = nullptr;
 
 	const wchar_t* kWindowTitle = L"CG2";
 
 	//アプリケーションの開始
 	const uint32_t kWindowWidth = 1280;
 	const uint32_t kWindowHeight = 720;
+
+	bool isScene = 0;
 
 	WindowAPI* winApp = nullptr;
 	DirectXCommon* dxCommon = nullptr;
