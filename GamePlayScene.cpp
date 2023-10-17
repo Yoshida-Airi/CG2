@@ -44,8 +44,23 @@ void GamePlayScene::Initialize()
 
 	imGuiManager->Initialize(winApp, dxCommon);
 
-	model->Initialize(winApp, dxCommon, engine, texture, "Resources", "cube.Obj");
-	model2->Initialize(winApp, dxCommon, engine, texture, "Resources", "axis.Obj");
+	transform_=
+	{
+		{1.0f,1.0f,1.0f},
+		{0.0f,0.0f,0.0f},
+		{0.0f,0.0f,0.0f}
+	};
+	
+	transform2_ =
+	{
+		{1.0f,1.0f,1.0f},
+		{0.0f,0.0f,0.0f},
+		{0.0f,0.0f,0.0f}
+	};
+
+
+	model->Initialize(winApp, dxCommon, engine, texture,  "Resources", "cube.Obj");
+	model2->Initialize(winApp, dxCommon, engine, texture,  "Resources", "axis.Obj");
 	sphere->Initialize(winApp, dxCommon, engine, texture, monsterTexture);
 	sprite->Initialize(winApp, dxCommon, engine, texture, spriteData, uvTexture);
 
@@ -58,14 +73,20 @@ void GamePlayScene::Update()
 	imGuiManager->Begin();
 
 
-	if (input->TriggerKey(DIK_0))
+	if (input->TriggerKey(DIK_UP))
 	{
-		OutputDebugStringA("Hit\n");
+		transform_.translate.x += 0.01f;
 	}
 
+	if (input->TriggerKey(DIK_W))
+	{
+		transform2_.translate.x += 0.01f;
+	}
+
+
 	input->Update();
-	model->Update();
-	model2->Update();
+	model->Update(transform_);
+	model2->Update(transform2_);
 	sphere->Update();
 	sprite->Update();
 
@@ -75,8 +96,8 @@ void GamePlayScene::Update()
 void GamePlayScene::Draw()
 {
 
-	/*model->Draw();
-	model2->Draw();*/
+	model->Draw();
+	model2->Draw();
 	sphere->Draw();
 	sprite->Draw();
 

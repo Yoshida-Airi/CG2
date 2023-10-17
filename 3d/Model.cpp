@@ -28,13 +28,6 @@ void Model::Initialize(WindowAPI* winApp, DirectXCommon* dxComon, MyEngine* engi
 	materialData_->enableLighting = true;
 	materialData_->uvTransform = MakeIdentity4x4();
 
-	transform_ =
-	{
-		{1.0f,1.0f,1.0f},
-		{0.0f,0.0f,0.0f},
-		{0.0f,0.0f,0.0f}
-	};
-
 	cameraTransform_ =
 	{
 		{1.0f, 1.0f, 1.0f },
@@ -51,8 +44,11 @@ void Model::Initialize(WindowAPI* winApp, DirectXCommon* dxComon, MyEngine* engi
 
 }
 
-void Model::Update()
+void Model::Update(Transform transform)
 {
+
+	Transform transform_ = transform;
+
 
 	Matrix4x4 worldMatrix = MakeAffinMatrix(transform_.scale, transform_.rotate, transform_.translate);
 	Matrix4x4 cameraMatrix = MakeAffinMatrix(cameraTransform_.scale, cameraTransform_.rotate, cameraTransform_.translate);

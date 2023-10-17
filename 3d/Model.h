@@ -36,7 +36,7 @@ public:
 	~Model();
 
 	void Initialize(WindowAPI* winApp, DirectXCommon* dxComon, MyEngine* engine, TextureManager* texture, const std::string& directoryPath, const std::string& filename);
-	void Update();
+	void Update(Transform transform);
 	void Draw();
 
 	Model* CreateModelFromObj(const std::string& directoryPath, const std::string& filename);
@@ -68,7 +68,6 @@ private:
 
 	DirectX::ScratchImage mipImages2 = {};
 
-	Transform transform_ = {};
 	Transform cameraTransform_ = {};
 
 	D3D12_GPU_DESCRIPTOR_HANDLE textureSrvHandleGPU_;
