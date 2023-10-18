@@ -52,7 +52,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <AdditionalIncludeDirectories>$(ProjectDir)Scene;$(ProjectDir)Input;$(ProjectDir)Logger;$(ProjectDir)2d;$(ProjectDir);$(ProjectDir)3d;$(ProjectDir)Resources\Shaders;$(ProjectDir)Math;$(ProjectDir)Common;$(ProjectDir)Resources\Shaders;$(ProjectDir)Resources;$(ProjectDir)Math;$(ProjectDir)Logger;$(ProjectDir)2d;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Object\Player;$(ProjectDir)Scene;$(ProjectDir)Input;$(ProjectDir)Logger;$(ProjectDir)2d;$(ProjectDir);$(ProjectDir)3d;$(ProjectDir)Resources\Shaders;$(ProjectDir)Math;$(ProjectDir)Common;$(ProjectDir)Resources\Shaders;$(ProjectDir)Resources;$(ProjectDir)Math;$(ProjectDir)Logger;$(ProjectDir)2d;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -71,7 +71,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalIncludeDirectories>$(ProjectDir)Scene;$(ProjectDir)Input;$(ProjectDir)Logger;$(ProjectDir)2d;$(ProjectDir);$(ProjectDir)3d;$(ProjectDir)Resources\Shaders;$(ProjectDir)Math;$(ProjectDir)Common;$(ProjectDir)Resource\Shader;$(ProjectDir)Resource;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Object\Player;$(ProjectDir)Scene;$(ProjectDir)Input;$(ProjectDir)Logger;$(ProjectDir)2d;$(ProjectDir);$(ProjectDir)3d;$(ProjectDir)Resources\Shaders;$(ProjectDir)Math;$(ProjectDir)Common;$(ProjectDir)Resource\Shader;$(ProjectDir)Resource;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -102,6 +102,7 @@
     <ClCompile Include="Logger\ConvertString.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Math\MathUtilty.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="Scene\GameManager.cpp" />
     <ClCompile Include="Scene\GamePlayScene.cpp" />
     <ClCompile Include="Scene\GameTitleScene.cpp" />
@@ -135,6 +136,7 @@
     <ClInclude Include="Math\Vector2.h" />
     <ClInclude Include="Math\Vector3.h" />
     <ClInclude Include="Math\Vector4.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="Scene\GameManager.h" />
     <ClInclude Include="Scene\GamePlayScene.h" />
     <ClInclude Include="Scene\GameTitleScene.h" />

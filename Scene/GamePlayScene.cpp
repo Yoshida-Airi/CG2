@@ -7,7 +7,9 @@ void GamePlayScene::Initialize()
 
 	spriteData = new SpriteData;
 	sprite = new Sprite;
+	model_ = new Model;
 
+	player_ = new Player;
 
 	spriteData->vertex[0] = { 0.0f,360.0f,0.0f,1.0f };
 	spriteData->vertex[1] = { 0.0f,0.0f,0.0f,1.0f };
@@ -29,6 +31,7 @@ void GamePlayScene::Initialize()
 	monsterTexture = texture->LoadTexture("Resources/monsterBall.png");
 
 
+
 	transform_=
 	{
 		{1.0f,1.0f,1.0f},
@@ -36,20 +39,17 @@ void GamePlayScene::Initialize()
 		{0.0f,0.0f,0.0f}
 	};
 	
-	transform2_ =
-	{
-		{1.0f,1.0f,1.0f},
-		{0.0f,0.0f,0.0f},
-		{0.0f,0.0f,0.0f}
-	};
 
 	sprite->Initialize(spriteData, uvTexture);
+
+	Vector3 playerPos = { 0.0f,0.0f,0.0f };
+	player_->Initialize(model_, playerPos);
 
 }
 
 void GamePlayScene::Update()
 {
-	
+	input->Update();
 
 	if (input->PushKey(DIK_UP))
 	{
@@ -58,14 +58,16 @@ void GamePlayScene::Update()
 
 	if (input->PushKey(DIK_W))
 	{
-		transform2_.translate.x += 0.01f;
+		
 	}
 
+	player_->Update();
 
-
-	input->Update();
+	
 
 	sprite->Update();
+
+
 
 }
 
@@ -75,13 +77,13 @@ void GamePlayScene::Draw()
 	
 	sprite->Draw();
 
-
-
+	player_->Draw();
 }
 
 void GamePlayScene::Finalize()
 {
-	
+	delete player_;
+	delete model_;
 	delete sprite;
 	delete spriteData;
 	

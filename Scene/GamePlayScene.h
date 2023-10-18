@@ -7,6 +7,7 @@
 #include"Model.h"
 #include"Input.h"
 
+#include"Player.h"
 
 
 class GamePlayScene
@@ -25,12 +26,16 @@ private:
 
 	SpriteData* spriteData = nullptr;
 	Sprite* sprite;
+	Model* model_ = nullptr;
 
 	uint32_t uvTexture;
 	uint32_t monsterTexture;
 
 	Transform transform_;
-	Transform transform2_;
+
+	Player* player_ = nullptr;
+
+
 
 };
 
