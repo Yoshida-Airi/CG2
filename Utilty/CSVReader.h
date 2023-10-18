@@ -13,6 +13,6 @@ public:
 	/// CSVファイルを開く
 	/// </summary>
 	/// <param name="filePath">ファイル名</param>
-	void LoadFlle(const std::string& filePath);
+	std::stringstream LoadFlle(const std::string& filePath);
 };
 

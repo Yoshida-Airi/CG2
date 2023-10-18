@@ -1,6 +1,6 @@
 #include "CSVReader.h"
 
-std::stringstream LoadFlle(const std::string& filePath) 
+std::stringstream CSVReader::LoadFlle(const std::string& filePath)
 {
 	//ファイルを開く
 	std::ifstream file;
