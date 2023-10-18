@@ -57,12 +57,12 @@ void GamePlayScene::Update()
 {
 	
 
-	if (input->TriggerKey(DIK_UP))
+	if (input->PushKey(DIK_UP))
 	{
 		transform_.translate.x += 0.01f;
 	}
 
-	if (input->TriggerKey(DIK_W))
+	if (input->PushKey(DIK_W))
 	{
 		transform2_.translate.x += 0.01f;
 	}
