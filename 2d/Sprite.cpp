@@ -94,6 +94,9 @@ void Sprite::Update()
 void Sprite::Draw()
 {
 	dxCommon_->GetCommandList()->IASetVertexBuffers(0, 1, &vertexBufferView_);	//VBVを設定
+	//形状を設定。PS0にせっていしているものとはまた別。同じものを設定する
+	dxCommon_->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
 	dxCommon_->GetCommandList()->IASetIndexBuffer(&indexBufferView_);
 	dxCommon_->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
 	dxCommon_->GetCommandList()->SetGraphicsRootConstantBufferView(1, transformationmatrixResource->GetGPUVirtualAddress());

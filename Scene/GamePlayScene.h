@@ -24,10 +24,7 @@ private:
 	Input* input = nullptr;
 
 	SpriteData* spriteData = nullptr;
-	Sphere* sphere;
 	Sprite* sprite;
-	Model* model;
-	Model* model2;
 
 	uint32_t uvTexture;
 	uint32_t monsterTexture;
